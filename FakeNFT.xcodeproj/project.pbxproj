@@ -123,6 +123,7 @@
 		5A04699C2A7BC8650026D783 /* ShoppingCartFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartFlow.swift; sourceTree = "<group>"; };
 		5A04699E2A7BC8980026D783 /* ProfileFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlow.swift; sourceTree = "<group>"; };
 		5A0469A02A7BC8DB0026D783 /* StatisticsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFlow.swift; sourceTree = "<group>"; };
+		5AB4D8772A7BDD7E00E1757D /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +156,7 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
+				5AB4D8772A7BDD7E00E1757D /* Readme.md */,
 				5A04693B2A7ABAEC0026D783 /* .gitignore */,
 				5A04693C2A7ABAEC0026D783 /* .swiftlint.yml */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
