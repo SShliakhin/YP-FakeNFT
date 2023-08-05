@@ -53,6 +53,7 @@
 		5A04699D2A7BC8650026D783 /* ShoppingCartFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04699C2A7BC8650026D783 /* ShoppingCartFlow.swift */; };
 		5A04699F2A7BC8990026D783 /* ProfileFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04699E2A7BC8980026D783 /* ProfileFlow.swift */; };
 		5A0469A12A7BC8DB0026D783 /* StatisticsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0469A02A7BC8DB0026D783 /* StatisticsFlow.swift */; };
+		5AB4D8792A7D3C6A00E1757D /* Theme+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB4D8782A7D3C6A00E1757D /* Theme+Images.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,7 @@
 		5A04699E2A7BC8980026D783 /* ProfileFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlow.swift; sourceTree = "<group>"; };
 		5A0469A02A7BC8DB0026D783 /* StatisticsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFlow.swift; sourceTree = "<group>"; };
 		5AB4D8772A7BDD7E00E1757D /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		5AB4D8782A7D3C6A00E1757D /* Theme+Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Theme+Images.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 				5A0469452A7ABC990026D783 /* Theme+Fonts.swift */,
 				5A0469432A7ABC990026D783 /* Theme+Colors.swift */,
 				5A0469442A7ABC990026D783 /* Theme+Sizes+Spacing.swift */,
+				5AB4D8782A7D3C6A00E1757D /* Theme+Images.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -527,6 +530,7 @@
 				5A04698F2A7ABE180026D783 /* ProfileViewController.swift in Sources */,
 				5A0469782A7ABCC50026D783 /* UIViewController+Preview.swift in Sources */,
 				5A04697C2A7ABCC50026D783 /* UIViewController+hideKeyboard.swift in Sources */,
+				5AB4D8792A7D3C6A00E1757D /* Theme+Images.swift in Sources */,
 				5A0469752A7ABCC50026D783 /* UIView+Constraints.swift in Sources */,
 				5A0469832A7ABCC50026D783 /* ICellViewModel.swift in Sources */,
 				5A0469972A7ACCAB0026D783 /* AppAppearance.swift in Sources */,
