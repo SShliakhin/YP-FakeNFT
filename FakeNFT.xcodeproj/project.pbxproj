@@ -53,6 +53,7 @@
 		5A04699D2A7BC8650026D783 /* ShoppingCartFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04699C2A7BC8650026D783 /* ShoppingCartFlow.swift */; };
 		5A04699F2A7BC8990026D783 /* ProfileFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04699E2A7BC8980026D783 /* ProfileFlow.swift */; };
 		5A0469A12A7BC8DB0026D783 /* StatisticsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0469A02A7BC8DB0026D783 /* StatisticsFlow.swift */; };
+		5A0823AA2A82D7640047A8AC /* CatalogAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A0823A92A82D7640047A8AC /* CatalogAssets.xcassets */; };
 		5AAB675A2A8043ED00E95CB2 /* CatalogAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB67592A8043ED00E95CB2 /* CatalogAPI.swift */; };
 		5AAB675C2A81103400E95CB2 /* CatalogServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB675B2A81103400E95CB2 /* CatalogServiceProvider.swift */; };
 		5AAB675E2A81126B00E95CB2 /* CatalogUseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB675D2A81126B00E95CB2 /* CatalogUseCaseProvider.swift */; };
@@ -145,6 +146,7 @@
 		5A04699C2A7BC8650026D783 /* ShoppingCartFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartFlow.swift; sourceTree = "<group>"; };
 		5A04699E2A7BC8980026D783 /* ProfileFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlow.swift; sourceTree = "<group>"; };
 		5A0469A02A7BC8DB0026D783 /* StatisticsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFlow.swift; sourceTree = "<group>"; };
+		5A0823A92A82D7640047A8AC /* CatalogAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CatalogAssets.xcassets; sourceTree = "<group>"; };
 		5AAB67592A8043ED00E95CB2 /* CatalogAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogAPI.swift; sourceTree = "<group>"; };
 		5AAB675B2A81103400E95CB2 /* CatalogServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogServiceProvider.swift; sourceTree = "<group>"; };
 		5AAB675D2A81126B00E95CB2 /* CatalogUseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogUseCaseProvider.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				5AAB67882A81FAD500E95CB2 /* Domain */,
 				5A0469982A7BC0680026D783 /* CatalogFlow.swift */,
 				5A0469882A7ABE180026D783 /* CatalogViewController.swift */,
+				5A0823A92A82D7640047A8AC /* CatalogAssets.xcassets */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 			files = (
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
+				5A0823AA2A82D7640047A8AC /* CatalogAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
