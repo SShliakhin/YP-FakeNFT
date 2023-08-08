@@ -6,7 +6,14 @@ protocol IRequest {
 
 struct PostRequest<Body: Model>: IRequest {
 	let endpoint: URL?
+	let method: HTTPMethod
 	let body: Body
+
+	init(endpoint: URL?, body: Body, method: HTTPMethod = .post) {
+		self.endpoint = endpoint
+		self.body = body
+		self.method = method
+	}
 
 	func urlRequest() -> URLRequest {
 		guard let url = endpoint else {
@@ -15,7 +22,7 @@ struct PostRequest<Body: Model>: IRequest {
 		}
 
 		var urlRequest = URLRequest(url: url)
-		urlRequest.httpMethod = "POST"
+		urlRequest.httpMethod = method.rawValue.uppercased()
 
 		do {
 			let encoder = Body.encoder
