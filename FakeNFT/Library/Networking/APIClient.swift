@@ -21,6 +21,17 @@ struct APIClient {
 	}
 
 	@discardableResult
+	func send<T: Model>(
+		_ request: IRequest,
+		completion: @escaping (Result<[T], APIError>) -> Void
+	) -> NetworkTask {
+
+		return send(request) { (result: Result<DecodableArrayConvert<T>, APIError>) in
+			completion(result.map { $0.models })
+		}
+	}
+
+	@discardableResult
 	func send<T: IDataConvert>(
 		_ request: IRequest,
 		completion: @escaping (Result<T, APIError>) -> Void
@@ -46,7 +57,6 @@ struct APIClient {
 		let networkTask = NetworkTask()
 
 		let backgroundTaskID = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
-
 		// swiftlint:disable:next closure_body_length
 		queue.async {
 			let urlRequest = request.urlRequest()

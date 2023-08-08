@@ -59,3 +59,17 @@ struct DecodableConvert<T: Model>: IRequiredDataConvert {
 		return DecodableConvert(model)
 	}
 }
+
+struct DecodableArrayConvert<T: Model>: IRequiredDataConvert {
+	let models: [T]
+
+	init(_ models: [T]) {
+		self.models = models
+	}
+
+	static func convert(from data: Data) throws -> DecodableArrayConvert<T> {
+		let decoder = T.decoder
+		let models = try decoder.decode([T].self, from: data)
+		return DecodableArrayConvert(models)
+	}
+}
