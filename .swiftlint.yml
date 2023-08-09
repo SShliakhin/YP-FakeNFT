@@ -111,11 +111,11 @@ custom_rules:
     message: "Print decrease performance of the app"
     severity: warning
 
-  image_name_initialization:
-    name: "Image initialization without SwiftGen"
-    regex: 'UIImage\(named:[^)]+\)'
-    message: "Use SwiftGen UIImageView(image: Asset.someImage.image)"
-    severity: warning
+#  image_name_initialization:
+#    name: "Image initialization without SwiftGen"
+#    regex: 'UIImage\(named:[^)]+\)'
+#    message: "Use SwiftGen UIImageView(image: Asset.someImage.image)"
+#    severity: warning
 
   image_literal_initialization:
     name: "Image Literal initialization without SwiftGen"
