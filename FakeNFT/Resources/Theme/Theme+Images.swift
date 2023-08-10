@@ -6,10 +6,11 @@ extension Theme {
 		case sortIcon
 		case addToCartIcon
 		case deleteFromCartIcon
+		case star
 	}
 
 	static func image(kind: ImageAsset) -> UIImage {
-		return UIImage(named: kind.rawValue) ?? .actions // swiftlint:disable:this image_name_initialization
+		return UIImage(named: kind.rawValue) ?? .actions
 	}
 
 	enum ImageSF3: String {
