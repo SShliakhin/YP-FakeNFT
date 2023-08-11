@@ -7,6 +7,7 @@ extension Theme {
 		case addToCartIcon
 		case deleteFromCartIcon
 		case star
+		case heart
 	}
 
 	static func image(kind: ImageAsset) -> UIImage {
