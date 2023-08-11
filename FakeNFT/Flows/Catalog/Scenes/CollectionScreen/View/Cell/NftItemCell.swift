@@ -129,7 +129,7 @@ private extension NftItemCell {
 	func makeLikeButton() -> UIButton {
 		let button = UIButton(type: .custom)
 		button.setBackgroundImage(Theme.image(kind: .heart), for: .normal)
-		button.tintColor = Theme.color(usage: .white)
+		button.tintColor = Theme.color(usage: .allDayWhite)
 
 		return button
 	}
@@ -146,7 +146,6 @@ private extension NftItemCell {
 		let label = UILabel()
 		label.textColor = Theme.color(usage: .main)
 		label.font = Theme.font(style: .caption)
-		label.text = "Fdfsa"
 
 		return label
 	}

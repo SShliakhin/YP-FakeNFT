@@ -153,6 +153,6 @@ extension CollectionItemCellModel {
 		.init(id: "Pink", title: "Pink", nftsCount: 14, cover: nil),
 		.init(id: "White", title: "White", nftsCount: 7, cover: nil),
 		.init(id: "Yellow", title: "Yellow", nftsCount: 8, cover: nil),
-		.init(id: "Brown", title: "Brown", nftsCount: 7, cover: nil),
+		.init(id: "Brown", title: "Brown", nftsCount: 7, cover: nil)
 	]
 }
