@@ -44,7 +44,6 @@
 # Architecture
 
 * MVVM
-* DI: на базе фабрик
 * Layout: Anchors, CompositionalLayout
 
 # Structure
