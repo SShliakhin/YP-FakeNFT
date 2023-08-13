@@ -60,7 +60,6 @@ private extension CollectionViewController {
 
 	func updateSections() {
 		collectionView.reloadData()
-		print(collectionView.numberOfSections)
 	}
 	func updateItems() {
 		guard collectionView.numberOfSections > 0 else { return }
@@ -115,7 +114,7 @@ private extension CollectionViewController {
 private extension CollectionViewController {
 	func makeGoBackButton() -> UIButton {
 		let button = UIButton(type: .custom)
-		button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+		button.setImage(Theme.image(kind: .goBack), for: .normal)
 		button.tintColor = Theme.color(usage: .black)
 		button.event = { [weak self] in self?.viewModel.didUserDo(request: .goBack) }
 

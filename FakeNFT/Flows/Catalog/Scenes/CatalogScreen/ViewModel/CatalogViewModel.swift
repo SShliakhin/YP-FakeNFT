@@ -73,7 +73,7 @@ extension DefaultCatalogViewModel {
 
 extension DefaultCatalogViewModel {
 	func viewIsReady() {
-		// TODO: - сходить в сеть и получить коллекции
+		// TODO: - заблокировать и сходить в сеть
 		items.value = CollectionItemCellModel.domainCollections
 	}
 
@@ -86,7 +86,6 @@ extension DefaultCatalogViewModel {
 		case .selectItemAtIndex(let index):
 			let collection = items.value[index]
 			didSendEventClosure?(.selectCollection(collection))
-			print("Показать детали коллекции: \(collection.name)")
 		}
 	}
 }
