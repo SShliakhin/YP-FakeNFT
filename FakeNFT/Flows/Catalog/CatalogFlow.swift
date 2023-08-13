@@ -17,8 +17,8 @@ struct CatalogFlow: IFlow {
 					completion: { viewModel.didUserDo(request: .selectSortBy($0)) }
 				)
 				view?.present(alert, animated: true)
-			case .selectCollection(let index):
-				let collectionVC = makeCollectionVCBy(index: index)
+			case .selectCollection(let collection):
+				let collectionVC = makeCollectionVCBy(collection: collection)
 				view?.show(collectionVC, sender: view)
 			}
 		}
@@ -26,8 +26,18 @@ struct CatalogFlow: IFlow {
 		return view
 	}
 
-	func makeCollectionVCBy(index: String) -> UIViewController {
-		let view = ShoppingCartViewController()
+	func makeCollectionVCBy(collection: Collection) -> UIViewController {
+		let dep = DefaultCollectionViewModel.Dependencies(collection: collection)
+		let viewModel = DefaultCollectionViewModel(dep: dep)
+		let view = CollectionViewController(viewModel: viewModel)
+		viewModel.didSendEventClosure = { [weak view, viewModel] event in
+			switch event {
+			case .close:
+				view?.navigationController?.popViewController(animated: true)
+			case .showAuthorSite(let url):
+				break
+			}
+		}
 
 		return view
 	}

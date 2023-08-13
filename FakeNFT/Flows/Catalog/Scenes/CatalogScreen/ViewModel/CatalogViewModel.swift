@@ -3,7 +3,7 @@ import Foundation
 // переходы
 enum CatalogEvents {
 	case showSortAlert
-	case selectCollection(String)
+	case selectCollection(Collection)
 }
 
 // действия пользователя
@@ -23,11 +23,12 @@ protocol CatalogViewModelInput: AnyObject {
 
 // дата сорс и свойства для наблюдений
 protocol CatalogViewModelOutput: AnyObject {
-	var items: Observable<[CollectionItemViewModel]> { get }
+	var items: Observable<[Collection]> { get }
 	var numberOfItems: Int { get }
 	var isEmpty: Bool { get }
+	var cellModels: [ICellViewAnyModel.Type] { get }
 
-	func cellModelAtIndex(_ index: Int) -> CollectionItemCellModel
+	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel
 }
 
 typealias CatalogViewModel = (
@@ -43,9 +44,10 @@ final class DefaultCatalogViewModel: CatalogViewModel {
 	var didSendEventClosure: ((CatalogEvents) -> Void)?
 
 	// MARK: - OUTPUT
-	var items: Observable<[CollectionItemViewModel]> = Observable([])
+	var items: Observable<[Collection]> = Observable([])
 	var numberOfItems: Int { items.value.count }
 	var isEmpty: Bool { items.value.isEmpty }
+	var cellModels: [ICellViewAnyModel.Type] = [CollectionItemCellModel.self]
 
 	// MARK: - Inits
 
@@ -57,12 +59,12 @@ final class DefaultCatalogViewModel: CatalogViewModel {
 // MARK: - OUTPUT
 
 extension DefaultCatalogViewModel {
-	func cellModelAtIndex(_ index: Int) -> CollectionItemCellModel {
+	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel {
 		let item = items.value[index]
 
 		return CollectionItemCellModel(
-			image: item.id, // TODO: заменить на URL в cover
-			description: item.description
+			image: item.name, // TODO: заменить на URL в cover
+			description: "\(item.name) (\(item.authorID))" // TODO: заменить на "\(item.name) (\(item.nftsCount))"
 		)
 	}
 }
@@ -72,7 +74,7 @@ extension DefaultCatalogViewModel {
 extension DefaultCatalogViewModel {
 	func viewIsReady() {
 		// TODO: - сходить в сеть и получить коллекции
-		items.value = CollectionItemCellModel.mainCollections
+		items.value = CollectionItemCellModel.domainCollections
 	}
 
 	func didUserDo(request: CatalogRequest) {
@@ -83,8 +85,8 @@ extension DefaultCatalogViewModel {
 			sortCollectionsBy(sortBy)
 		case .selectItemAtIndex(let index):
 			let collection = items.value[index]
-			didSendEventClosure?(.selectCollection(collection.id))
-			print("Показать детали коллекции: \(collection.title)")
+			didSendEventClosure?(.selectCollection(collection))
+			print("Показать детали коллекции: \(collection.name)")
 		}
 	}
 }
@@ -93,9 +95,9 @@ private extension DefaultCatalogViewModel {
 	func sortCollectionsBy(_ sortBy: SortBy) {
 		switch sortBy {
 		case .name:
-			items.value = items.value.sorted { $0.title < $1.title }
+			items.value = items.value.sorted { $0.name < $1.name }
 		case .nftsCount:
-			items.value = items.value.sorted { $0.nftsCount < $1.nftsCount }
+			items.value = items.value.sorted { $0.authorID < $1.authorID } // TODO: заменить на $0.nftsCount > $1.nftsCount
 		}
 	}
 }

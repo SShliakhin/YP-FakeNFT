@@ -33,7 +33,7 @@ final class CatalogViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		tableView.setContentOffset(CGPoint(x: 0, y: -tableView.contentInset.top), animated: false)
+		tableView.setContentOffset(CGPoint(x: .zero, y: -tableView.contentInset.top), animated: false)
 	}
 }
 
@@ -92,7 +92,9 @@ private extension CatalogViewController {
 			tableView
 		].forEach { view.addSubview($0) }
 
-		tableView.makeEqualToSuperviewToSafeArea(insets: .init(top: 20))
+		tableView.makeEqualToSuperviewToSafeArea(
+			insets: .init(top: Theme.spacing(usage: .constant20))
+		)
 	}
 }
 
@@ -112,7 +114,7 @@ private extension CatalogViewController {
 	func makeTableView() -> UITableView {
 		let tableView = UITableView()
 
-		tableView.register(models: [CollectionItemCellModel.self])
+		tableView.register(models: viewModel.cellModels)
 
 		tableView.dataSource = self
 		tableView.delegate = self

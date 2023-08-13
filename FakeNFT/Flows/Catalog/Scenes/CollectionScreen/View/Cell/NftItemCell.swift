@@ -28,7 +28,7 @@ final class NftItemCell: UICollectionViewCell {
 		super.prepareForReuse()
 		avatarImageView.image = nil
 		likeButton.tintColor = Theme.color(usage: .allDayWhite)
-		ratingView.update(with: 0)
+		ratingView.update(with: .zero)
 		titleLabel.text = nil
 		priceLabel.text = nil
 		cartButton.setBackgroundImage(Theme.image(kind: .addToCartIcon), for: .normal)
@@ -56,6 +56,7 @@ extension NftItemCellModel: ICellViewModel {
 		cell.likeButton.tintColor = isFavorite
 		? Theme.color(usage: .red)
 		: Theme.color(usage: .allDayWhite)
+		cell.likeButton.event = onTapFavorite
 		cell.ratingView.update(with: rating)
 		cell.titleLabel.text = title
 		cell.priceLabel.text = "\(price) ETN"
@@ -65,6 +66,7 @@ extension NftItemCellModel: ICellViewModel {
 			: Theme.image(kind: .addToCartIcon),
 			for: .normal
 		)
+		cell.cartButton.event = onTapInCart
 	}
 }
 
@@ -88,6 +90,8 @@ private extension NftItemCell {
 		leftVStack.axis = .vertical
 		leftVStack.spacing = Theme.spacing(usage: .standardHalf)
 		leftVStack.alignment = .leading
+		titleLabel.makeConstraints { [$0.heightAnchor.constraint(equalToConstant: 22)] }
+		priceLabel.makeConstraints { [$0.heightAnchor.constraint(equalToConstant: 12)] }
 
 		let bottomHStack = UIStackView(arrangedSubviews: [leftVStack, cartButton])
 		bottomHStack.alignment = .center
@@ -102,7 +106,8 @@ private extension NftItemCell {
 			bottomHStack
 		].forEach { mainVStack.addArrangedSubview($0) }
 		mainVStack.setCustomSpacing(5, after: ratingView)
-		avatarContainer.makeConstraints { $0.size(.init(width: 108, height: 108)) }
+		avatarContainer.makeConstraints { [$0.heightAnchor.constraint(equalTo: $0.widthAnchor, multiplier: 1)] }
+
 		bottomHStack.makeConstraints { make in
 			[
 				make.leadingAnchor.constraint(equalTo: mainVStack.leadingAnchor),
@@ -111,7 +116,9 @@ private extension NftItemCell {
 		}
 
 		contentView.addSubview(mainVStack)
-		mainVStack.makeEqualToSuperview()
+		mainVStack.makeEqualToSuperview(
+			insets: .init(bottom: Theme.spacing(usage: .constant20))
+		)
 	}
 }
 

@@ -40,25 +40,10 @@ struct CollectionItemCellModel {
 extension CollectionItemCellModel: ICellViewModel {
 	func setup(cell: CollectionItemCell) {
 		let newWidth = UIScreen.main.bounds.width - 32
-		let newImage = resizeImage(
-			image: UIImage(named: image),
-			newWidth: newWidth
-		)
 
-		cell.coverImageView.image = newImage
+		cell.coverImageView.image = UIImage(named: image)?
+			.resize(withWidth: newWidth)
 		cell.descriptionLabel.text = description
-	}
-
-	func resizeImage(image: UIImage?, newWidth: CGFloat) -> UIImage {
-		guard let image = image else { return UIImage() }
-
-		let scale = newWidth / image.size.width
-		let newHeight = image.size.height * scale
-		UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
-		image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
-		let newImage = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-		return newImage ?? image
 	}
 }
 
@@ -94,7 +79,7 @@ private extension CollectionItemCell {
 private extension CollectionItemCell {
 	func makeCoverImageView() -> UIImageView {
 		let imageView = UIImageView()
-		imageView.contentMode = .top // .scaleAspectFill
+		imageView.contentMode = .top
 		imageView.layer.cornerRadius = Theme.dimension(kind: .largeRadius)
 		imageView.layer.masksToBounds = true
 
@@ -144,15 +129,38 @@ extension CollectionItemCellModel {
 		.init(image: "Brown", description: "Brown (7)")
 	]
 
-	static let mainCollections: [CollectionItemViewModel] = [
-		.init(id: "Beige", title: "Beige", nftsCount: 21, cover: nil),
-		.init(id: "Blue", title: "Blue", nftsCount: 5, cover: nil),
-		.init(id: "Gray", title: "Gray", nftsCount: 19, cover: nil),
-		.init(id: "Green", title: "Green", nftsCount: 3, cover: nil),
-		.init(id: "Peach", title: "Peach", nftsCount: 11, cover: nil),
-		.init(id: "Pink", title: "Pink", nftsCount: 14, cover: nil),
-		.init(id: "White", title: "White", nftsCount: 7, cover: nil),
-		.init(id: "Yellow", title: "Yellow", nftsCount: 8, cover: nil),
-		.init(id: "Brown", title: "Brown", nftsCount: 7, cover: nil)
+	static let domainCollections: [Collection] = [
+		.init(
+			id: "1",
+			name: "Beige",
+			description: "A series of one-of-a-kind NFTs featuring historic moments in sports history.",
+			cover: nil,
+			nfts: [],
+			authorID: "6"
+		),
+		.init(
+			id: "2",
+			name: "Blue",
+			description: "A collection of virtual trading cards featuring popular characters from movies and TV shows.",
+			cover: nil,
+			nfts: [],
+			authorID: "9"
+		),
+		.init(
+			id: "3",
+			name: "Gray",
+			description: "A set of limited edition digital stamps featuring famous landmarks from around the world.",
+			cover: nil,
+			nfts: [],
+			authorID: "12"
+		),
+		.init(
+			id: "4",
+			name: "Green",
+			description: "A collection of unique 3D sculptures that can be displayed in virtual reality.",
+			cover: nil,
+			nfts: [],
+			authorID: "15"
+		)
 	]
 }

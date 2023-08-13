@@ -5,8 +5,10 @@ final class CollectionHeaderCell: UICollectionViewCell {
 
 	fileprivate lazy var coverImageView: UIImageView = makeCoverImageView()
 	fileprivate lazy var titleLabel: UILabel = makeTitleLabel()
-	fileprivate lazy var authorLabel = UILabel()
+	fileprivate lazy var authorLabel: UILabel = makeAuthorLabel()
 	fileprivate lazy var descriptionLabel: UILabel = makeDescriptionLabel()
+
+	fileprivate var onTapAuthor: (() -> Void)?
 
 	// MARK: - Inits
 
@@ -26,8 +28,17 @@ final class CollectionHeaderCell: UICollectionViewCell {
 		super.prepareForReuse()
 		coverImageView.image = nil
 		titleLabel.text = nil
-		authorLabel.text = nil
+		authorLabel.attributedText = nil
 		descriptionLabel.text = nil
+	}
+}
+
+// MARK: - Actions
+private extension CollectionHeaderCell {
+	@objc
+	func handleOnTapAuthor() {
+		onTapAuthor?()
+		print("по тапу на авторе показываем новый экран")
 	}
 }
 
@@ -37,7 +48,6 @@ struct CollectionHeaderCellModel {
 	let coverImageString: String
 	let title: String
 	let author: String
-	let authorURL: URL?
 	let description: String
 	let onTapAuthor: (() -> Void)?
 
@@ -56,45 +66,17 @@ extension CollectionHeaderCellModel: ICellViewModel {
 			mainColor: Theme.color(usage: .main),
 			linkFont: Theme.font(style: .subhead),
 			linkColor: Theme.color(usage: .blue),
-			linkText: author,
-			linkURL: authorURL ?? URL(string: "https://www.google.com/")! // swiftlint:disable:this force_unwrapping
+			linkText: author
 		)
 
-		cell.coverImageView.image = UIImage(named: coverImageString)
+		let newWidth = UIScreen.main.bounds.width
+
+		cell.coverImageView.image = UIImage(named: coverImageString)?
+			.resize(withWidth: newWidth)
 		cell.titleLabel.text = title
-		cell.authorLabel.attributedText = Self.makeLinkInsideText(data: data)
+		cell.authorLabel.attributedText = makeLinkInsideText(data: data)
 		cell.descriptionLabel.text = description
-	}
-}
-
-private extension CollectionHeaderCellModel {
-	enum Appearance {
-		static let authorTextPrefix = "Автор колллекции:"
-	}
-}
-
-extension CollectionHeaderCellModel {
-	struct LinkInsideTextInputData {
-		let text: String
-		let mainFont: UIFont
-		let mainColor: UIColor
-		let linkFont: UIFont
-		let linkColor: UIColor
-		let linkText: String
-		let linkURL: URL
-	}
-	static func makeLinkInsideText(data: LinkInsideTextInputData) -> NSMutableAttributedString {
-		let mainTextAttributes = [
-			NSAttributedString.Key.font: data.mainFont,
-			NSAttributedString.Key.foregroundColor: data.mainColor
-		]
-		let attributedText = NSMutableAttributedString(string: data.text, attributes: mainTextAttributes)
-		let linkRange = (data.text as NSString).range(of: data.linkText)
-		attributedText.addAttribute(.link, value: data.linkURL, range: linkRange)
-		attributedText.addAttribute(.font, value: data.linkFont, range: linkRange)
-		attributedText.addAttribute(.foregroundColor, value: data.linkColor, range: linkRange)
-
-		return attributedText
+		cell.onTapAuthor = onTapAuthor
 	}
 }
 
@@ -104,7 +86,6 @@ private extension CollectionHeaderCell {
 		let vStack = UIStackView()
 		vStack.axis = .vertical
 		vStack.alignment = .leading
-		vStack.distribution = .equalCentering
 		vStack.spacing = 13
 		[
 			titleLabel,
@@ -112,31 +93,14 @@ private extension CollectionHeaderCell {
 			descriptionLabel
 		].forEach { vStack.addArrangedSubview($0) }
 		vStack.setCustomSpacing(5, after: authorLabel)
-		titleLabel.makeConstraints { make in
-			[
-				make.heightAnchor.constraint(equalToConstant: 28)
-			]
-		}
-		authorLabel.makeConstraints { make in
-			[
-				make.heightAnchor.constraint(equalToConstant: 18)
-			]
-		}
 
-		let mainVStack = UIStackView(arrangedSubviews: [coverImageView, vStack])
+		let view = UIView()
+		view.addSubview(vStack)
+		vStack.makeEqualToSuperview(insets: .init(horizontal: Theme.spacing(usage: .standard2), vertical: .zero))
+
+		let mainVStack = UIStackView(arrangedSubviews: [coverImageView, view])
 		mainVStack.axis = .vertical
 		mainVStack.spacing = Theme.spacing(usage: .standard2)
-		coverImageView.makeConstraints { make in
-			[
-				make.heightAnchor.constraint(equalToConstant: 310)
-			]
-		}
-		vStack.makeConstraints { make in
-			[
-				make.leadingAnchor.constraint(equalTo: mainVStack.leadingAnchor, constant: Theme.spacing(usage: .standard2)),
-				make.trailingAnchor.constraint(equalTo: mainVStack.trailingAnchor, constant: -Theme.spacing(usage: .standard2))
-			]
-		}
 
 		contentView.addSubview(mainVStack)
 		mainVStack.makeEqualToSuperview()
@@ -162,11 +126,21 @@ private extension CollectionHeaderCell {
 		return label
 	}
 
+	func makeAuthorLabel() -> UILabel {
+		let label = UILabel()
+
+		let tap = UITapGestureRecognizer(target: self, action: #selector(handleOnTapAuthor))
+		label.addGestureRecognizer(tap)
+		label.isUserInteractionEnabled = true
+
+		return label
+	}
+
 	func makeDescriptionLabel() -> UILabel {
 		let label = UILabel()
 		label.textColor = Theme.color(usage: .main)
 		label.font = Theme.font(style: .footnote)
-		label.numberOfLines = 0
+		label.numberOfLines = .zero
 
 		return label
 	}
@@ -182,15 +156,42 @@ struct CollectionHeaderCellPreviews: PreviewProvider {
 			coverImageString: "Peach",
 			title: "Peach",
 			author: "John Doe",
-			authorURL: nil,
 			description: "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей.",
 			onTapAuthor: nil
 		)
 		model.setup(cell: view)
 		return Group {
-			view.preview().frame(height: 453)
+			view.preview().frame(height: 468)
 		}
 		.preferredColorScheme(.light)
 	}
 }
 #endif
+
+private extension CollectionHeaderCellModel {
+	enum Appearance {
+		static let authorTextPrefix = "Автор колллекции:"
+	}
+
+	struct LinkInsideTextInputData {
+		let text: String
+		let mainFont: UIFont
+		let mainColor: UIColor
+		let linkFont: UIFont
+		let linkColor: UIColor
+		let linkText: String
+	}
+
+	func makeLinkInsideText(data: LinkInsideTextInputData) -> NSMutableAttributedString {
+		let mainTextAttributes = [
+			NSAttributedString.Key.font: data.mainFont,
+			NSAttributedString.Key.foregroundColor: data.mainColor
+		]
+		let attributedText = NSMutableAttributedString(string: data.text, attributes: mainTextAttributes)
+		let linkRange = (data.text as NSString).range(of: data.linkText)
+		attributedText.addAttribute(.font, value: data.linkFont, range: linkRange)
+		attributedText.addAttribute(.foregroundColor, value: data.linkColor, range: linkRange)
+
+		return attributedText
+	}
+}
