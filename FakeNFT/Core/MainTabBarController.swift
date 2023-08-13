@@ -9,7 +9,7 @@ final class MainTabBarController: UITabBarController {
 			.statistics
 		].sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
 	}()
-	private let firstPage: TabbarPage = .catalog
+	private let firstPage: TabbarPage = .shoppingCart
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
