@@ -36,10 +36,25 @@ struct CatalogFlow: IFlow {
 				view?.navigationController?.popViewController(animated: true)
 			case .showAuthorSite(let url):
 				if let url = url {
-					print("показать экран с сайтом автора: \(url)")
+					let webViewVC = makeWebViewVC(url: url)
+					view?.show(webViewVC, sender: view)
 				} else {
 					print("url не url")
 				}
+			}
+		}
+
+		return view
+	}
+
+	func makeWebViewVC(url: URL) -> UIViewController {
+		let dep = DefaultWebViewModel.Dependencies(url: url)
+		let viewModel = DefaultWebViewModel(dep: dep)
+		let view = WebViewController(viewModel: viewModel)
+		viewModel.didSendEventClosure = { [weak view] event in
+			switch event {
+			case .close:
+				view?.navigationController?.popViewController(animated: true)
 			}
 		}
 
