@@ -30,12 +30,16 @@ struct CatalogFlow: IFlow {
 		let dep = DefaultCollectionViewModel.Dependencies(collection: collection)
 		let viewModel = DefaultCollectionViewModel(dep: dep)
 		let view = CollectionViewController(viewModel: viewModel)
-		viewModel.didSendEventClosure = { [weak view, viewModel] event in
+		viewModel.didSendEventClosure = { [weak view] event in
 			switch event {
 			case .close:
 				view?.navigationController?.popViewController(animated: true)
 			case .showAuthorSite(let url):
-				break
+				if let url = url {
+					print("показать экран с сайтом автора: \(url)")
+				} else {
+					print("url не url")
+				}
 			}
 		}
 

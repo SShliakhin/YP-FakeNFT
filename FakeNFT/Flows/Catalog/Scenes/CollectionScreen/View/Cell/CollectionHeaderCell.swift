@@ -38,7 +38,6 @@ private extension CollectionHeaderCell {
 	@objc
 	func handleOnTapAuthor() {
 		onTapAuthor?()
-		print("по тапу на авторе показываем новый экран")
 	}
 }
 

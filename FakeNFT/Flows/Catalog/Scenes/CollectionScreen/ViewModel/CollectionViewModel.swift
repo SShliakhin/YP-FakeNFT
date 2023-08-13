@@ -17,16 +17,12 @@ enum CollectionSection {
 // переходы
 enum CollectionEvents {
 	case close
-	case showAuthorSite(URL)
+	case showAuthorSite(URL?)
 }
 
 // действия пользователя
 enum CollectionRequest {
 	case goBack
-	case showAuthorSite(String)
-	case selectItemAtIndex(Int)
-	case likeItemAtIndex(Int)
-	case addItemToCartAtIndex(Int)
 }
 
 // переходы, обработка действий пользователя, начальное состояние
@@ -94,7 +90,9 @@ extension DefaultCollectionViewModel {
 				title: dependencies.collection.name,
 				author: author.name,
 				description: dependencies.collection.description,
-				onTapAuthor: nil
+				onTapAuthor: { [weak self] in
+					self?.didSendEventClosure?(.showAuthorSite(author.website))
+				}
 			)
 		case .list(let list):
 			let nft = list[index]
@@ -105,8 +103,8 @@ extension DefaultCollectionViewModel {
 				title: nft.name,
 				price: nft.price,
 				isInCart: order.value.contains(nft.id),
-				onTapFavorite: nil,
-				onTapInCart: nil
+				onTapFavorite: { [weak self] in self?.likeItemWithID(nft.id) },
+				onTapInCart: { [weak self] in self?.addToCartItemWithID(nft.id) }
 			)
 		}
 	}
@@ -126,17 +124,27 @@ extension DefaultCollectionViewModel {
 		switch request {
 		case .goBack:
 			didSendEventClosure?(.close)
-		case .showAuthorSite(let urlString):
-			guard let url = URL(string: urlString) else { break }
-			didSendEventClosure?(.showAuthorSite(url))
-			print("показать экран с сайтом автора: \(url)")
-		case .selectItemAtIndex(let index):
-			print("в этой версии не требуется для \(index)")
-		case .likeItemAtIndex(let index):
-			print("обновить like для \(index)")
-		case .addItemToCartAtIndex(let index):
-			print("обновить состоянии корзины этим \(index)")
 		}
+	}
+}
+
+private extension DefaultCollectionViewModel {
+	func likeItemWithID(_ nftID: String) {
+		if likes.value.contains(nftID) {
+			likes.value.removeAll { $0 == nftID }
+		} else {
+			likes.value.append(nftID)
+		}
+		// TODO: - заблокировать, изменить локально и отправить в сеть
+	}
+
+	func addToCartItemWithID(_ nftID: String) {
+		if order.value.contains(nftID) {
+			order.value.removeAll { $0 == nftID }
+		} else {
+			order.value.append(nftID)
+		}
+		// TODO: - заблокировать, изменить локально и отправить в сеть
 	}
 }
 
