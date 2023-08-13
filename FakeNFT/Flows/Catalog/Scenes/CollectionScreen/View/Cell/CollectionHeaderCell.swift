@@ -35,8 +35,7 @@ final class CollectionHeaderCell: UICollectionViewCell {
 
 // MARK: - Actions
 private extension CollectionHeaderCell {
-	@objc
-	func handleOnTapAuthor() {
+	@objc func handleOnTapAuthor() {
 		onTapAuthor?()
 	}
 }
@@ -155,7 +154,7 @@ struct CollectionHeaderCellPreviews: PreviewProvider {
 			coverImageString: "Peach",
 			title: "Peach",
 			author: "John Doe",
-			description: "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей.",
+			description: "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей.", // swiftlint:disable:this line_length
 			onTapAuthor: nil
 		)
 		model.setup(cell: view)

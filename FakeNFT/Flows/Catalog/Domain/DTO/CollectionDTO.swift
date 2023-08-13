@@ -1,5 +1,3 @@
-import Foundation
-
 struct CollectionDTO: Model {
 	let name: String?
 	let cover: String?

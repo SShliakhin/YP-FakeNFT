@@ -1,6 +1,6 @@
 import UIKit
 
-class CollectionViewController: UIViewController {
+final class CollectionViewController: UIViewController {
 
 	private var viewModel: CollectionViewModel
 
@@ -23,7 +23,6 @@ class CollectionViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		setup()
 		applyStyle()
 		setConstraints()
 
@@ -89,7 +88,6 @@ extension CollectionViewController: UICollectionViewDataSource {
 
 // MARK: - UI
 private extension CollectionViewController {
-	func setup() {}
 	func applyStyle() {
 		view.backgroundColor = Theme.color(usage: .white)
 	}

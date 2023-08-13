@@ -6,7 +6,6 @@ extension String {
 
 enum CatalogAPI {
 	enum Constant: String {
-		// case baseURLString = "64c51731c853c26efada7bb6.mockapi.io"
 		case baseURLString = "64d15caaff953154bb7a4558.mockapi.io"
 	}
 

@@ -1,5 +1,3 @@
-import Foundation
-
 struct ProfileDTO: Model {
 	let name: String?
 	let avatar: String?

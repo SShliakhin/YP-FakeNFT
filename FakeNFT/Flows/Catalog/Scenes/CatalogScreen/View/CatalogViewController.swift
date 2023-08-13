@@ -1,7 +1,7 @@
 import UIKit
 
 final class CatalogViewController: UIViewController {
-	private var viewModel: CatalogViewModel
+	private let viewModel: CatalogViewModel
 
 	// MARK: - UI Elements
 	private lazy var sortCollectionsBarButtonItem: UIBarButtonItem = makeSortCollectionsBarButtonItem()
@@ -107,7 +107,7 @@ private extension CatalogViewController {
 			target: self,
 			action: #selector(didTapSortCollectionsButton)
 		)
-		button.tintColor = Theme.color(usage: .main)
+		button.tintColor = Theme.color(usage: .black)
 
 		return button
 	}

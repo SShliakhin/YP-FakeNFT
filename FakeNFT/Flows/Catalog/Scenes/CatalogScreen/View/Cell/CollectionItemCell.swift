@@ -1,6 +1,6 @@
 import UIKit
 
-class CollectionItemCell: UITableViewCell {
+final class CollectionItemCell: UITableViewCell {
 	// MARK: - UI Elements
 	fileprivate lazy var coverImageView: UIImageView = makeCoverImageView()
 	fileprivate lazy var descriptionLabel: UILabel = makeDescriptionLabel()

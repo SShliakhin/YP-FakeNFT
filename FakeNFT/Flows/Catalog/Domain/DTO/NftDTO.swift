@@ -1,5 +1,3 @@
-import Foundation
-
 struct NftDTO: Model {
 	let name: String?
 	let images: [String]?
