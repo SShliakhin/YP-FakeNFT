@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class CollectionViewController: UIViewController {
 
@@ -27,6 +28,7 @@ final class CollectionViewController: UIViewController {
 		setConstraints()
 
 		bind(to: viewModel)
+		ProgressHUD.show()
 		viewModel.viewIsReady()
 	}
 
@@ -59,10 +61,12 @@ private extension CollectionViewController {
 
 	func updateSections() {
 		collectionView.reloadData()
+		ProgressHUD.dismiss()
 	}
 	func updateItems() {
 		guard collectionView.numberOfSections > 0 else { return }
 		collectionView.reloadSections([1])
+		ProgressHUD.dismiss()
 	}
 }
 

@@ -1,5 +1,4 @@
 import Foundation
-import ProgressHUD
 
 enum CollectionSection {
 	case header(Author)
@@ -123,8 +122,6 @@ extension DefaultCollectionViewModel {
 
 extension DefaultCollectionViewModel {
 	func viewIsReady() {
-		ProgressHUD.show()
-
 		let authorID = dependencies.collection.authorID
 
 		let group = DispatchGroup()
@@ -136,7 +133,6 @@ extension DefaultCollectionViewModel {
 
 		group.notify(queue: .main) {
 			self.makeDataSource()
-			ProgressHUD.dismiss()
 		}
 	}
 
@@ -150,7 +146,6 @@ extension DefaultCollectionViewModel {
 
 private extension DefaultCollectionViewModel {
 	func likeItemWithID(_ nftID: String) {
-		ProgressHUD.show()
 		var likes = likes.value
 		if likes.contains(nftID) {
 			likes.removeAll { $0 == nftID }
@@ -159,7 +154,6 @@ private extension DefaultCollectionViewModel {
 		}
 
 		dependencies.putLikes.invoke(likes: .init(nfts: likes)) { [weak self] result in
-			ProgressHUD.dismiss()
 			switch result {
 			case .success(let likes):
 				self?.likes.value = likes.nfts
@@ -170,7 +164,6 @@ private extension DefaultCollectionViewModel {
 	}
 
 	func addToCartItemWithID(_ nftID: String) {
-		ProgressHUD.show()
 		var order = order.value
 		if order.contains(nftID) {
 			order.removeAll { $0 == nftID }
@@ -179,7 +172,6 @@ private extension DefaultCollectionViewModel {
 		}
 
 		dependencies.putOrder.invoke(order: .init(nfts: order)) { [weak self] result in
-			ProgressHUD.dismiss()
 			switch result {
 			case .success(let order):
 				self?.order.value = order.nfts

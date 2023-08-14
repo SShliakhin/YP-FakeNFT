@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class CatalogViewController: UIViewController {
 	private let viewModel: CatalogViewModel
@@ -27,6 +28,7 @@ final class CatalogViewController: UIViewController {
 		setConstraints()
 
 		bind(to: viewModel)
+		ProgressHUD.show()
 		viewModel.viewIsReady()
 	}
 
@@ -48,6 +50,7 @@ private extension CatalogViewController {
 
 	func updateItems() {
 		tableView.reloadData()
+		ProgressHUD.dismiss()
 	}
 }
 

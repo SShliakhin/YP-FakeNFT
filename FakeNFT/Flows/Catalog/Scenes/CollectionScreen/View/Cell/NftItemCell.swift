@@ -1,5 +1,6 @@
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class NftItemCell: UICollectionViewCell {
 	fileprivate static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
@@ -72,7 +73,10 @@ extension NftItemCellModel: ICellViewModel {
 		cell.likeButton.tintColor = isFavorite
 		? Theme.color(usage: .red)
 		: Theme.color(usage: .allDayWhite)
-		cell.likeButton.event = onTapFavorite
+		cell.likeButton.event = {
+			ProgressHUD.show()
+			onTapFavorite?()
+		}
 		cell.ratingView.update(with: rating)
 		cell.titleLabel.text = title
 		cell.priceLabel.text = "\(price) ETN"
@@ -82,7 +86,10 @@ extension NftItemCellModel: ICellViewModel {
 			: Theme.image(kind: .addToCartIcon),
 			for: .normal
 		)
-		cell.cartButton.event = onTapInCart
+		cell.cartButton.event = {
+			ProgressHUD.show()
+			onTapInCart?()
+		}
 	}
 }
 

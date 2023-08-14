@@ -1,5 +1,4 @@
 import Foundation
-import ProgressHUD
 
 // переходы
 enum CatalogEvents {
@@ -76,9 +75,7 @@ extension DefaultCatalogViewModel {
 
 extension DefaultCatalogViewModel {
 	func viewIsReady() {
-		ProgressHUD.show()
 		dependencies.getCollections.invoke { [weak self] result in
-			ProgressHUD.dismiss()
 			switch result {
 			case .success(let collections):
 				self?.items.value = collections
