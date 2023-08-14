@@ -29,7 +29,15 @@ struct CatalogFlow: IFlow {
 	}
 
 	func makeCollectionVCBy(collection: Collection) -> UIViewController {
-		let dep = DefaultCollectionViewModel.Dependencies(collection: collection)
+		let dep = DefaultCollectionViewModel.Dependencies(
+			collection: collection,
+			getAuthor: CatalogUseCaseProvider.instance.getAuthor,
+			getNfts: CatalogUseCaseProvider.instance.getNfts,
+			getLikes: CatalogUseCaseProvider.instance.getLikes,
+			putLikes: CatalogUseCaseProvider.instance.putLikes,
+			getOrder: CatalogUseCaseProvider.instance.getOrder,
+			putOrder: CatalogUseCaseProvider.instance.putOrder
+		)
 		let viewModel = DefaultCollectionViewModel(dep: dep)
 		let view = CollectionViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view] event in

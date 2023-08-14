@@ -1,6 +1,9 @@
 import UIKit
+import Kingfisher
 
 final class NftItemCell: UICollectionViewCell {
+	fileprivate static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
+
 	// MARK: - UI Elements
 
 	fileprivate lazy var avatarImageView: UIImageView = makeAvatarImageView()
@@ -26,19 +29,22 @@ final class NftItemCell: UICollectionViewCell {
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
+
 		avatarImageView.image = nil
 		likeButton.tintColor = Theme.color(usage: .allDayWhite)
 		ratingView.update(with: .zero)
 		titleLabel.text = nil
 		priceLabel.text = nil
 		cartButton.setBackgroundImage(Theme.image(kind: .addToCartIcon), for: .normal)
+
+		avatarImageView.kf.cancelDownloadTask()
 	}
 }
 
 // MARK: - Data model for cell
 
 struct NftItemCellModel {
-	let avatarImageString: String
+	let avatarImageURL: URL?
 	let isFavorite: Bool
 	let rating: Int
 	let title: String
@@ -52,7 +58,17 @@ struct NftItemCellModel {
 
 extension NftItemCellModel: ICellViewModel {
 	func setup(cell: NftItemCell) {
-		cell.avatarImageView.image = UIImage(named: avatarImageString)
+		cell.avatarImageView.kf.setImage(
+			with: avatarImageURL,
+			placeholder: NftItemCell.imagePlaceholder,
+			options: [.transition(.fade(0.2))]
+		) { [weak cell] result in
+			guard let cell = cell else { return }
+			if case .failure = result {
+				cell.avatarImageView.image = NftItemCell.imagePlaceholder
+			}
+		}
+
 		cell.likeButton.tintColor = isFavorite
 		? Theme.color(usage: .red)
 		: Theme.color(usage: .allDayWhite)
@@ -130,6 +146,8 @@ private extension NftItemCell {
 		imageView.layer.cornerRadius = Theme.dimension(kind: .largeRadius)
 		imageView.layer.masksToBounds = true
 
+		imageView.kf.indicatorType = .activity
+
 		return imageView
 	}
 
@@ -165,64 +183,3 @@ private extension NftItemCell {
 		return button
 	}
 }
-
-// MARK: - Preview
-
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-struct NftItemCellPreviews: PreviewProvider {
-	static var previews: some View {
-
-		let view1 = NftItemCell()
-		let view2 = NftItemCell()
-		let view3 = NftItemCell()
-		let model1 = NftItemCellModel(
-			avatarImageString: "Archie",
-			isFavorite: true,
-			rating: 5,
-			title: "Archie",
-			price: 7.74,
-			isInCart: true,
-			onTapFavorite: nil,
-			onTapInCart: nil
-		)
-		let model2 = NftItemCellModel(
-			avatarImageString: "Art",
-			isFavorite: false,
-			rating: 4,
-			title: "Art",
-			price: 0.33,
-			isInCart: false,
-			onTapFavorite: nil,
-			onTapInCart: nil
-		)
-		let model3 = NftItemCellModel(
-			avatarImageString: "Biscuit",
-			isFavorite: false,
-			rating: 4,
-			title: "Biscuit",
-			price: 1.59,
-			isInCart: true,
-			onTapFavorite: nil,
-			onTapInCart: nil
-		)
-		model1.setup(cell: view1)
-		model2.setup(cell: view2)
-		model3.setup(cell: view3)
-
-		return Group {
-			HStack {
-				view1.preview()
-					.frame(width: 108, height: 172)
-
-				view2.preview()
-					.frame(width: 108, height: 172)
-				view3.preview()
-					.frame(width: 108, height: 172)
-			}
-			.preferredColorScheme(.dark)
-			.padding(.vertical, 16)
-		}
-	}
-}
-#endif

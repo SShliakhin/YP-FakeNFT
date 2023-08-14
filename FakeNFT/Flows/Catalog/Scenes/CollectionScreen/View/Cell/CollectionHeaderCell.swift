@@ -1,6 +1,10 @@
 import UIKit
+import Kingfisher
 
 final class CollectionHeaderCell: UICollectionViewCell {
+	fileprivate static let imageWidth = UIScreen.main.bounds.width
+	fileprivate static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
+
 	// MARK: - UI Elements
 
 	fileprivate lazy var coverImageView: UIImageView = makeCoverImageView()
@@ -30,6 +34,8 @@ final class CollectionHeaderCell: UICollectionViewCell {
 		titleLabel.text = nil
 		authorLabel.attributedText = nil
 		descriptionLabel.text = nil
+
+		coverImageView.kf.cancelDownloadTask()
 	}
 }
 
@@ -43,7 +49,7 @@ private extension CollectionHeaderCell {
 // MARK: - Data model for cell
 
 struct CollectionHeaderCellModel {
-	let coverImageString: String
+	let imageURL: URL?
 	let title: String
 	let author: String
 	let description: String
@@ -67,10 +73,22 @@ extension CollectionHeaderCellModel: ICellViewModel {
 			linkText: author
 		)
 
-		let newWidth = UIScreen.main.bounds.width
+		cell.coverImageView.kf.setImage(
+			with: imageURL,
+			placeholder: CollectionHeaderCell.imagePlaceholder,
+			options: [.transition(.fade(0.2))]
+		) { [weak cell] result in
+			guard let cell = cell else { return }
+			switch result {
+			case .success(let value):
+				cell.coverImageView.image = value.image
+					.resize(withWidth: CollectionHeaderCell.imageWidth)
+			case .failure:
+				cell.coverImageView.image = CollectionHeaderCell.imagePlaceholder
+				cell.contentMode = .center
+			}
+		}
 
-		cell.coverImageView.image = UIImage(named: coverImageString)?
-			.resize(withWidth: newWidth)
 		cell.titleLabel.text = title
 		cell.authorLabel.attributedText = makeLinkInsideText(data: data)
 		cell.descriptionLabel.text = description
@@ -113,6 +131,8 @@ private extension CollectionHeaderCell {
 		imageView.layer.cornerRadius = Theme.dimension(kind: .largeRadius)
 		imageView.layer.masksToBounds = true
 
+		imageView.kf.indicatorType = .activity
+
 		return imageView
 	}
 
@@ -143,28 +163,6 @@ private extension CollectionHeaderCell {
 		return label
 	}
 }
-
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-struct CollectionHeaderCellPreviews: PreviewProvider {
-	static var previews: some View {
-
-		let view = CollectionHeaderCell()
-		let model = CollectionHeaderCellModel(
-			coverImageString: "Peach",
-			title: "Peach",
-			author: "John Doe",
-			description: "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей.", // swiftlint:disable:this line_length
-			onTapAuthor: nil
-		)
-		model.setup(cell: view)
-		return Group {
-			view.preview().frame(height: 468)
-		}
-		.preferredColorScheme(.light)
-	}
-}
-#endif
 
 private extension CollectionHeaderCellModel {
 	enum Appearance {

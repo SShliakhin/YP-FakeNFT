@@ -1,4 +1,5 @@
 import Foundation
+import ProgressHUD
 
 enum CollectionSection {
 	case header(Author)
@@ -53,8 +54,16 @@ typealias CollectionViewModel = (
 final class DefaultCollectionViewModel: CollectionViewModel {
 	struct Dependencies {
 		let collection: Collection
-	} // TODO: для зависимостей
+		let getAuthor: GetAuthorUseCase
+		let getNfts: GetNftsUseCase
+		let getLikes: GetLikesUseCase
+		let putLikes: PutLikesUseCase
+		let getOrder: GetOrderUseCase
+		let putOrder: PutOrderUseCase
+	}
 	private let dependencies: Dependencies
+	private var author: Author?
+	private var nfts: [Nft] = []
 
 	// MARK: - INPUT
 	var didSendEventClosure: ((CollectionEvents) -> Void)?
@@ -86,7 +95,7 @@ extension DefaultCollectionViewModel {
 		switch section {
 		case .header(let author):
 			return CollectionHeaderCellModel(
-				coverImageString: dependencies.collection.name,
+				imageURL: dependencies.collection.cover,
 				title: dependencies.collection.name,
 				author: author.name,
 				description: dependencies.collection.description,
@@ -97,7 +106,7 @@ extension DefaultCollectionViewModel {
 		case .list(let list):
 			let nft = list[index]
 			return NftItemCellModel(
-				avatarImageString: nft.name,
+				avatarImageURL: nft.cover,
 				isFavorite: likes.value.contains(nft.id),
 				rating: nft.rating,
 				title: nft.name,
@@ -114,10 +123,21 @@ extension DefaultCollectionViewModel {
 
 extension DefaultCollectionViewModel {
 	func viewIsReady() {
-		// TODO: - заблокировать и сходить в сеть
-		dataSource.value = Appearance.defaultDataSource
-		likes.value = Appearance.defaultLikes
-		order.value = Appearance.defaultOrder
+		ProgressHUD.show()
+
+		let authorID = dependencies.collection.authorID
+
+		let group = DispatchGroup()
+
+		fetchAuthor(group: group, authorID: authorID)
+		fetchNfts(group: group, authorID: authorID)
+		fetchLikes(group: group)
+		fetchOrder(group: group)
+
+		group.notify(queue: .main) {
+			self.makeDataSource()
+			ProgressHUD.dismiss()
+		}
 	}
 
 	func didUserDo(request: CollectionRequest) {
@@ -130,90 +150,110 @@ extension DefaultCollectionViewModel {
 
 private extension DefaultCollectionViewModel {
 	func likeItemWithID(_ nftID: String) {
-		if likes.value.contains(nftID) {
-			likes.value.removeAll { $0 == nftID }
+		ProgressHUD.show()
+		var likes = likes.value
+		if likes.contains(nftID) {
+			likes.removeAll { $0 == nftID }
 		} else {
-			likes.value.append(nftID)
+			likes.append(nftID)
 		}
-		// TODO: - заблокировать, изменить локально и отправить в сеть
+
+		dependencies.putLikes.invoke(likes: .init(nfts: likes)) { [weak self] result in
+			ProgressHUD.dismiss()
+			switch result {
+			case .success(let likes):
+				self?.likes.value = likes.nfts
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+		}
 	}
 
 	func addToCartItemWithID(_ nftID: String) {
-		if order.value.contains(nftID) {
-			order.value.removeAll { $0 == nftID }
+		ProgressHUD.show()
+		var order = order.value
+		if order.contains(nftID) {
+			order.removeAll { $0 == nftID }
 		} else {
-			order.value.append(nftID)
+			order.append(nftID)
 		}
-		// TODO: - заблокировать, изменить локально и отправить в сеть
+
+		dependencies.putOrder.invoke(order: .init(nfts: order)) { [weak self] result in
+			ProgressHUD.dismiss()
+			switch result {
+			case .success(let order):
+				self?.order.value = order.nfts
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+		}
 	}
 }
 
-// MARK: - Section
 private extension DefaultCollectionViewModel {
-	enum Appearance {
-		static let defaultLikes: [String] = ["49", "51", "53"]
-		static let defaultOrder: [String] = ["50", "51", "54"]
-		static let defaultDataSource: [CollectionSection] =
-		[
+	func makeDataSource() {
+		guard let author = author else { return }
+		dataSource.value = [
 			CollectionSection.header(
 				.init(
-					id: "6",
-					name: "Cole Edwards",
-					website: URL(string: "https://practicum.yandex.ru/middle-frontend/")
+					id: author.id,
+					name: author.name,
+					website: author.website
 				)
 			),
-			CollectionSection.list(
-				[
-					.init(
-						id: "49",
-						name: "Archie",
-						description: "",
-						rating: 5,
-						images: [],
-						price: 7.74
-					),
-					.init(
-						id: "50",
-						name: "Art",
-						description: "",
-						rating: 4,
-						images: [],
-						price: 0.33
-					),
-					.init(
-						id: "51",
-						name: "Biscuit",
-						description: "",
-						rating: 4,
-						images: [],
-						price: 1.59
-					),
-					.init(
-						id: "52",
-						name: "Daisy",
-						description: "",
-						rating: 5,
-						images: [],
-						price: 1.38
-					),
-					.init(
-						id: "54",
-						name: "Oreo",
-						description: "",
-						rating: 3,
-						images: [],
-						price: 7.06
-					),
-					.init(
-						id: "53",
-						name: "Nacho",
-						description: "",
-						rating: 2,
-						images: [],
-						price: 3.72
-					)
-				]
-			)
+			CollectionSection.list(nfts)
 		]
+	}
+
+	func fetchAuthor(group: DispatchGroup, authorID: String) {
+		group.enter()
+		dependencies.getAuthor.invoke(userID: authorID) { [weak self] result in
+			switch result {
+			case .success(let author):
+				self?.author = author
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+			group.leave()
+		}
+	}
+
+	func fetchNfts(group: DispatchGroup, authorID: String) {
+		group.enter()
+		dependencies.getNfts.invoke(authorID: authorID) { [weak self] result in
+			switch result {
+			case .success(let nfts):
+				self?.nfts = nfts
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+			group.leave()
+		}
+	}
+
+	func fetchLikes(group: DispatchGroup) {
+		group.enter()
+		dependencies.getLikes.invoke { [weak self] result in
+			switch result {
+			case .success(let likes):
+				self?.likes.value = likes.nfts
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+			group.leave()
+		}
+	}
+
+	func fetchOrder(group: DispatchGroup) {
+		group.enter()
+		dependencies.getOrder.invoke { [weak self] result in
+			switch result {
+			case .success(let order):
+				self?.order.value = order.nfts
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+			group.leave()
+		}
 	}
 }

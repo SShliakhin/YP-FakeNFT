@@ -31,7 +31,7 @@ typealias WebViewModel = (
 final class DefaultWebViewModel: WebViewModel {
 	struct Dependencies {
 		let url: URL
-	} // TODO: для зависимостей
+	}
 	private let dependencies: Dependencies
 
 	// MARK: - INPUT
