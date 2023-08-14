@@ -115,6 +115,7 @@ private extension CatalogViewController {
 		let tableView = UITableView()
 
 		tableView.register(models: viewModel.cellModels)
+		tableView.rowHeight = 187.0
 
 		tableView.dataSource = self
 		tableView.delegate = self

@@ -71,7 +71,7 @@ private extension CollectionItemCell {
 			]
 		}
 		contentView.addSubview(vStack)
-		vStack.makeEqualToSuperview(insets: .init(top: 0, left: 16, bottom: 20, right: 16))
+		vStack.makeEqualToSuperview(insets: .init(top: 0, left: 16, bottom: 21, right: 16))
 	}
 }
 
@@ -108,7 +108,7 @@ struct CatalogItemCellPreviews: PreviewProvider {
 
 		return Group {
 			VStack(spacing: 0) {
-				cell.preview().frame(height: 186)
+				cell.preview().frame(height: 187)
 			}
 		}
 	}
