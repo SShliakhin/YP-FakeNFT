@@ -1,4 +1,5 @@
 import Foundation
+import ProgressHUD
 
 // переходы
 enum CatalogEvents {
@@ -37,7 +38,9 @@ typealias CatalogViewModel = (
 )
 
 final class DefaultCatalogViewModel: CatalogViewModel {
-	struct Dependencies {} // TODO: для зависимостей
+	struct Dependencies {
+		let getCollections: GetCollectionsUseCase
+	}
 	private let dependencies: Dependencies
 
 	// MARK: - INPUT
@@ -63,8 +66,8 @@ extension DefaultCatalogViewModel {
 		let item = items.value[index]
 
 		return CollectionItemCellModel(
-			image: item.name, // TODO: заменить на URL в cover
-			description: "\(item.name) (\(item.authorID))" // TODO: заменить на "\(item.name) (\(item.nftsCount))"
+			imageURL: item.cover,
+			description: "\(item.name) (\(item.nftsCount))"
 		)
 	}
 }
@@ -73,8 +76,16 @@ extension DefaultCatalogViewModel {
 
 extension DefaultCatalogViewModel {
 	func viewIsReady() {
-		// TODO: - заблокировать и сходить в сеть
-		items.value = CollectionItemCellModel.domainCollections
+		ProgressHUD.show()
+		dependencies.getCollections.invoke { [weak self] result in
+			ProgressHUD.dismiss()
+			switch result {
+			case .success(let collections):
+				self?.items.value = collections
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+		}
 	}
 
 	func didUserDo(request: CatalogRequest) {
@@ -96,7 +107,7 @@ private extension DefaultCatalogViewModel {
 		case .name:
 			items.value = items.value.sorted { $0.name < $1.name }
 		case .nftsCount:
-			items.value = items.value.sorted { $0.authorID < $1.authorID } // TODO: заменить на $0.nftsCount > $1.nftsCount
+			items.value = items.value.sorted { $0.nftsCount > $1.nftsCount }
 		}
 	}
 }

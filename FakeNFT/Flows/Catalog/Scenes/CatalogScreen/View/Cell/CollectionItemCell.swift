@@ -1,8 +1,12 @@
 import UIKit
+import Kingfisher
 
 final class CollectionItemCell: UITableViewCell {
+	fileprivate static let imageWidth = UIScreen.main.bounds.width - 32
+	fileprivate static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
+
 	// MARK: - UI Elements
-	fileprivate lazy var coverImageView: UIImageView = makeCoverImageView()
+	lazy var coverImageView: UIImageView = makeCoverImageView()
 	fileprivate lazy var descriptionLabel: UILabel = makeDescriptionLabel()
 
 	// MARK: - Inits
@@ -25,13 +29,15 @@ final class CollectionItemCell: UITableViewCell {
 
 		coverImageView.image = nil
 		descriptionLabel.text = nil
+
+		coverImageView.kf.cancelDownloadTask()
 	}
 }
 
 // MARK: - Data model for cell
 
 struct CollectionItemCellModel {
-	let image: String
+	let imageURL: URL?
 	let description: String
 }
 
@@ -39,11 +45,23 @@ struct CollectionItemCellModel {
 
 extension CollectionItemCellModel: ICellViewModel {
 	func setup(cell: CollectionItemCell) {
-		let newWidth = UIScreen.main.bounds.width - 32
 
-		cell.coverImageView.image = UIImage(named: image)?
-			.resize(withWidth: newWidth)
 		cell.descriptionLabel.text = description
+		cell.coverImageView.kf.setImage(
+			with: imageURL,
+			placeholder: CollectionItemCell.imagePlaceholder,
+			options: [.transition(.fade(0.2))]
+		) { [weak cell] result in
+			guard let cell = cell else { return }
+			switch result {
+			case .success(let value):
+				cell.coverImageView.image = value.image
+					.resize(withWidth: CollectionItemCell.imageWidth)
+			case .failure:
+				cell.coverImageView.image = CollectionItemCell.imagePlaceholder
+				cell.contentMode = .center
+			}
+		}
 	}
 }
 
@@ -53,25 +71,15 @@ private extension CollectionItemCell {
 		contentView.backgroundColor = Theme.color(usage: .white)
 	}
 	func setConstraints() {
-		let vStack = UIStackView()
+		let vStack = UIStackView(arrangedSubviews: [coverImageView, descriptionLabel])
 		vStack.axis = .vertical
 		vStack.spacing = Theme.spacing(usage: .standardHalf)
-		[
-			coverImageView,
-			descriptionLabel
-		].forEach { vStack.addArrangedSubview($0) }
-		coverImageView.makeConstraints { make in
-			[
-				make.heightAnchor.constraint(equalToConstant: 140)
-			]
-		}
-		descriptionLabel.makeConstraints { make in
-			[
-				make.heightAnchor.constraint(equalToConstant: 22)
-			]
-		}
+
+		coverImageView.makeConstraints { [$0.heightAnchor.constraint(equalToConstant: 140)] }
+		descriptionLabel.makeConstraints { [$0.heightAnchor.constraint(equalToConstant: 22)] }
+
 		contentView.addSubview(vStack)
-		vStack.makeEqualToSuperview(insets: .init(top: 0, left: 16, bottom: 21, right: 16))
+		vStack.makeEqualToSuperview(insets: .init(top: .zero, left: 16, bottom: 21, right: 16))
 	}
 }
 
@@ -83,6 +91,8 @@ private extension CollectionItemCell {
 		imageView.layer.cornerRadius = Theme.dimension(kind: .largeRadius)
 		imageView.layer.masksToBounds = true
 
+		imageView.kf.indicatorType = .activity
+
 		return imageView
 	}
 	func makeDescriptionLabel() -> UILabel {
@@ -92,75 +102,4 @@ private extension CollectionItemCell {
 
 		return label
 	}
-}
-
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-struct CatalogItemCellPreviews: PreviewProvider {
-	static func makeCell(model: CollectionItemCellModel) -> UIView {
-		let cell = CollectionItemCell()
-		model.setup(cell: cell)
-		return cell
-	}
-	static var previews: some View {
-		let model = CollectionItemCellModel(image: "Peach", description: "Peach (11)")
-		let cell = makeCell(model: model)
-
-		return Group {
-			VStack(spacing: 0) {
-				cell.preview().frame(height: 187)
-			}
-		}
-	}
-}
-#endif
-
-extension CollectionItemCellModel {
-	static let defaultCollections: [CollectionItemCellModel] =
-	[
-		.init(image: "Beige", description: "Beige (21)"),
-		.init(image: "Blue", description: "Blue (5)"),
-		.init(image: "Gray", description: "Gray (19)"),
-		.init(image: "Green", description: "Green (3)"),
-		.init(image: "Peach", description: "Peach (11)"),
-		.init(image: "Pink", description: "Pink (14)"),
-		.init(image: "White", description: "White (7)"),
-		.init(image: "Yellow", description: "Yellow (8)"),
-		.init(image: "Brown", description: "Brown (7)")
-	]
-
-	static let domainCollections: [Collection] = [
-		.init(
-			id: "1",
-			name: "Beige",
-			description: "A series of one-of-a-kind NFTs featuring historic moments in sports history.",
-			cover: nil,
-			nfts: [],
-			authorID: "6"
-		),
-		.init(
-			id: "2",
-			name: "Blue",
-			description: "A collection of virtual trading cards featuring popular characters from movies and TV shows.",
-			cover: nil,
-			nfts: [],
-			authorID: "9"
-		),
-		.init(
-			id: "3",
-			name: "Gray",
-			description: "A set of limited edition digital stamps featuring famous landmarks from around the world.",
-			cover: nil,
-			nfts: [],
-			authorID: "12"
-		),
-		.init(
-			id: "4",
-			name: "Green",
-			description: "A collection of unique 3D sculptures that can be displayed in virtual reality.",
-			cover: nil,
-			nfts: [],
-			authorID: "15"
-		)
-	]
 }

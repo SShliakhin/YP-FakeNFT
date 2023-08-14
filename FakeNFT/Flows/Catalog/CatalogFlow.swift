@@ -6,7 +6,9 @@ struct CatalogFlow: IFlow {
 	}
 
 	func showCatalogOfCollections() -> UIViewController {
-		let dep = DefaultCatalogViewModel.Dependencies()
+		let dep = DefaultCatalogViewModel.Dependencies(
+			getCollections: CatalogUseCaseProvider.instance.getCollections
+		)
 		let viewModel = DefaultCatalogViewModel(dep: dep)
 		let view = CatalogViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view, viewModel] event in
