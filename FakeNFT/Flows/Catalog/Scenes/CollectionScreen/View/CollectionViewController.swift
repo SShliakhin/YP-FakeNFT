@@ -32,13 +32,13 @@ final class CollectionViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.navigationController?.setNavigationBarHidden(true, animated: animated)
+		hideNavTabBars(animated)
 		collectionView.setContentOffset(CGPoint(x: .zero, y: -collectionView.contentInset.top), animated: false)
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		self.navigationController?.setNavigationBarHidden(false, animated: animated)
+		showNavTabBars(animated)
 	}
 }
 
@@ -128,11 +128,11 @@ private extension CollectionViewController {
 		)
 
 		collectionView.register(models: viewModel.cellModels)
-
 		collectionView.dataSource = self
 
 		collectionView.backgroundColor = .clear
-		collectionView.bounces = false
+
+		collectionView.contentInsetAdjustmentBehavior = .never
 
 		return collectionView
 	}
