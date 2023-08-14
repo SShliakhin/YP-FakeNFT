@@ -64,9 +64,9 @@ private extension TabbarPage {
 		static let shoppingCartTabTitle = "Корзина"
 		static let statisticsTabTitle = "Статистика"
 
-		static let tabProfileIcon = UIImage(systemName: "person.crop.circle.fill") ?? UIImage()
-		static let tabCatalogIcon = UIImage(systemName: "rectangle.stack.fill") ?? UIImage()
-		static let tabShoppingCartIcon = UIImage(systemName: "bag.fill") ?? UIImage()
-		static let tabStatsIcon = UIImage(systemName: "flag.2.crossed.fill") ?? UIImage()
+		static let tabProfileIcon = Theme.image(kind: .profileIcon)
+		static let tabCatalogIcon = Theme.image(kind: .catalogIcon)
+		static let tabShoppingCartIcon = Theme.image(kind: .bagIcon)
+		static let tabStatsIcon = Theme.image(kind: .statisticsIcon)
 	}
 }

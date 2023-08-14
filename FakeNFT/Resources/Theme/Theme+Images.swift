@@ -8,6 +8,10 @@ extension Theme {
 		case deleteFromCartIcon
 		case star
 		case heart
+		case bagIcon
+		case statisticsIcon
+		case catalogIcon
+		case profileIcon
 	}
 
 	static func image(kind: ImageAsset) -> UIImage {
