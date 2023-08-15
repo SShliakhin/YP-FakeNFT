@@ -18,7 +18,7 @@ final class CatalogUseCaseProvider {
 	}()
 
 	lazy var getAuthor: GetAuthorUseCase = {
-		.init(apiClient: serviceProvider.apiClient)
+		GetAuthorUseCaseImp(apiClient: serviceProvider.apiClient)
 	}()
 
 	lazy var getLikes: GetLikesUseCase = {
