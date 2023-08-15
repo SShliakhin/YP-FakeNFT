@@ -164,11 +164,13 @@ private extension DefaultCollectionViewModel {
 		}
 
 		dependencies.putLikes.invoke(likes: .init(nfts: likes)) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let likes):
-				self?.likes.value = likes.nfts
+				self.likes.value = likes.nfts
 			case .failure(let error):
-				print(error.localizedDescription)
+				self.likes.value = self.likes.value
+				self.didSendEventClosure?(.showErrorAlert(error.description))
 			}
 		}
 	}
@@ -182,11 +184,13 @@ private extension DefaultCollectionViewModel {
 		}
 
 		dependencies.putOrder.invoke(order: .init(nfts: order)) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let order):
-				self?.order.value = order.nfts
+				self.order.value = order.nfts
 			case .failure(let error):
-				print(error.localizedDescription)
+				self.order.value = self.order.value
+				self.didSendEventClosure?(.showErrorAlert(error.description))
 			}
 		}
 	}

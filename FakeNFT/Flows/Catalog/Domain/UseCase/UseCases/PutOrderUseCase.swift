@@ -1,6 +1,10 @@
 import Foundation
 
-final class PutOrderUseCase {
+protocol PutOrderUseCase {
+	func invoke(order: NftIDs, completion: @escaping (Result<NftIDs, CatalogError>) -> Void)
+}
+
+final class PutOrderUseCaseImp: PutOrderUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
 
@@ -8,7 +12,7 @@ final class PutOrderUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(order: NftIDs, completion: @escaping (Result<NftIDs, APIError>) -> Void) {
+	func invoke(order: NftIDs, completion: @escaping (Result<NftIDs, CatalogError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -23,11 +27,15 @@ final class PutOrderUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let orderDTO):
-				let order = orderDTO.nfts ?? []
-				completion(.success(.init(nfts: order)))
+				let orderDTO = orderDTO.nfts ?? []
+				if orderDTO == order.nfts {
+					completion(.success(.init(nfts: orderDTO)))
+				} else {
+					completion(.failure(.brokenOrder))
+				}
 				self.task = nil
 			case .failure(let error):
-				completion(.failure(error))
+				completion(.failure(.apiError(error)))
 			}
 		}
 	}

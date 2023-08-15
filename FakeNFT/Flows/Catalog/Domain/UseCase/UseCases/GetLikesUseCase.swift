@@ -1,6 +1,10 @@
 import Foundation
 
-final class GetLikesUseCase {
+protocol GetLikesUseCase {
+	func invoke(completion: @escaping (Result<NftIDs, APIError>) -> Void)
+}
+
+final class GetLikesUseCaseImp: GetLikesUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
 

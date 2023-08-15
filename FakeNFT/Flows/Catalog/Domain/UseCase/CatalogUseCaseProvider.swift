@@ -22,19 +22,19 @@ final class CatalogUseCaseProvider {
 	}()
 
 	lazy var getLikes: GetLikesUseCase = {
-		.init(apiClient: serviceProvider.apiClient)
+		GetLikesUseCaseImp(apiClient: serviceProvider.apiClient)
 	}()
 
 	lazy var putLikes: PutLikesUseCase = {
-		.init(apiClient: serviceProvider.apiClient)
+		PutLikesUseCaseImp(apiClient: serviceProvider.apiClient)
 	}()
 
 	lazy var getOrder: GetOrderUseCase = {
-		.init(apiClient: serviceProvider.apiClient)
+		GetOrderUseCaseImp(apiClient: serviceProvider.apiClient)
 	}()
 
 	lazy var putOrder: PutOrderUseCase = {
-		.init(apiClient: serviceProvider.apiClient)
+		PutOrderUseCaseImp(apiClient: serviceProvider.apiClient)
 	}()
 
 	lazy var getSetSortCollectionsOption: SortCollectionsOption = {

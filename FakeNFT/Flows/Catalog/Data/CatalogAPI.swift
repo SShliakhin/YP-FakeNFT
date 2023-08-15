@@ -64,17 +64,21 @@ extension CatalogAPI: API {
 }
 
 enum CatalogError: Error {
+	case apiError(APIError)
 	case noCollections
 	case noAuthorByID(String)
 	case noNfts
 	case noNftsByAuthorID(String)
 	case noNftByID(String)
-	case apiError(APIError)
+	case brokenLikes
+	case brokenOrder
 }
 
 extension CatalogError: CustomStringConvertible {
 	private var localizedDescription: String {
 		switch self {
+		case .apiError(let apiError):
+			return apiError.description
 		case .noCollections:
 			return Appearance.noCollection
 		case .noNfts:
@@ -85,8 +89,10 @@ extension CatalogError: CustomStringConvertible {
 			return String(format: Appearance.noNftByID, id)
 		case .noAuthorByID(let id):
 			return String(format: Appearance.noAuthorByID, id)
-		case .apiError(let apiError):
-			return apiError.description
+		case .brokenLikes:
+			return Appearance.brokenLikes
+		case .brokenOrder:
+			return Appearance.brokenOrder
 		}
 	}
 
@@ -102,5 +108,7 @@ private extension CatalogError {
 		static let noNftsByAuthorID = "Nfts по автору с id %@ не получены."
 		static let noNftByID = "Nft с id %@ не получен."
 		static let noAuthorByID = "Автор с id %@ не получен."
+		static let brokenLikes = "Лайки сломаны."
+		static let brokenOrder = "Заказ сломан"
 	}
 }

@@ -1,6 +1,10 @@
 import Foundation
 
-final class GetOrderUseCase {
+protocol GetOrderUseCase {
+	func invoke(completion: @escaping (Result<NftIDs, APIError>) -> Void)
+}
+
+final class GetOrderUseCaseImp: GetOrderUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
 

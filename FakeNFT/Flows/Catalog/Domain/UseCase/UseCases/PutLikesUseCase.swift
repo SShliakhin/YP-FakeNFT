@@ -1,6 +1,10 @@
 import Foundation
 
-final class PutLikesUseCase {
+protocol PutLikesUseCase {
+	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, CatalogError>) -> Void)
+}
+
+final class PutLikesUseCaseImp: PutLikesUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
 
@@ -8,7 +12,7 @@ final class PutLikesUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, APIError>) -> Void) {
+	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, CatalogError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -23,11 +27,15 @@ final class PutLikesUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let profileDTO):
-				let likes = profileDTO.likes ?? []
-				completion(.success(.init(nfts: likes)))
+				let likesDTO = profileDTO.likes ?? []
+				if likesDTO == likes.nfts {
+					completion(.success(.init(nfts: likesDTO)))
+				} else {
+					completion(.failure(.brokenLikes))
+				}
 				self.task = nil
 			case .failure(let error):
-				completion(.failure(error))
+				completion(.failure(.apiError(error)))
 			}
 		}
 	}
