@@ -1,33 +1,7 @@
 import Foundation
 
 protocol GetCollectionsUseCase {
-	func invoke(completion: @escaping (Result<[Collection], GetCollectionsError>) -> Void)
-}
-
-enum GetCollectionsError: Error {
-	case noCollections
-	case apiError(APIError)
-}
-
-extension GetCollectionsError: CustomStringConvertible {
-	private var localizedDescription: String {
-		switch self {
-		case .noCollections:
-			return Appearance.noCollection
-		case .apiError(let apiError):
-			return apiError.description
-		}
-	}
-
-	var description: String {
-		localizedDescription
-	}
-}
-
-private extension GetCollectionsError {
-	enum Appearance {
-		static let noCollection = "Коллекции не получены."
-	}
+	func invoke(completion: @escaping (Result<[Collection], CatalogError>) -> Void)
 }
 
 final class GetCollectionsUseCaseImp: GetCollectionsUseCase {
@@ -38,7 +12,7 @@ final class GetCollectionsUseCaseImp: GetCollectionsUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(completion: @escaping (Result<[Collection], GetCollectionsError>) -> Void) {
+	func invoke(completion: @escaping (Result<[Collection], CatalogError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 

@@ -62,3 +62,45 @@ extension CatalogAPI: API {
 		}
 	}
 }
+
+enum CatalogError: Error {
+	case noCollections
+	case noAuthorByID(String)
+	case noNfts
+	case noNftsByAuthorID(String)
+	case noNftByID(String)
+	case apiError(APIError)
+}
+
+extension CatalogError: CustomStringConvertible {
+	private var localizedDescription: String {
+		switch self {
+		case .noCollections:
+			return Appearance.noCollection
+		case .noNfts:
+			return Appearance.noNfts
+		case .noNftsByAuthorID(let authorID):
+			return String(format: Appearance.noNftsByAuthorID, authorID)
+		case .noNftByID(let id):
+			return String(format: Appearance.noNftByID, id)
+		case .noAuthorByID(let id):
+			return String(format: Appearance.noAuthorByID, id)
+		case .apiError(let apiError):
+			return apiError.description
+		}
+	}
+
+	var description: String {
+		localizedDescription
+	}
+}
+
+private extension CatalogError {
+	enum Appearance {
+		static let noCollection = "Коллекции не получены."
+		static let noNfts = "Nfts не получены."
+		static let noNftsByAuthorID = "Nfts по автору с id %@ не получены."
+		static let noNftByID = "Nft с id %@ не получен."
+		static let noAuthorByID = "Автор с id %@ не получен."
+	}
+}
