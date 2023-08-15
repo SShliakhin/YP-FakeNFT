@@ -2,7 +2,6 @@ import UIKit
 import WebKit
 
 final class WebViewController: UIViewController, WKNavigationDelegate {
-
 	private let viewModel: WebViewModel
 
 	// MARK: - UI Elements
@@ -33,11 +32,17 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+
 		hideNavTabBars(animated)
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+
+		if webView.isLoading {
+			webView.stopLoading()
+		}
+
 		showNavTabBars(animated)
 	}
 }
@@ -101,7 +106,9 @@ private extension WebViewController {
 		// избегаю эффекта резинки - не нравится в темной теме белый фон
 		webView.scrollView.bounces = false
 		// но на нижней границе только так
-		webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 1, right: 0)
+		webView.scrollView.contentInset = UIEdgeInsets(
+			top: .zero, left: .zero, bottom: 1, right: .zero
+		)
 
 		return webView
 	}
