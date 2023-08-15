@@ -77,12 +77,16 @@ extension DefaultCatalogViewModel {
 
 extension DefaultCatalogViewModel {
 	func viewIsReady() {
-		dependencies.getCollections.invoke { [weak self] result in
+		let sortBy = dependencies.getSetSortOption.sortBy
+		dependencies.getCollections.invoke(sortBy: sortBy) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let collections):
 				self.items.value = collections
-				self.sortCollections()
+				if sortBy != .name {
+					// сортировка на сервере возможна только по имени
+					self.sortCollections()
+				}
 			case .failure(let error):
 				self.items.value = []
 				self.didSendEventClosure?(.showErrorAlert(error.description))

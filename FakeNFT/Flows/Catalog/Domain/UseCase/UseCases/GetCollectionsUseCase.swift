@@ -1,7 +1,7 @@
 import Foundation
 
 protocol GetCollectionsUseCase {
-	func invoke(completion: @escaping (Result<[Collection], CatalogError>) -> Void)
+	func invoke(sortBy: SortCollectionsBy, completion: @escaping (Result<[Collection], CatalogError>) -> Void)
 }
 
 final class GetCollectionsUseCaseImp: GetCollectionsUseCase {
@@ -12,11 +12,11 @@ final class GetCollectionsUseCaseImp: GetCollectionsUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(completion: @escaping (Result<[Collection], CatalogError>) -> Void) {
+	func invoke(sortBy: SortCollectionsBy, completion: @escaping (Result<[Collection], CatalogError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.getCollections
+		let resource = CatalogAPI.getCollections(sortBy)
 		let request = Request(endpoint: resource.url)
 
 		task = network.send(request) { [weak self] ( result: Result<[CollectionDTO], APIError>) in

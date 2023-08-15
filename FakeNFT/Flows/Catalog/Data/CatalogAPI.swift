@@ -9,7 +9,7 @@ enum CatalogAPI {
 		case baseURLString = "64d15caaff953154bb7a4558.mockapi.io"
 	}
 
-	case getCollections
+	case getCollections(SortCollectionsBy)
 	case getCollection(String)
 	case getNFTs
 	case getNFT(String)
@@ -53,6 +53,16 @@ extension CatalogAPI: API {
 
 	var parameters: [URLQueryItem]? {
 		switch self {
+		case .getCollections(let sortBy):
+			switch sortBy {
+			case .name:
+				return [
+					URLQueryItem(name: "sortBy", value: "name"),
+					URLQueryItem(name: "order", value: "asc")
+				]
+			case .nftsCount:
+				return nil
+			}
 		case .getNFTsByAuthor(let id):
 			return [
 				URLQueryItem(name: "author", value: id)
