@@ -14,7 +14,7 @@ final class CatalogUseCaseProvider {
 	}()
 
 	lazy var getNfts: GetNftsUseCase = {
-		.init(apiClient: serviceProvider.apiClient)
+		GetNftsUseCaseImp(apiClient: serviceProvider.apiClient)
 	}()
 
 	lazy var getAuthor: GetAuthorUseCase = {

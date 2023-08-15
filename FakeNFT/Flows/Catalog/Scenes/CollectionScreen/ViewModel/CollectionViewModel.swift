@@ -16,6 +16,7 @@ enum CollectionSection {
 
 // переходы
 enum CollectionEvents {
+	case showErrorAlert(String)
 	case close
 	case showAuthorSite(URL?)
 }
@@ -63,6 +64,7 @@ final class DefaultCollectionViewModel: CollectionViewModel {
 	private let dependencies: Dependencies
 	private var author: Author?
 	private var nfts: [Nft] = []
+	private var errors: [String] = []
 
 	// MARK: - INPUT
 	var didSendEventClosure: ((CollectionEvents) -> Void)?
@@ -123,6 +125,7 @@ extension DefaultCollectionViewModel {
 extension DefaultCollectionViewModel {
 	func viewIsReady() {
 		let authorID = dependencies.collection.authorID
+		errors = []
 
 		let group = DispatchGroup()
 
@@ -133,6 +136,13 @@ extension DefaultCollectionViewModel {
 
 		group.notify(queue: .main) {
 			self.makeDataSource()
+			if self.dataSource.value.isEmpty {
+				self.dataSource.value = []
+			}
+			if !self.errors.isEmpty {
+				let message = self.errors.joined(separator: "\n")
+				self.didSendEventClosure?(.showErrorAlert(message))
+			}
 		}
 	}
 
@@ -204,6 +214,7 @@ private extension DefaultCollectionViewModel {
 			case .success(let author):
 				self?.author = author
 			case .failure(let error):
+				self?.errors.append(error.description)
 				print(error.localizedDescription)
 			}
 			group.leave()
@@ -217,6 +228,7 @@ private extension DefaultCollectionViewModel {
 			case .success(let nfts):
 				self?.nfts = nfts
 			case .failure(let error):
+				self?.errors.append(error.description)
 				print(error.localizedDescription)
 			}
 			group.leave()
@@ -230,6 +242,7 @@ private extension DefaultCollectionViewModel {
 			case .success(let likes):
 				self?.likes.value = likes.nfts
 			case .failure(let error):
+				self?.errors.append(error.description)
 				print(error.localizedDescription)
 			}
 			group.leave()
@@ -243,6 +256,7 @@ private extension DefaultCollectionViewModel {
 			case .success(let order):
 				self?.order.value = order.nfts
 			case .failure(let error):
+				self?.errors.append(error.description)
 				print(error.localizedDescription)
 			}
 			group.leave()

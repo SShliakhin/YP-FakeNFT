@@ -46,6 +46,9 @@ struct CatalogFlow: IFlow {
 		let view = CollectionViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view] event in
 			switch event {
+			case .showErrorAlert(let message):
+				let alert = makeErrorAlertVC(message: message)
+				view?.present(alert, animated: true)
 			case .close:
 				view?.navigationController?.popViewController(animated: true)
 			case .showAuthorSite(let url):
