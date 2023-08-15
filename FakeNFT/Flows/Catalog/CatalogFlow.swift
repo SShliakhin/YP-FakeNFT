@@ -7,7 +7,8 @@ struct CatalogFlow: IFlow {
 
 	func showCatalogOfCollections() -> UIViewController {
 		let dep = DefaultCatalogViewModel.Dependencies(
-			getCollections: CatalogUseCaseProvider.instance.getCollections
+			getCollections: CatalogUseCaseProvider.instance.getCollections,
+			getSetSortOption: CatalogUseCaseProvider.instance.getSetSortCollectionsOption
 		)
 		let viewModel = DefaultCatalogViewModel(dep: dep)
 		let view = CatalogViewController(viewModel: viewModel)
@@ -71,7 +72,10 @@ struct CatalogFlow: IFlow {
 		return view
 	}
 
-	func makeSortAlertVC(sortCases: [SortBy], completion: @escaping (SortBy) -> Void) -> UIViewController {
+	func makeSortAlertVC(
+		sortCases: [SortCollectionsBy],
+		completion: @escaping (SortCollectionsBy) -> Void
+	) -> UIViewController {
 		let alert = UIAlertController(
 			title: Appearance.alertTitle,
 			message: nil,

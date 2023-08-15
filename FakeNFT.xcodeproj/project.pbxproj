@@ -57,8 +57,9 @@
 		5A0823AC2A82DD850047A8AC /* CollectionItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0823AB2A82DD850047A8AC /* CollectionItemCell.swift */; };
 		5A0823AE2A83C2190047A8AC /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0823AD2A83C2190047A8AC /* RatingView.swift */; };
 		5A3ED4B22A89FD6E003E367D /* UIViewController+Bars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */; };
+		5A3ED4B42A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B32A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift */; };
 		5A51DA022A8570D700235E7D /* CatalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA012A8570D700235E7D /* CatalogViewModel.swift */; };
-		5A51DA062A85C3CA00235E7D /* SortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA052A85C3CA00235E7D /* SortBy.swift */; };
+		5A51DA062A85C3CA00235E7D /* SortCollectionsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */; };
 		5A51DA102A85DA0E00235E7D /* NftItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA0F2A85DA0E00235E7D /* NftItemCell.swift */; };
 		5A51DA132A86209400235E7D /* CollectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA122A86209400235E7D /* CollectionHeaderCell.swift */; };
 		5A51DA152A86C2F500235E7D /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA142A86C2F500235E7D /* CollectionViewController.swift */; };
@@ -162,8 +163,9 @@
 		5A0823AB2A82DD850047A8AC /* CollectionItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItemCell.swift; sourceTree = "<group>"; };
 		5A0823AD2A83C2190047A8AC /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Bars.swift"; sourceTree = "<group>"; };
+		5A3ED4B32A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSetSortCollectionsOptionUseCase.swift; sourceTree = "<group>"; };
 		5A51DA012A8570D700235E7D /* CatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewModel.swift; sourceTree = "<group>"; };
-		5A51DA052A85C3CA00235E7D /* SortBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortBy.swift; sourceTree = "<group>"; };
+		5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCollectionsBy.swift; sourceTree = "<group>"; };
 		5A51DA0F2A85DA0E00235E7D /* NftItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftItemCell.swift; sourceTree = "<group>"; };
 		5A51DA122A86209400235E7D /* CollectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionHeaderCell.swift; sourceTree = "<group>"; };
 		5A51DA142A86C2F500235E7D /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 				5AAB67832A81D9D800E95CB2 /* PutLikesUseCase.swift */,
 				5AAB67812A81D45B00E95CB2 /* GetOrderUseCase.swift */,
 				5AAB67852A81F1F400E95CB2 /* PutOrderUseCase.swift */,
+				5A3ED4B32A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -572,7 +575,7 @@
 				5AAB67732A8132AF00E95CB2 /* Nft.swift */,
 				5AAB67752A81435700E95CB2 /* Author.swift */,
 				5AAB67772A81462200E95CB2 /* NftIDs.swift */,
-				5A51DA052A85C3CA00235E7D /* SortBy.swift */,
+				5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -772,6 +775,7 @@
 				5A04699B2A7BC59C0026D783 /* IFlow.swift in Sources */,
 				5A0469932A7ABE610026D783 /* MainTabBarController.swift in Sources */,
 				5A51DA152A86C2F500235E7D /* CollectionViewController.swift in Sources */,
+				5A3ED4B42A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift in Sources */,
 				5AAB67692A812C7C00E95CB2 /* OrderDTO.swift in Sources */,
 				5AAB67822A81D45B00E95CB2 /* GetOrderUseCase.swift in Sources */,
 				5A0469822A7ABCC50026D783 /* ILoadWithIndicator.swift in Sources */,
@@ -817,7 +821,7 @@
 				5A04696F2A7ABCC50026D783 /* Request.swift in Sources */,
 				5AAB67672A812A6700E95CB2 /* UserDTO.swift in Sources */,
 				5A0823AE2A83C2190047A8AC /* RatingView.swift in Sources */,
-				5A51DA062A85C3CA00235E7D /* SortBy.swift in Sources */,
+				5A51DA062A85C3CA00235E7D /* SortCollectionsBy.swift in Sources */,
 				5A0469792A7ABCC50026D783 /* Array+Extensions.swift in Sources */,
 				5A04696C2A7ABCC50026D783 /* APIClient.swift in Sources */,
 				5A04696D2A7ABCC50026D783 /* DataConvert.swift in Sources */,

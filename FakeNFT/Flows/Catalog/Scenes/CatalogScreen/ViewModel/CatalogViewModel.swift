@@ -9,7 +9,7 @@ enum CatalogEvents {
 // действия пользователя
 enum CatalogRequest {
 	case selectSort
-	case selectSortBy(SortBy)
+	case selectSortBy(SortCollectionsBy)
 	case selectItemAtIndex(Int)
 }
 
@@ -39,6 +39,7 @@ typealias CatalogViewModel = (
 final class DefaultCatalogViewModel: CatalogViewModel {
 	struct Dependencies {
 		let getCollections: GetCollectionsUseCase
+		let getSetSortOption: SortCollectionsOption
 	}
 	private let dependencies: Dependencies
 
@@ -78,7 +79,9 @@ extension DefaultCatalogViewModel {
 		dependencies.getCollections.invoke { [weak self] result in
 			switch result {
 			case .success(let collections):
-				self?.items.value = collections
+				guard let self = self else { return }
+				self.items.value = collections
+				self.sortCollections()
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
@@ -90,7 +93,8 @@ extension DefaultCatalogViewModel {
 		case .selectSort:
 			didSendEventClosure?(.showSortAlert)
 		case .selectSortBy(let sortBy):
-			sortCollectionsBy(sortBy)
+			dependencies.getSetSortOption.setOption(sortBy)
+			sortCollections()
 		case .selectItemAtIndex(let index):
 			let collection = items.value[index]
 			didSendEventClosure?(.selectCollection(collection))
@@ -99,7 +103,8 @@ extension DefaultCatalogViewModel {
 }
 
 private extension DefaultCatalogViewModel {
-	func sortCollectionsBy(_ sortBy: SortBy) {
+	func sortCollections() {
+		let sortBy = dependencies.getSetSortOption.sortBy
 		switch sortBy {
 		case .name:
 			items.value = items.value.sorted { $0.name < $1.name }

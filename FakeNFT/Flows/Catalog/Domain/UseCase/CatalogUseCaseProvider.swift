@@ -36,4 +36,8 @@ final class CatalogUseCaseProvider {
 	lazy var putOrder: PutOrderUseCase = {
 		.init(apiClient: serviceProvider.apiClient)
 	}()
+
+	lazy var getSetSortCollectionsOption: SortCollectionsOption = {
+		GetSetSortCollectionsOptionUseCase()
+	}()
 }

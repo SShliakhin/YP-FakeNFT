@@ -1,9 +1,9 @@
-enum SortBy {
+enum SortCollectionsBy: String {
 	case name
 	case nftsCount
 }
 
-extension SortBy: CustomStringConvertible {
+extension SortCollectionsBy: CustomStringConvertible {
 	var description: String {
 		switch self {
 		case .name:
@@ -14,7 +14,7 @@ extension SortBy: CustomStringConvertible {
 	}
 }
 
-private extension SortBy {
+private extension SortCollectionsBy {
 	enum Appearance {
 		static let sortByName = "По названию"
 		static let sortByNftsCount = "По количеству NFT"
