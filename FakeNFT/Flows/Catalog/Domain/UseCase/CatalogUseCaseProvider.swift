@@ -6,7 +6,7 @@ final class CatalogUseCaseProvider {
 	private let serviceProvider = CatalogServiceProvider()
 
 	lazy var getCollections: GetCollectionsUseCase = {
-		.init(apiClient: serviceProvider.apiClient)
+		GetCollectionsUseCaseImp(apiClient: serviceProvider.apiClient)
 	}()
 
 	lazy var getCollection: GetCollectionUseCase = {

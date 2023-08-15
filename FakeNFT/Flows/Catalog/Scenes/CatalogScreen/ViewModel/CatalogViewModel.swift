@@ -2,6 +2,7 @@ import Foundation
 
 // переходы
 enum CatalogEvents {
+	case showErrorAlert(String)
 	case showSortAlert
 	case selectCollection(Collection)
 }
@@ -77,13 +78,14 @@ extension DefaultCatalogViewModel {
 extension DefaultCatalogViewModel {
 	func viewIsReady() {
 		dependencies.getCollections.invoke { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let collections):
-				guard let self = self else { return }
 				self.items.value = collections
 				self.sortCollections()
 			case .failure(let error):
-				print(error.localizedDescription)
+				self.items.value = []
+				self.didSendEventClosure?(.showErrorAlert(error.description))
 			}
 		}
 	}
@@ -91,6 +93,7 @@ extension DefaultCatalogViewModel {
 	func didUserDo(request: CatalogRequest) {
 		switch request {
 		case .selectSort:
+			guard items.value.count > 1 else { return }
 			didSendEventClosure?(.showSortAlert)
 		case .selectSortBy(let sortBy):
 			dependencies.getSetSortOption.setOption(sortBy)

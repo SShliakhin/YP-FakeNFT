@@ -1,6 +1,36 @@
 import Foundation
 
-final class GetCollectionsUseCase {
+protocol GetCollectionsUseCase {
+	func invoke(completion: @escaping (Result<[Collection], GetCollectionsError>) -> Void)
+}
+
+enum GetCollectionsError: Error {
+	case noCollections
+	case apiError(APIError)
+}
+
+extension GetCollectionsError: CustomStringConvertible {
+	private var localizedDescription: String {
+		switch self {
+		case .noCollections:
+			return Appearance.noCollection
+		case .apiError(let apiError):
+			return apiError.description
+		}
+	}
+
+	var description: String {
+		localizedDescription
+	}
+}
+
+private extension GetCollectionsError {
+	enum Appearance {
+		static let noCollection = "Коллекции не получены."
+	}
+}
+
+final class GetCollectionsUseCaseImp: GetCollectionsUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
 
@@ -8,7 +38,7 @@ final class GetCollectionsUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(completion: @escaping (Result<[Collection], APIError>) -> Void) {
+	func invoke(completion: @escaping (Result<[Collection], GetCollectionsError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -20,10 +50,14 @@ final class GetCollectionsUseCase {
 			switch result {
 			case .success(let collectionsDTO):
 				let collections = collectionsDTO.compactMap { Collection(from: $0) }
-				completion(.success(collections))
+				if collections.isEmpty {
+					completion(.failure(.noCollections))
+				} else {
+					completion(.success(collections))
+				}
 				self.task = nil
 			case .failure(let error):
-				completion(.failure(error))
+				completion(.failure(.apiError(error)))
 			}
 		}
 	}

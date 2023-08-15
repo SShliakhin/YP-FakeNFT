@@ -14,6 +14,9 @@ struct CatalogFlow: IFlow {
 		let view = CatalogViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view, viewModel] event in
 			switch event {
+			case .showErrorAlert(let message):
+				let alert = makeErrorAlertVC(message: message)
+				view?.present(alert, animated: true)
 			case .showSortAlert:
 				let alert = makeSortAlertVC(
 					sortCases: [.name, .nftsCount],
@@ -94,11 +97,31 @@ struct CatalogFlow: IFlow {
 
 		return alert
 	}
+
+	func makeErrorAlertVC(
+		message: String,
+		completion: (() -> Void)? = nil
+	) -> UIViewController {
+		let alert = UIAlertController(
+			title: Appearance.alertErrorTitle,
+			message: message,
+			preferredStyle: .alert
+		)
+		alert.addAction(
+			UIAlertAction(title: Appearance.alertOK, style: .default) { _ in
+				completion?()
+			}
+		)
+
+		return alert
+	}
 }
 
 private extension CatalogFlow {
 	enum Appearance {
 		static let alertTitle = "Сортировка"
 		static let actionCloseTitle = "Закрыть"
+		static let alertErrorTitle = "Ошибка"
+		static let alertOK = "OK"
 	}
 }
