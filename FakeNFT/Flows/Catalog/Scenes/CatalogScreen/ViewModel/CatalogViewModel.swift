@@ -81,15 +81,11 @@ extension DefaultCatalogViewModel {
 
 extension DefaultCatalogViewModel {
 	func viewIsReady() {
-		retryAction = { self.viewIsReady() }
 		isLoading.value = true
-		
-		let sortBy = dependencies.getSetSortOption.sortBy
 
+		let sortBy = dependencies.getSetSortOption.sortBy
 		dependencies.getCollections.invoke(sortBy: sortBy) { [weak self] result in
 			guard let self = self else { return }
-
-			self.isLoading.value = false
 
 			switch result {
 			case .success(let collections):
@@ -100,8 +96,11 @@ extension DefaultCatalogViewModel {
 				}
 			case .failure(let error):
 				self.items.value = []
+				self.retryAction = { self.viewIsReady() }
 				self.didSendEventClosure?(.showErrorAlert(error.description))
 			}
+
+			self.isLoading.value = false
 		}
 	}
 
