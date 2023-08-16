@@ -28,6 +28,7 @@ final class GetLikesUseCaseImp: GetLikesUseCase {
 				self.task = nil
 			case .failure(let error):
 				completion(.failure(error))
+				self.task = nil
 			}
 		}
 	}

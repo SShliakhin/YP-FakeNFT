@@ -31,6 +31,7 @@ final class GetAuthorUseCaseImp: GetAuthorUseCase {
 				self.task = nil
 			case .failure(let error):
 				completion(.failure(.apiError(error)))
+				self.task = nil
 			}
 		}
 	}

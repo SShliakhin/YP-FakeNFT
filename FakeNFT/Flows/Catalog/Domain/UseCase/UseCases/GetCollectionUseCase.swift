@@ -27,6 +27,7 @@ final class GetCollectionUseCase {
 				self.task = nil
 			case .failure(let error):
 				completion(.failure(error))
+				self.task = nil
 			}
 		}
 	}

@@ -28,6 +28,7 @@ final class GetOrderUseCaseImp: GetOrderUseCase {
 				self.task = nil
 			case .failure(let error):
 				completion(.failure(error))
+				self.task = nil
 			}
 		}
 	}

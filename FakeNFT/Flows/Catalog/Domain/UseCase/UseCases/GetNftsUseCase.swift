@@ -34,6 +34,7 @@ final class GetNftsUseCaseImp: GetNftsUseCase {
 				self.task = nil
 			case .failure(let error):
 				completion(.failure(.apiError(error)))
+				self.task = nil
 			}
 		}
 	}
@@ -58,6 +59,7 @@ final class GetNftsUseCaseImp: GetNftsUseCase {
 				self.task = nil
 			case .failure(let error):
 				completion(.failure(.apiError(error)))
+				self.task = nil
 			}
 		}
 	}
@@ -81,6 +83,7 @@ final class GetNftsUseCaseImp: GetNftsUseCase {
 				self.task = nil
 			case .failure(let error):
 				completion(.failure(.apiError(error)))
+				self.task = nil
 			}
 		}
 	}

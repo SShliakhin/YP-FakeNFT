@@ -36,6 +36,7 @@ final class PutLikesUseCaseImp: PutLikesUseCase {
 				self.task = nil
 			case .failure(let error):
 				completion(.failure(.apiError(error)))
+				self.task = nil
 			}
 		}
 	}
