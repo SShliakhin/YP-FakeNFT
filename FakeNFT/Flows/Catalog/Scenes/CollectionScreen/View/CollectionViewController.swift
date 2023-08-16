@@ -28,7 +28,6 @@ final class CollectionViewController: UIViewController {
 		setConstraints()
 
 		bind(to: viewModel)
-		ProgressHUD.show()
 		viewModel.viewIsReady()
 	}
 
@@ -57,16 +56,17 @@ private extension CollectionViewController {
 		viewModel.order.observe(on: self) { [weak self] _ in
 			self?.updateItems()
 		}
+		viewModel.isLoading.observe(on: self) { isLoading in
+			isLoading ? ProgressHUD.show() : ProgressHUD.dismiss()
+		}
 	}
 
 	func updateSections() {
 		collectionView.reloadData()
-		ProgressHUD.dismiss()
 	}
 	func updateItems() {
 		guard collectionView.numberOfSections > 0 else { return }
 		collectionView.reloadSections([1])
-		ProgressHUD.dismiss()
 	}
 }
 

@@ -16,7 +16,7 @@ enum CollectionSection {
 
 // переходы
 enum CollectionEvents {
-	case showErrorAlert(String)
+	case showErrorAlert(String, withRetry: Bool)
 	case close
 	case showAuthorSite(URL?)
 }
@@ -24,6 +24,7 @@ enum CollectionEvents {
 // действия пользователя
 enum CollectionRequest {
 	case goBack
+	case retryAction
 }
 
 // переходы, обработка действий пользователя, начальное состояние
@@ -39,6 +40,7 @@ protocol CollectionViewModelOutput: AnyObject {
 	var dataSource: Observable<[CollectionSection]> { get }
 	var likes: Observable<[String]> { get }
 	var order: Observable<[String]> { get }
+	var isLoading: Observable<Bool> { get }
 	var numberOfSection: Int { get }
 	var cellModels: [ICellViewAnyModel.Type] { get }
 
@@ -62,6 +64,7 @@ final class DefaultCollectionViewModel: CollectionViewModel {
 		let putOrder: PutOrderUseCase
 	}
 	private let dependencies: Dependencies
+	private var retryAction: (() -> Void)?
 	private var author: Author?
 	private var nfts: [Nft] = []
 	private var errors: [String] = []
@@ -73,6 +76,7 @@ final class DefaultCollectionViewModel: CollectionViewModel {
 	var dataSource: Observable<[CollectionSection]> = Observable([])
 	var likes: Observable<[String]> = Observable([])
 	var order: Observable<[String]> = Observable([])
+	var isLoading: Observable<Bool> = Observable(false)
 	var numberOfSection: Int {
 		dataSource.value.count
 	}
@@ -124,6 +128,8 @@ extension DefaultCollectionViewModel {
 
 extension DefaultCollectionViewModel {
 	func viewIsReady() {
+		isLoading.value = true
+
 		let authorID = dependencies.collection.authorID
 		errors = []
 
@@ -140,9 +146,14 @@ extension DefaultCollectionViewModel {
 				self.dataSource.value = []
 			}
 			if !self.errors.isEmpty {
+				self.retryAction = { self.viewIsReady() }
 				let message = self.errors.joined(separator: "\n")
-				self.didSendEventClosure?(.showErrorAlert(message))
+				self.didSendEventClosure?(
+					.showErrorAlert(message, withRetry: true)
+				)
 			}
+
+			self.isLoading.value = false
 		}
 	}
 
@@ -150,12 +161,16 @@ extension DefaultCollectionViewModel {
 		switch request {
 		case .goBack:
 			didSendEventClosure?(.close)
+		case .retryAction:
+			retryAction?()
 		}
 	}
 }
 
 private extension DefaultCollectionViewModel {
 	func likeItemWithID(_ nftID: String) {
+		isLoading.value = true
+
 		var likes = likes.value
 		if likes.contains(nftID) {
 			likes.removeAll { $0 == nftID }
@@ -169,13 +184,20 @@ private extension DefaultCollectionViewModel {
 			case .success(let likes):
 				self.likes.value = likes.nfts
 			case .failure(let error):
+				self.retryAction = nil
 				self.likes.value = self.likes.value
-				self.didSendEventClosure?(.showErrorAlert(error.description))
+				self.didSendEventClosure?(
+					.showErrorAlert(error.description, withRetry: false)
+				)
 			}
+
+			self.isLoading.value = false
 		}
 	}
 
 	func addToCartItemWithID(_ nftID: String) {
+		isLoading.value = true
+
 		var order = order.value
 		if order.contains(nftID) {
 			order.removeAll { $0 == nftID }
@@ -189,9 +211,14 @@ private extension DefaultCollectionViewModel {
 			case .success(let order):
 				self.order.value = order.nfts
 			case .failure(let error):
+				self.retryAction = nil
 				self.order.value = self.order.value
-				self.didSendEventClosure?(.showErrorAlert(error.description))
+				self.didSendEventClosure?(
+					.showErrorAlert(error.description, withRetry: false)
+				)
 			}
+
+			self.isLoading.value = false
 		}
 	}
 }

@@ -47,10 +47,15 @@ struct CatalogFlow: IFlow {
 		)
 		let viewModel = DefaultCollectionViewModel(dep: dep)
 		let view = CollectionViewController(viewModel: viewModel)
-		viewModel.didSendEventClosure = { [weak view] event in
+		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
-			case .showErrorAlert(let message):
-				let alert = makeErrorAlertVC(message: message)
+			case .showErrorAlert(let message, let withRetry):
+				let alert = makeErrorAlertVC(
+					message: message,
+					completion: withRetry
+					? { viewModel?.didUserDo(request: .retryAction) }
+					: nil
+				)
 				view?.present(alert, animated: true)
 			case .close:
 				view?.navigationController?.popViewController(animated: true)
