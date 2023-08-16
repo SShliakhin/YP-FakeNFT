@@ -64,7 +64,8 @@ struct CatalogFlow: IFlow {
 					let webViewVC = makeWebViewVC(url: url)
 					view?.show(webViewVC, sender: view)
 				} else {
-					print("url не url")
+					let alert = makeErrorAlertVC(message: Appearance.incorrectURLMessage)
+					view?.present(alert, animated: true)
 				}
 			}
 		}
@@ -91,7 +92,7 @@ struct CatalogFlow: IFlow {
 		completion: @escaping (SortCollectionsBy) -> Void
 	) -> UIViewController {
 		let alert = UIAlertController(
-			title: Appearance.alertTitle,
+			title: Appearance.alertSortTitle,
 			message: nil,
 			preferredStyle: .actionSheet
 		)
@@ -103,7 +104,7 @@ struct CatalogFlow: IFlow {
 			)
 		}
 		alert.addAction(
-			UIAlertAction(title: Appearance.actionCloseTitle, style: .cancel)
+			UIAlertAction(title: Appearance.actionClose, style: .cancel)
 		)
 
 		return alert
@@ -120,13 +121,13 @@ struct CatalogFlow: IFlow {
 		)
 		if let completion = completion {
 			alert.addAction(
-				UIAlertAction(title: Appearance.alertRetry, style: .default) { _ in
+				UIAlertAction(title: Appearance.actionRetry, style: .default) { _ in
 					completion()
 				}
 			)
 		} else {
 			alert.addAction(
-				UIAlertAction(title: Appearance.alertOK, style: .default)
+				UIAlertAction(title: Appearance.actionOK, style: .default)
 			)
 		}
 
@@ -136,10 +137,11 @@ struct CatalogFlow: IFlow {
 
 private extension CatalogFlow {
 	enum Appearance {
-		static let alertTitle = "Сортировка"
-		static let actionCloseTitle = "Закрыть"
+		static let alertSortTitle = "Сортировка"
 		static let alertErrorTitle = "Ошибка"
-		static let alertOK = "OK"
-		static let alertRetry = "Повторить запрос"
+		static let actionClose = "Закрыть"
+		static let actionOK = "OK"
+		static let actionRetry = "Повторить запрос"
+		static let incorrectURLMessage = "Неверный адрес сайта автора"
 	}
 }
