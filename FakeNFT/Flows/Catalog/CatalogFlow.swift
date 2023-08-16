@@ -12,15 +12,18 @@ struct CatalogFlow: IFlow {
 		)
 		let viewModel = DefaultCatalogViewModel(dep: dep)
 		let view = CatalogViewController(viewModel: viewModel)
-		viewModel.didSendEventClosure = { [weak view, viewModel] event in
+		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
 			case .showErrorAlert(let message):
-				let alert = makeErrorAlertVC(message: message)
+				let alert = makeErrorAlertVC(
+					message: message,
+					completion: { viewModel?.didUserDo(request: .retryAction) }
+				)
 				view?.present(alert, animated: true)
 			case .showSortAlert:
 				let alert = makeSortAlertVC(
 					sortCases: [.name, .nftsCount],
-					completion: { viewModel.didUserDo(request: .selectSortBy($0)) }
+					completion: { viewModel?.didUserDo(request: .selectSortBy($0)) }
 				)
 				view?.present(alert, animated: true)
 			case .selectCollection(let collection):
@@ -110,11 +113,17 @@ struct CatalogFlow: IFlow {
 			message: message,
 			preferredStyle: .alert
 		)
-		alert.addAction(
-			UIAlertAction(title: Appearance.alertOK, style: .default) { _ in
-				completion?()
-			}
-		)
+		if let completion = completion {
+			alert.addAction(
+				UIAlertAction(title: Appearance.alertRetry, style: .default) { _ in
+					completion()
+				}
+			)
+		} else {
+			alert.addAction(
+				UIAlertAction(title: Appearance.alertOK, style: .default)
+			)
+		}
 
 		return alert
 	}
@@ -126,5 +135,6 @@ private extension CatalogFlow {
 		static let actionCloseTitle = "Закрыть"
 		static let alertErrorTitle = "Ошибка"
 		static let alertOK = "OK"
+		static let alertRetry = "Повторить запрос"
 	}
 }

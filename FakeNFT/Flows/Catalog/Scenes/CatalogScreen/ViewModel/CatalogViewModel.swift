@@ -12,6 +12,7 @@ enum CatalogRequest {
 	case selectSort
 	case selectSortBy(SortCollectionsBy)
 	case selectItemAtIndex(Int)
+	case retryAction
 }
 
 // переходы, обработка действий пользователя, начальное состояние
@@ -25,6 +26,7 @@ protocol CatalogViewModelInput: AnyObject {
 // дата сорс и свойства для наблюдений
 protocol CatalogViewModelOutput: AnyObject {
 	var items: Observable<[Collection]> { get }
+	var isLoading: Observable<Bool> { get }
 	var numberOfItems: Int { get }
 	var isEmpty: Bool { get }
 	var cellModels: [ICellViewAnyModel.Type] { get }
@@ -43,12 +45,14 @@ final class DefaultCatalogViewModel: CatalogViewModel {
 		let getSetSortOption: SortCollectionsOption
 	}
 	private let dependencies: Dependencies
+	private var retryAction: (() -> Void)?
 
 	// MARK: - INPUT
 	var didSendEventClosure: ((CatalogEvents) -> Void)?
 
 	// MARK: - OUTPUT
 	var items: Observable<[Collection]> = Observable([])
+	var isLoading: Observable<Bool> = Observable(false)
 	var numberOfItems: Int { items.value.count }
 	var isEmpty: Bool { items.value.isEmpty }
 	var cellModels: [ICellViewAnyModel.Type] = [CollectionItemCellModel.self]
@@ -77,9 +81,16 @@ extension DefaultCatalogViewModel {
 
 extension DefaultCatalogViewModel {
 	func viewIsReady() {
+		retryAction = { self.viewIsReady() }
+		isLoading.value = true
+		
 		let sortBy = dependencies.getSetSortOption.sortBy
+
 		dependencies.getCollections.invoke(sortBy: sortBy) { [weak self] result in
 			guard let self = self else { return }
+
+			self.isLoading.value = false
+
 			switch result {
 			case .success(let collections):
 				self.items.value = collections
@@ -105,6 +116,8 @@ extension DefaultCatalogViewModel {
 		case .selectItemAtIndex(let index):
 			let collection = items.value[index]
 			didSendEventClosure?(.selectCollection(collection))
+		case .retryAction:
+			retryAction?()
 		}
 	}
 }

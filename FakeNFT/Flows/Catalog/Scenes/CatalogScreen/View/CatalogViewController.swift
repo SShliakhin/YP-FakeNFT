@@ -28,7 +28,6 @@ final class CatalogViewController: UIViewController {
 		setConstraints()
 
 		bind(to: viewModel)
-		ProgressHUD.show()
 		viewModel.viewIsReady()
 	}
 
@@ -46,11 +45,13 @@ private extension CatalogViewController {
 		viewModel.items.observe(on: self) { [weak self] _ in
 			self?.updateItems()
 		}
+		viewModel.isLoading.observe(on: self) { isLoading in
+			isLoading ? ProgressHUD.show() : ProgressHUD.dismiss()
+		}
 	}
 
 	func updateItems() {
 		tableView.reloadData()
-		ProgressHUD.dismiss()
 	}
 }
 
