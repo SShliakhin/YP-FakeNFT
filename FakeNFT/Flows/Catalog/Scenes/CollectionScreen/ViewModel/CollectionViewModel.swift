@@ -7,10 +7,16 @@ enum CollectionSection {
 	var rowCount: Int {
 		switch self {
 		case .header:
-			return 1 // swiftlint:disable:this numbers_smell
+			return Appearance.headerCount
 		case .list(let list):
 			return list.count
 		}
+	}
+}
+
+private extension CollectionSection {
+	enum Appearance {
+		static let headerCount = 1
 	}
 }
 
