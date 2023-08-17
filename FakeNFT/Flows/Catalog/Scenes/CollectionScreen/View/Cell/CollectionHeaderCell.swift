@@ -56,7 +56,7 @@ struct CollectionHeaderCellModel {
 	let onTapAuthor: (() -> Void)?
 
 	var authorText: String {
-		"\(Appearance.authorTextPrefix) \(author)"
+		"\(Theme.Author.textPrefix) \(author)"
 	}
 }
 
@@ -165,10 +165,6 @@ private extension CollectionHeaderCell {
 }
 
 private extension CollectionHeaderCellModel {
-	enum Appearance {
-		static let authorTextPrefix = "Автор колллекции:"
-	}
-
 	struct LinkInsideTextInputData {
 		let text: String
 		let mainFont: UIFont

@@ -21,25 +21,25 @@ enum TabbarPage: Int {
 	func pageTitleValue() -> String {
 		switch self {
 		case .profile:
-			return Appearance.profileTabTitle
+			return Theme.TabTitle.profile
 		case .catalog:
-			return Appearance.catalogTabTitle
+			return Theme.TabTitle.catalog
 		case .shoppingCart:
-			return Appearance.shoppingCartTabTitle
+			return Theme.TabTitle.cart
 		case .statistics:
-			return Appearance.statisticsTabTitle
+			return Theme.TabTitle.stats
 		}
 	}
 	func pageIconValue() -> UIImage {
 		switch self {
 		case .profile:
-			return Appearance.tabProfileIcon
+			return Theme.image(kind: .profileIcon)
 		case .catalog:
-			return Appearance.tabCatalogIcon
+			return Theme.image(kind: .catalogIcon)
 		case .shoppingCart:
-			return Appearance.tabShoppingCartIcon
+			return Theme.image(kind: .bagIcon)
 		case .statistics:
-			return Appearance.tabStatsIcon
+			return Theme.image(kind: .statisticsIcon)
 		}
 	}
 	func pageFlow() -> IFlow {
@@ -53,20 +53,5 @@ enum TabbarPage: Int {
 		case .statistics:
 			return StatisticsFlow()
 		}
-	}
-}
-
-private extension TabbarPage {
-
-	enum Appearance {
-		static let profileTabTitle = "Профиль"
-		static let catalogTabTitle = "Каталог"
-		static let shoppingCartTabTitle = "Корзина"
-		static let statisticsTabTitle = "Статистика"
-
-		static let tabProfileIcon = Theme.image(kind: .profileIcon)
-		static let tabCatalogIcon = Theme.image(kind: .catalogIcon)
-		static let tabShoppingCartIcon = Theme.image(kind: .bagIcon)
-		static let tabStatsIcon = Theme.image(kind: .statisticsIcon)
 	}
 }

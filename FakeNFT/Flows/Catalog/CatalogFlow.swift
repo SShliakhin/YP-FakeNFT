@@ -64,7 +64,7 @@ struct CatalogFlow: IFlow {
 					let webViewVC = makeWebViewVC(url: url)
 					view?.show(webViewVC, sender: view)
 				} else {
-					let alert = makeErrorAlertVC(message: Appearance.incorrectURLMessage)
+					let alert = makeErrorAlertVC(message: Theme.Author.incorrectURL)
 					view?.present(alert, animated: true)
 				}
 			}
@@ -92,7 +92,7 @@ struct CatalogFlow: IFlow {
 		completion: @escaping (SortCollectionsBy) -> Void
 	) -> UIViewController {
 		let alert = UIAlertController(
-			title: Appearance.alertSortTitle,
+			title: Theme.AlertTitles.sortTitle,
 			message: nil,
 			preferredStyle: .actionSheet
 		)
@@ -104,7 +104,7 @@ struct CatalogFlow: IFlow {
 			)
 		}
 		alert.addAction(
-			UIAlertAction(title: Appearance.actionClose, style: .cancel)
+			UIAlertAction(title: Theme.ActionsNames.close, style: .cancel)
 		)
 
 		return alert
@@ -115,33 +115,22 @@ struct CatalogFlow: IFlow {
 		completion: (() -> Void)? = nil
 	) -> UIViewController {
 		let alert = UIAlertController(
-			title: Appearance.alertErrorTitle,
+			title: Theme.AlertTitles.errorTitle,
 			message: message,
 			preferredStyle: .alert
 		)
 		if let completion = completion {
 			alert.addAction(
-				UIAlertAction(title: Appearance.actionRetry, style: .default) { _ in
+				UIAlertAction(title: Theme.ActionsNames.retry, style: .default) { _ in
 					completion()
 				}
 			)
 		} else {
 			alert.addAction(
-				UIAlertAction(title: Appearance.actionOK, style: .default)
+				UIAlertAction(title: Theme.ActionsNames.okey, style: .default)
 			)
 		}
 
 		return alert
-	}
-}
-
-private extension CatalogFlow {
-	enum Appearance {
-		static let alertSortTitle = "Сортировка"
-		static let alertErrorTitle = "Ошибка"
-		static let actionClose = "Закрыть"
-		static let actionOK = "OK"
-		static let actionRetry = "Повторить запрос"
-		static let incorrectURLMessage = "Неверный адрес сайта автора"
 	}
 }

@@ -7,16 +7,9 @@ extension SortCollectionsBy: CustomStringConvertible {
 	var description: String {
 		switch self {
 		case .name:
-			return Appearance.sortByName
+			return Theme.SortByTitle.name
 		case .nftsCount:
-			return Appearance.sortByNftsCount
+			return Theme.SortByTitle.nftsCount
 		}
-	}
-}
-
-private extension SortCollectionsBy {
-	enum Appearance {
-		static let sortByName = "По названию"
-		static let sortByNftsCount = "По количеству NFT"
 	}
 }
