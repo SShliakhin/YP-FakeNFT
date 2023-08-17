@@ -58,6 +58,7 @@
 		5A0D320A2A8DBE7700EF98F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A0D320C2A8DBE7700EF98F5 /* InfoPlist.strings */; };
 		5A0D320F2A8DD7CD00EF98F5 /* Theme+Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D320E2A8DD7CD00EF98F5 /* Theme+Localizable.swift */; };
 		5A0D32112A8DF60F00EF98F5 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32102A8DF60F00EF98F5 /* Profile.swift */; };
+		5A0D32132A8E788000EF98F5 /* ProfileServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32122A8E788000EF98F5 /* ProfileServiceProvider.swift */; };
 		5A3ED4B22A89FD6E003E367D /* UIViewController+Bars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */; };
 		5A51DA062A85C3CA00235E7D /* SortCollectionsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */; };
 		5A51DA172A87215600235E7D /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA162A87215600235E7D /* UIImage+.swift */; };
@@ -152,6 +153,7 @@
 		5A0D320D2A8DBE7800EF98F5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A0D320E2A8DD7CD00EF98F5 /* Theme+Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme+Localizable.swift"; sourceTree = "<group>"; };
 		5A0D32102A8DF60F00EF98F5 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		5A0D32122A8E788000EF98F5 /* ProfileServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceProvider.swift; sourceTree = "<group>"; };
 		5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Bars.swift"; sourceTree = "<group>"; };
 		5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCollectionsBy.swift; sourceTree = "<group>"; };
 		5A51DA162A87215600235E7D /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				5A0469982A7BC0680026D783 /* CatalogFlow.swift */,
+				5A0D32142A8E788700EF98F5 /* Data */,
 				5A0469882A7ABE180026D783 /* CatalogViewController.swift */,
 			);
 			path = Catalog;
@@ -449,6 +452,14 @@
 				5A0D320C2A8DBE7700EF98F5 /* InfoPlist.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		5A0D32142A8E788700EF98F5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5A0D32122A8E788000EF98F5 /* ProfileServiceProvider.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		5A51DA0E2A85CC8900235E7D /* Views */ = {
@@ -691,6 +702,7 @@
 				5A04696B2A7ABCC50026D783 /* Model.swift in Sources */,
 				5A04696E2A7ABCC50026D783 /* NetworkTask.swift in Sources */,
 				5A0469482A7ABC990026D783 /* Theme+Sizes+Spacing.swift in Sources */,
+				5A0D32132A8E788000EF98F5 /* ProfileServiceProvider.swift in Sources */,
 				5A04699F2A7BC8990026D783 /* ProfileFlow.swift in Sources */,
 				5A0469742A7ABCC50026D783 /* UserDefaultsBacked.swift in Sources */,
 				5A0469492A7ABC990026D783 /* Theme+Fonts.swift in Sources */,
