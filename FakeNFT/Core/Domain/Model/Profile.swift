@@ -7,6 +7,13 @@ struct Profile {
 	let website: URL?
 	let nfts: [String]
 	let likes: [String]
+
+	var nftsCount: Int {
+		nfts.count
+	}
+	var likesCount: Int {
+		likes.count
+	}
 }
 
 extension Profile {
