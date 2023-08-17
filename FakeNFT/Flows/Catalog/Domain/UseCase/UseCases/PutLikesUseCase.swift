@@ -1,7 +1,7 @@
 import Foundation
 
 protocol PutLikesUseCase {
-	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, CatalogError>) -> Void)
+	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, FakeNFTError>) -> Void)
 }
 
 final class PutLikesUseCaseImp: PutLikesUseCase {
@@ -12,7 +12,7 @@ final class PutLikesUseCaseImp: PutLikesUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, CatalogError>) -> Void) {
+	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, FakeNFTError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 

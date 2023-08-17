@@ -73,7 +73,7 @@ extension FakeNFTAPI: API {
 	}
 }
 
-enum CatalogError: Error {
+enum FakeNFTError: Error {
 	case apiError(APIError)
 	case noCollections
 	case noAuthorByID(String)
@@ -84,7 +84,7 @@ enum CatalogError: Error {
 	case brokenOrder
 }
 
-extension CatalogError: CustomStringConvertible {
+extension FakeNFTError: CustomStringConvertible {
 	private var localizedDescription: String {
 		switch self {
 		case .apiError(let apiError):

@@ -1,7 +1,7 @@
 import Foundation
 
 protocol GetAuthorUseCase {
-	func invoke(userID: String, completion: @escaping (Result<Author, CatalogError>) -> Void)
+	func invoke(userID: String, completion: @escaping (Result<Author, FakeNFTError>) -> Void)
 }
 
 final class GetAuthorUseCaseImp: GetAuthorUseCase {
@@ -12,7 +12,7 @@ final class GetAuthorUseCaseImp: GetAuthorUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(userID: String, completion: @escaping (Result<Author, CatalogError>) -> Void) {
+	func invoke(userID: String, completion: @escaping (Result<Author, FakeNFTError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 

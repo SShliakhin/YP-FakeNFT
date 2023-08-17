@@ -1,7 +1,7 @@
 import Foundation
 
 protocol PutOrderUseCase {
-	func invoke(order: NftIDs, completion: @escaping (Result<NftIDs, CatalogError>) -> Void)
+	func invoke(order: NftIDs, completion: @escaping (Result<NftIDs, FakeNFTError>) -> Void)
 }
 
 final class PutOrderUseCaseImp: PutOrderUseCase {
@@ -12,7 +12,7 @@ final class PutOrderUseCaseImp: PutOrderUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(order: NftIDs, completion: @escaping (Result<NftIDs, CatalogError>) -> Void) {
+	func invoke(order: NftIDs, completion: @escaping (Result<NftIDs, FakeNFTError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 

@@ -1,9 +1,9 @@
 import Foundation
 
 protocol GetNftsUseCase {
-	func invoke(completion: @escaping (Result<[Nft], CatalogError>) -> Void)
-	func invoke(authorID: String, completion: @escaping (Result<[Nft], CatalogError>) -> Void)
-	func invoke(nftID: String, completion: @escaping (Result<Nft, CatalogError>) -> Void)
+	func invoke(completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
+	func invoke(authorID: String, completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
+	func invoke(nftID: String, completion: @escaping (Result<Nft, FakeNFTError>) -> Void)
 }
 
 final class GetNftsUseCaseImp: GetNftsUseCase {
@@ -14,7 +14,7 @@ final class GetNftsUseCaseImp: GetNftsUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(completion: @escaping (Result<[Nft], CatalogError>) -> Void) {
+	func invoke(completion: @escaping (Result<[Nft], FakeNFTError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -39,7 +39,7 @@ final class GetNftsUseCaseImp: GetNftsUseCase {
 		}
 	}
 
-	func invoke(authorID: String, completion: @escaping (Result<[Nft], CatalogError>) -> Void) {
+	func invoke(authorID: String, completion: @escaping (Result<[Nft], FakeNFTError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -64,7 +64,7 @@ final class GetNftsUseCaseImp: GetNftsUseCase {
 		}
 	}
 
-	func invoke(nftID: String, completion: @escaping (Result<Nft, CatalogError>) -> Void) {
+	func invoke(nftID: String, completion: @escaping (Result<Nft, FakeNFTError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
