@@ -95,6 +95,12 @@ extension Theme {
 				comment: "Ошибка сети: Nfts по автору с id %@ не получены."
 			)
 		}
+		static var noProfile: String {
+			NSLocalizedString(
+				"error.noProfile",
+				comment: "Ошибка сети: Профайл не получен."
+			)
+		}
 	}
 
 	enum SortByTitle {

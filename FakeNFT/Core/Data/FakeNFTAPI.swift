@@ -19,6 +19,10 @@ enum FakeNFTAPI {
 	case putProfile
 	case getUser(String)
 	case getNFTsByAuthor(String)
+	case getCurrencies
+	case getCurrency(String)
+	case getPaymentCurrency(String)
+	case getUsers
 }
 
 extension FakeNFTAPI: API {
@@ -48,6 +52,14 @@ extension FakeNFTAPI: API {
 			return "/api/v1/users/\(id)"
 		case .getNFTsByAuthor:
 			return "/api/v1/nft"
+		case .getCurrencies:
+			return "/api/v1/currencies"
+		case let .getCurrency(id):
+			return "/api/v1/currencies/\(id)"
+		case let .getPaymentCurrency(id):
+			return "/api/v1/orders/1/payment/\(id)"
+		case .getUsers:
+			return "/api/v1/users"
 		}
 	}
 
@@ -82,6 +94,7 @@ enum FakeNFTError: Error {
 	case noNftByID(String)
 	case brokenLikes
 	case brokenOrder
+	case noProfile
 }
 
 extension FakeNFTError: CustomStringConvertible {
@@ -103,6 +116,8 @@ extension FakeNFTError: CustomStringConvertible {
 			return Theme.NetworkError.brokenLikes
 		case .brokenOrder:
 			return Theme.NetworkError.brokenOrder
+		case .noProfile:
+			return Theme.NetworkError.noProfile
 		}
 	}
 
