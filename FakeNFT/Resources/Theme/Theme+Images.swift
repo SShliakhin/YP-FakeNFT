@@ -23,10 +23,6 @@ extension Theme {
 
 	enum ImageSF3: String {
 		case goBack
-		case ratingStar
-		case ratingStarFill
-		case favorite
-		case favoriteFill
 		case editProfile
 		case close
 		case showDetail
@@ -38,14 +34,6 @@ extension Theme {
 		switch kind {
 		case .goBack:
 			customImage = UIImage(systemName: "chevron.backward") ?? .actions
-		case .ratingStar:
-			customImage = UIImage(systemName: "star.fill")?.withTintColor(Theme.color(usage: .allDayWhite)) ?? .actions
-		case .ratingStarFill:
-			customImage = UIImage(systemName: "star.fill")?.withTintColor(Theme.color(usage: .yellow)) ?? .actions
-		case .favorite:
-			customImage = UIImage(systemName: "heart.fill")?.withTintColor(Theme.color(usage: .allDayWhite)) ?? .actions
-		case .favoriteFill:
-			customImage = UIImage(systemName: "heart.fill")?.withTintColor(Theme.color(usage: .red)) ?? .actions
 		case .editProfile:
 			customImage = UIImage(systemName: "square.and.pencil") ?? .actions
 		case .close:
@@ -84,13 +72,6 @@ struct ImageProvider: PreviewProvider {
 		label.attributedText = imageString
 		label.sizeToFit()
 
-		if case kind = Theme.ImageSF3.ratingStar {
-			label.backgroundColor = Theme.color(usage: .background)
-		}
-		if case kind = Theme.ImageSF3.favorite {
-			label.backgroundColor = Theme.color(usage: .background)
-		}
-
 		return label
 	}
 
@@ -100,10 +81,6 @@ struct ImageProvider: PreviewProvider {
 		let deleteFromCartIcon = makeLabel(kind: .deleteFromCartIcon)
 		let goBack = makeLabel(kind: .goBack)
 		let showDetail = makeLabel(kind: .showDetail)
-		let ratingStar = makeLabel(kind: .ratingStar)
-		let ratingStarFill = makeLabel(kind: .ratingStarFill)
-		let favorite = makeLabel(kind: .favorite)
-		let favoriteFill = makeLabel(kind: .favoriteFill)
 		let editProfile = makeLabel(kind: .editProfile)
 		let close = makeLabel(kind: .close)
 
@@ -116,10 +93,6 @@ struct ImageProvider: PreviewProvider {
 			VStack(spacing: 0) {
 				goBack.preview().frame(height: 30)
 				showDetail.preview().frame(height: 30)
-				ratingStar.preview().frame(height: 30)
-				ratingStarFill.preview().frame(height: 30)
-				favorite.preview().frame(height: 30)
-				favoriteFill.preview().frame(height: 30)
 				editProfile.preview().frame(height: 30)
 				close.preview().frame(height: 30)
 			}
