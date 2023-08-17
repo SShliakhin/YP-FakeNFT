@@ -16,7 +16,7 @@ final class GetCollectionsUseCaseImp: GetCollectionsUseCase {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.getCollections(sortBy)
+		let resource = FakeNFTAPI.getCollections(sortBy)
 		let request = Request(endpoint: resource.url)
 
 		task = network.send(request) { [weak self] ( result: Result<[CollectionDTO], APIError>) in

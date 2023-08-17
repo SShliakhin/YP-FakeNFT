@@ -1,10 +1,10 @@
 import Foundation
 
 extension String {
-	static func key(_ constant: CatalogAPI.Constant) -> Self { constant.rawValue }
+	static func key(_ constant: FakeNFTAPI.Constant) -> Self { constant.rawValue }
 }
 
-enum CatalogAPI {
+enum FakeNFTAPI {
 	enum Constant: String {
 		case baseURLString = "64d15caaff953154bb7a4558.mockapi.io"
 	}
@@ -21,7 +21,7 @@ enum CatalogAPI {
 	case getNFTsByAuthor(String)
 }
 
-extension CatalogAPI: API {
+extension FakeNFTAPI: API {
 	var scheme: HTTPScheme {
 		.https
 	}

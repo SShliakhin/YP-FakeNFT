@@ -16,7 +16,7 @@ final class GetLikesUseCaseImp: GetLikesUseCase {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.getProfile
+		let resource = FakeNFTAPI.getProfile
 		let request = Request(endpoint: resource.url)
 
 		task = network.send(request) { [weak self] ( result: Result<ProfileDTO, APIError>) in

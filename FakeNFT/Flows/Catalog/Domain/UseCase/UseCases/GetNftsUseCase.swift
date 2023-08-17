@@ -18,7 +18,7 @@ final class GetNftsUseCaseImp: GetNftsUseCase {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.getNFTs
+		let resource = FakeNFTAPI.getNFTs
 		let request = Request(endpoint: resource.url)
 
 		task = network.send(request) { [weak self] ( result: Result<[NftDTO], APIError>) in
@@ -43,7 +43,7 @@ final class GetNftsUseCaseImp: GetNftsUseCase {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.getNFTsByAuthor(authorID)
+		let resource = FakeNFTAPI.getNFTsByAuthor(authorID)
 		let request = Request(endpoint: resource.url)
 
 		task = network.send(request) { [weak self] ( result: Result<[NftDTO], APIError>) in
@@ -68,7 +68,7 @@ final class GetNftsUseCaseImp: GetNftsUseCase {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.getNFT(nftID)
+		let resource = FakeNFTAPI.getNFT(nftID)
 		let request = Request(endpoint: resource.url)
 
 		task = network.send(request) { [weak self] ( result: Result<NftDTO, APIError>) in

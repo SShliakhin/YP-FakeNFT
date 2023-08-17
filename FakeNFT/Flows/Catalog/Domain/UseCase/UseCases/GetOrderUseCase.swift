@@ -16,7 +16,7 @@ final class GetOrderUseCaseImp: GetOrderUseCase {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.getOrder
+		let resource = FakeNFTAPI.getOrder
 		let request = Request(endpoint: resource.url)
 
 		task = network.send(request) { [weak self] ( result: Result<OrderDTO, APIError>) in

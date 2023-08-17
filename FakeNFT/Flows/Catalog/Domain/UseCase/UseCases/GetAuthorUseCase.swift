@@ -16,7 +16,7 @@ final class GetAuthorUseCaseImp: GetAuthorUseCase {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.getUser(userID)
+		let resource = FakeNFTAPI.getUser(userID)
 		let request = Request(endpoint: resource.url)
 
 		task = network.send(request) { [weak self] ( result: Result<UserDTO, APIError>) in

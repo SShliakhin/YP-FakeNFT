@@ -16,7 +16,7 @@ final class PutOrderUseCaseImp: PutOrderUseCase {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.putOrder
+		let resource = FakeNFTAPI.putOrder
 		let request = PostRequest(
 			endpoint: resource.url,
 			body: OrderDTO(nfts: order.nfts),

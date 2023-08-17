@@ -16,7 +16,7 @@ final class PutLikesUseCaseImp: PutLikesUseCase {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = CatalogAPI.putProfile
+		let resource = FakeNFTAPI.putProfile
 		let request = PostRequest(
 			endpoint: resource.url,
 			body: LikesDTO(likes: likes.nfts),

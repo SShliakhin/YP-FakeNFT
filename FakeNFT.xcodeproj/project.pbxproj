@@ -67,7 +67,7 @@
 		5A51DA1B2A872C8400235E7D /* CollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA1A2A872C8400235E7D /* CollectionViewModel.swift */; };
 		5AA5C8BA2A88D12100510684 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C8B92A88D12100510684 /* WebViewController.swift */; };
 		5AA5C8BC2A88F58700510684 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C8BB2A88F58700510684 /* WebViewModel.swift */; };
-		5AAB675A2A8043ED00E95CB2 /* CatalogAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB67592A8043ED00E95CB2 /* CatalogAPI.swift */; };
+		5AAB675A2A8043ED00E95CB2 /* FakeNFTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB67592A8043ED00E95CB2 /* FakeNFTAPI.swift */; };
 		5AAB675C2A81103400E95CB2 /* CatalogServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB675B2A81103400E95CB2 /* CatalogServiceProvider.swift */; };
 		5AAB675E2A81126B00E95CB2 /* CatalogUseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB675D2A81126B00E95CB2 /* CatalogUseCaseProvider.swift */; };
 		5AAB67612A8113CD00E95CB2 /* GetCollectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB67602A8113CD00E95CB2 /* GetCollectionsUseCase.swift */; };
@@ -174,7 +174,7 @@
 		5AA5C8B92A88D12100510684 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		5AA5C8BB2A88F58700510684 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		5AA5C8BF2A89052900510684 /* CatalogFlowDecomposition_SAS_c4gr4.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CatalogFlowDecomposition_SAS_c4gr4.md; sourceTree = "<group>"; };
-		5AAB67592A8043ED00E95CB2 /* CatalogAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogAPI.swift; sourceTree = "<group>"; };
+		5AAB67592A8043ED00E95CB2 /* FakeNFTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNFTAPI.swift; sourceTree = "<group>"; };
 		5AAB675B2A81103400E95CB2 /* CatalogServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogServiceProvider.swift; sourceTree = "<group>"; };
 		5AAB675D2A81126B00E95CB2 /* CatalogUseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogUseCaseProvider.swift; sourceTree = "<group>"; };
 		5AAB67602A8113CD00E95CB2 /* GetCollectionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCollectionsUseCase.swift; sourceTree = "<group>"; };
@@ -393,7 +393,6 @@
 				5AAB67882A81FAD500E95CB2 /* Domain */,
 				5A51DA072A85CA2600235E7D /* Scenes */,
 				5A0823A92A82D7640047A8AC /* CatalogAssets.xcassets */,
-				5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -419,17 +418,62 @@
 		5A0469912A7ABE610026D783 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				5A0469922A7ABE610026D783 /* MainTabBarController.swift */,
-				5A0469942A7ACBC80026D783 /* TabbarPage.swift */,
 				5A04699A2A7BC59C0026D783 /* IFlow.swift */,
+				5A0D31FB2A8DB00900EF98F5 /* Data */,
+				5A0D31FC2A8DB05800EF98F5 /* Domain */,
+				5A0D31FD2A8DB0CF00EF98F5 /* Scenes */,
+				5A51DA0E2A85CC8900235E7D /* Views */,
+				5A0D31FF2A8DB18C00EF98F5 /* Extensions */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		5A0D31FB2A8DB00900EF98F5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5AAB67592A8043ED00E95CB2 /* FakeNFTAPI.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		5A0D31FC2A8DB05800EF98F5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				5AAB676F2A8130FF00E95CB2 /* Model */,
+				5AAB676E2A8130A400E95CB2 /* DTO */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		5A0D31FD2A8DB0CF00EF98F5 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				5A0D31FE2A8DB0E600EF98F5 /* TabBar */,
+				5AA5C8B82A88D0FA00510684 /* Web */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		5A0D31FE2A8DB0E600EF98F5 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				5A0469922A7ABE610026D783 /* MainTabBarController.swift */,
+				5A0469942A7ACBC80026D783 /* TabbarPage.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		5A0D31FF2A8DB18C00EF98F5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		5A51DA072A85CA2600235E7D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				5AA5C8B82A88D0FA00510684 /* Web */,
 				5A51DA082A85CA4D00235E7D /* CatalogScreen */,
 				5A51DA0C2A85CC5900235E7D /* CollectionScreen */,
 			);
@@ -482,7 +526,6 @@
 		5A51DA0D2A85CC7600235E7D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5A51DA0E2A85CC8900235E7D /* Views */,
 				5A51DA112A861D2C00235E7D /* Cell */,
 				5A51DA142A86C2F500235E7D /* CollectionViewController.swift */,
 			);
@@ -592,8 +635,6 @@
 		5AAB67882A81FAD500E95CB2 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				5AAB676F2A8130FF00E95CB2 /* Model */,
-				5AAB676E2A8130A400E95CB2 /* DTO */,
 				5AAB67872A81F9FF00E95CB2 /* UseCase */,
 			);
 			path = Domain;
@@ -603,7 +644,6 @@
 			isa = PBXGroup;
 			children = (
 				5AAB675B2A81103400E95CB2 /* CatalogServiceProvider.swift */,
-				5AAB67592A8043ED00E95CB2 /* CatalogAPI.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -816,7 +856,7 @@
 				5AAB67802A81CB6F00E95CB2 /* GetLikesUseCase.swift in Sources */,
 				5AAB67762A81435700E95CB2 /* Author.swift in Sources */,
 				5AAB67742A8132AF00E95CB2 /* Nft.swift in Sources */,
-				5AAB675A2A8043ED00E95CB2 /* CatalogAPI.swift in Sources */,
+				5AAB675A2A8043ED00E95CB2 /* FakeNFTAPI.swift in Sources */,
 				5AAB67652A81246100E95CB2 /* NftDTO.swift in Sources */,
 				5A04696F2A7ABCC50026D783 /* Request.swift in Sources */,
 				5AAB67672A812A6700E95CB2 /* UserDTO.swift in Sources */,
