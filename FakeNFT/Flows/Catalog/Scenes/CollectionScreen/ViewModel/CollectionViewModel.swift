@@ -14,20 +14,17 @@ enum CollectionSection {
 	}
 }
 
-// переходы
 enum CollectionEvents {
 	case showErrorAlert(String, withRetry: Bool)
 	case close
 	case showAuthorSite(URL?)
 }
 
-// действия пользователя
 enum CollectionRequest {
 	case goBack
 	case retryAction
 }
 
-// переходы, обработка действий пользователя, начальное состояние
 protocol CollectionViewModelInput: AnyObject {
 	var didSendEventClosure: ((CollectionEvents) -> Void)? { get set }
 
@@ -35,7 +32,6 @@ protocol CollectionViewModelInput: AnyObject {
 	func didUserDo(request: CollectionRequest)
 }
 
-// дата сорс и свойства для наблюдений
 protocol CollectionViewModelOutput: AnyObject {
 	var dataSource: Observable<[CollectionSection]> { get }
 	var likes: Observable<[String]> { get }

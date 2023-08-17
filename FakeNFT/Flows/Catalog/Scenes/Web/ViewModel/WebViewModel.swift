@@ -1,16 +1,13 @@
 import Foundation
 
-// переходы
 enum WebEvents {
 	case close
 }
 
-// действия пользователя
 enum WebRequest {
 	case goBack
 }
 
-// переходы, обработка действий пользователя, начальное состояние
 protocol WebViewModelInput: AnyObject {
 	var didSendEventClosure: ((WebEvents) -> Void)? { get set }
 
@@ -18,7 +15,6 @@ protocol WebViewModelInput: AnyObject {
 	func didUserDo(request: WebRequest)
 }
 
-// дата сорс и свойства для наблюдений
 protocol WebViewModelOutput: AnyObject {
 	var url: Observable<URL?> { get }
 }

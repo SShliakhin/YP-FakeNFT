@@ -1,13 +1,11 @@
 import Foundation
 
-// переходы
 enum CatalogEvents {
 	case showErrorAlert(String)
 	case showSortAlert
 	case selectCollection(Collection)
 }
 
-// действия пользователя
 enum CatalogRequest {
 	case selectSort
 	case selectSortBy(SortCollectionsBy)
@@ -15,7 +13,6 @@ enum CatalogRequest {
 	case retryAction
 }
 
-// переходы, обработка действий пользователя, начальное состояние
 protocol CatalogViewModelInput: AnyObject {
 	var didSendEventClosure: ((CatalogEvents) -> Void)? { get set }
 
@@ -23,7 +20,6 @@ protocol CatalogViewModelInput: AnyObject {
 	func didUserDo(request: CatalogRequest)
 }
 
-// дата сорс и свойства для наблюдений
 protocol CatalogViewModelOutput: AnyObject {
 	var items: Observable<[Collection]> { get }
 	var isLoading: Observable<Bool> { get }
