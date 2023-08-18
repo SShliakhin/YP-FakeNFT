@@ -116,6 +116,18 @@ extension Theme {
 				comment: "Заголовок опции сортировки по количеству NFT: По количеству NFT"
 			)
 		}
+		static var price: String {
+			NSLocalizedString(
+				"sortBy.price",
+				comment: "Заголовок опции сортировки по названию: По цене"
+			)
+		}
+		static var rating: String {
+			NSLocalizedString(
+				"sortBy.rating",
+				comment: "Заголовок опции сортировки по названию: По рейтингу"
+			)
+		}
 	}
 
 	enum TabTitle {
