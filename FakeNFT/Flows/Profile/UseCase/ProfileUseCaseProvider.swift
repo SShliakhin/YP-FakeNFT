@@ -24,4 +24,8 @@ final class ProfileUseCaseProvider {
 	lazy var putLikes: PutLikesProfileUseCase = {
 		PutLikesProfileUseCaseImp(apiClient: serviceProvider.apiClient)
 	}()
+
+	lazy var getSetSortMyNtfsOption: SortMyNtfsOption = {
+		GetSetSortMyNtfsOptionUseCase()
+	}()
 }
