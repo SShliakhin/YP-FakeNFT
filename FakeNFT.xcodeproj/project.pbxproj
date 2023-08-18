@@ -61,6 +61,7 @@
 		5A3ED4B22A89FD6E003E367D /* UIViewController+Bars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */; };
 		5A51DA062A85C3CA00235E7D /* SortCollectionsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */; };
 		5A51DA172A87215600235E7D /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA162A87215600235E7D /* UIImage+.swift */; };
+		5A7EA45B2A8F7BD8004C5402 /* SortMyNtfsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45A2A8F7BD8004C5402 /* SortMyNtfsBy.swift */; };
 		5AA5C8BA2A88D12100510684 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C8B92A88D12100510684 /* WebViewController.swift */; };
 		5AA5C8BC2A88F58700510684 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C8BB2A88F58700510684 /* WebViewModel.swift */; };
 		5AAB675A2A8043ED00E95CB2 /* FakeNFTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB67592A8043ED00E95CB2 /* FakeNFTAPI.swift */; };
@@ -155,6 +156,7 @@
 		5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Bars.swift"; sourceTree = "<group>"; };
 		5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCollectionsBy.swift; sourceTree = "<group>"; };
 		5A51DA162A87215600235E7D /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		5A7EA45A2A8F7BD8004C5402 /* SortMyNtfsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortMyNtfsBy.swift; sourceTree = "<group>"; };
 		5AA5C8B92A88D12100510684 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		5AA5C8BB2A88F58700510684 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		5AAB67592A8043ED00E95CB2 /* FakeNFTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNFTAPI.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 				5AAB67752A81435700E95CB2 /* Author.swift */,
 				5AAB67772A81462200E95CB2 /* NftIDs.swift */,
 				5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */,
+				5A7EA45A2A8F7BD8004C5402 /* SortMyNtfsBy.swift */,
 				5A0D32102A8DF60F00EF98F5 /* Profile.swift */,
 			);
 			path = Model;
@@ -725,6 +728,7 @@
 				5A0469902A7ABE180026D783 /* ShoppingCartViewController.swift in Sources */,
 				5A51DA172A87215600235E7D /* UIImage+.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				5A7EA45B2A8F7BD8004C5402 /* SortMyNtfsBy.swift in Sources */,
 				5A04697E2A7ABCC50026D783 /* UITableView+Extensions.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				5A0469992A7BC0680026D783 /* CatalogFlow.swift in Sources */,
