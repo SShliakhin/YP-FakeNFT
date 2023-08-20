@@ -103,6 +103,33 @@ extension Theme {
 		}
 	}
 
+	enum Profile {
+		static var incorrectURL: String {
+			NSLocalizedString(
+				"profile.error.incorrectURL",
+				comment: "Ошибка в url разработчика: Неверный адрес сайта разработчика"
+			)
+		}
+		static var aboutCall: String {
+			NSLocalizedString(
+				"profile.titleCall.about",
+				comment: "Заголовок для вызова экрана: О разработчике"
+			)
+		}
+		static var favoritesCall: String {
+			NSLocalizedString(
+				"profile.titleCall.favorites",
+				comment: "Заголовок для вызова экрана: Избранные NFT (%d)"
+			)
+		}
+		static var myNftsCall: String {
+			NSLocalizedString(
+				"profile.titleCall.myNtfs",
+				comment: "Заголовок для вызова экрана: Мои NFT (%d)"
+			)
+		}
+	}
+
 	enum SortByTitle {
 		static var name: String {
 			NSLocalizedString(
