@@ -16,11 +16,13 @@ struct ProfileFlow: IFlow {
 	func showProfile() -> UIViewController {
 		let dep = DefaultProfileViewModel.Dependencies(
 			getProfile: ProfileUseCaseProvider.instance.getProfile,
+			putProfile: ProfileUseCaseProvider.instance.putProfile,
 			myNFTsVM: MyNFTsViewModel(),
 			favoritesVM: FavoritesViewModel()
 		)
 		let viewModel: ProfileViewModel = DefaultProfileViewModel(dep: dep)
 		let view = ProfileViewController(viewModel: viewModel)
+		// swiftlint:disable:next closure_body_length
 		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
 			case .showErrorAlert(let message, let withRetry):
@@ -33,8 +35,8 @@ struct ProfileFlow: IFlow {
 				view?.present(alert, animated: true)
 			case .selectEditProfile:
 				guard let viewModel = viewModel else { return }
-				let editProfileVC = makeEditProfileVC(profileVM: viewModel)
-				view?.present(editProfileVC, animated: true)
+				let editProfileView = EditProfileViewController(viewModel: viewModel)
+				view?.present(editProfileView, animated: true)
 			case .selectMyNfts(let profile):
 				let myNftsVC = makeMyNftsVC(profile: profile)
 				view?.show(myNftsVC, sender: view)
@@ -49,6 +51,8 @@ struct ProfileFlow: IFlow {
 					let alert = makeErrorAlertVC(message: Theme.Profile.incorrectURL)
 					view?.present(alert, animated: true)
 				}
+			case .close:
+				view?.presentedViewController?.dismiss(animated: true)
 			}
 		}
 
@@ -56,7 +60,9 @@ struct ProfileFlow: IFlow {
 	}
 
 	func makeEditProfileVC(profileVM: ProfileViewModel) -> UIViewController {
-		UIViewController()
+		let view = EditProfileViewController(viewModel: profileVM)
+
+		return view
 	}
 
 	func makeMyNftsVC(profile: Profile) -> UIViewController {

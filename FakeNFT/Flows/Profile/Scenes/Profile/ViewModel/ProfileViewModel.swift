@@ -1,6 +1,13 @@
 import Foundation
 import UIKit
 
+struct ProfileUpdate {
+	let name: String
+	let avatar: URL?
+	let description: String
+	let website: URL?
+}
+
 enum ProfileSection: CustomStringConvertible {
 	case myNFTs(Int)
 	case favoritesNFTS(Int)
@@ -18,26 +25,21 @@ enum ProfileSection: CustomStringConvertible {
 	}
 }
 
-private extension ProfileSection {
-	enum Appearance {
-		static let myNTFsTitle = "Мои NFT (%d)"
-		static let favoritesTitle = "Избранные NFT (%d)"
-		static let aboutTitle = "О разработчике"
-	}
-}
-
 enum ProfileEvents {
 	case showErrorAlert(String, Bool)
 	case selectEditProfile
 	case selectMyNfts(Profile)
 	case selectFavorites(Profile)
 	case selectAbout(URL?)
+	case close
 }
 
 enum ProfileRequest {
 	case selectItemAtIndex(Int)
 	case retryAction
 	case editProfile
+	case goBack
+	case updateProfile(ProfileUpdate)
 }
 
 protocol ProfileViewModelInput: AnyObject {
@@ -65,6 +67,7 @@ typealias ProfileViewModel = (
 final class DefaultProfileViewModel: ProfileViewModel {
 	struct Dependencies {
 		let getProfile: GetProfileUseCase
+		let putProfile: PutProfileUseCase
 		let myNFTsVM: MyNFTsViewModel
 		let favoritesVM: FavoritesViewModel
 	}
@@ -143,6 +146,11 @@ extension DefaultProfileViewModel {
 			}
 		case .editProfile:
 			didSendEventClosure?(.selectEditProfile)
+		case .goBack:
+			didSendEventClosure?(.close)
+		case .updateProfile(let updateProfile):
+			guard let profile = profile.value else { return }
+			self.updateProfile(profile, with: updateProfile)
 		}
 	}
 }
@@ -154,5 +162,35 @@ private extension DefaultProfileViewModel {
 			ProfileSection.favoritesNFTS(profile.likesCount),
 			ProfileSection.about
 		]
+	}
+
+	func updateProfile(_ oldProfile: Profile, with newProfile: ProfileUpdate) {
+		guard
+			oldProfile.name != newProfile.name ||
+				oldProfile.avatar != newProfile.avatar ||
+				oldProfile.description != newProfile.description ||
+				oldProfile.website != newProfile.website
+		else { return }
+
+		self.isLoading.value = true
+		let profile = Profile(
+			name: newProfile.name,
+			avatar: newProfile.avatar,
+			description: newProfile.description,
+			website: newProfile.website,
+			nfts: oldProfile.nfts,
+			likes: oldProfile.likes
+		)
+		dependencies.putProfile.invoke(profile: profile) { result in
+			switch result {
+			case .success(let profile):
+				self.profile.value = profile
+			case .failure(let error):
+				self.retryAction = { self.didUserDo(request: .updateProfile(newProfile)) }
+				self.didSendEventClosure?(.showErrorAlert(error.description, true))
+			}
+
+			self.isLoading.value = false
+		}
 	}
 }

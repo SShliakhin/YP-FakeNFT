@@ -128,6 +128,24 @@ extension Theme {
 				comment: "Заголовок для вызова экрана: Мои NFT (%d)"
 			)
 		}
+		static var editTitleName: String {
+			NSLocalizedString(
+				"profile.editTitle.name",
+				comment: "Заголовок для редактирования профиля: Имя"
+			)
+		}
+		static var editTitleDescription: String {
+			NSLocalizedString(
+				"profile.editTitle.description",
+				comment: "Заголовок для редактирования профиля: Описание"
+			)
+		}
+		static var editTitleWebsite: String {
+			NSLocalizedString(
+				"profile.editTitle.website",
+				comment: "Заголовок для редактирования профиля: Сайт"
+			)
+		}
 	}
 
 	enum SortByTitle {

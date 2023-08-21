@@ -87,6 +87,7 @@
 		5AAB67782A81462200E95CB2 /* NftIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB67772A81462200E95CB2 /* NftIDs.swift */; };
 		5AB4D8792A7D3C6A00E1757D /* Theme+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB4D8782A7D3C6A00E1757D /* Theme+Images.swift */; };
 		5AE76DA62A91F2CC00BAC6B2 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */; };
+		5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +195,7 @@
 		5AB4D8772A7BDD7E00E1757D /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		5AB4D8782A7D3C6A00E1757D /* Theme+Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Theme+Images.swift"; sourceTree = "<group>"; };
 		5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -589,6 +591,7 @@
 				5AE76DA72A92098A00BAC6B2 /* Views */,
 				5AE76DA32A91F24E00BAC6B2 /* Cell */,
 				5A04698A2A7ABE180026D783 /* ProfileViewController.swift */,
+				5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -818,6 +821,7 @@
 				5AAB676B2A812D1A00E95CB2 /* ProfileDTO.swift in Sources */,
 				5A0469972A7ACCAB0026D783 /* AppAppearance.swift in Sources */,
 				5AAB67762A81435700E95CB2 /* Author.swift in Sources */,
+				5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */,
 				5A7EA45F2A8FE83B004C5402 /* ProfileViewModel.swift in Sources */,
 				5AAB67742A8132AF00E95CB2 /* Nft.swift in Sources */,
 				5AAB675A2A8043ED00E95CB2 /* FakeNFTAPI.swift in Sources */,
