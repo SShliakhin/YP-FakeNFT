@@ -158,6 +158,18 @@ extension Theme {
 				comment: "Заголовок кнопки: Загрузить изображение"
 			)
 		}
+		static var someTextBy: String {
+			NSLocalizedString(
+				"profile.someText.by",
+				comment: "Некоторый текст: от"
+			)
+		}
+		static var someTextPrice: String {
+			NSLocalizedString(
+				"profile.someText.price",
+				comment: "Некоторый текст: Цена"
+			)
+		}
 	}
 
 	enum SortByTitle {
