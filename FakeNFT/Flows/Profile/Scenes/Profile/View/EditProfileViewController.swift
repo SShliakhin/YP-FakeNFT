@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 import ProgressHUD
 
 final class EditProfileViewController: UIViewController {
