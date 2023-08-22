@@ -103,7 +103,10 @@ private extension AvatarView {
 		let button = UIButton(type: .custom)
 		button.backgroundColor = Theme.color(usage: .allDayBlack).withAlphaComponent(0.6)
 		button.layer.cornerRadius = Appearance.avatarCornerRadius
-		button.setTitle("Сменить\nфото", for: .normal)
+		button.setTitle(
+			Theme.Profile.buttonTitleChangePhoto,
+			for: .normal
+		)
 		button.titleLabel?.numberOfLines = 2
 		button.titleLabel?.textAlignment = .center
 		button.titleLabel?.font = Theme.font(style: .caption)
@@ -118,7 +121,10 @@ private extension AvatarView {
 	func makeUploadImageButton() -> UIButton {
 		let button = UIButton(type: .custom)
 		button.backgroundColor = .clear
-		button.setTitle("Загрузить изображение", for: .normal)
+		button.setTitle(
+			Theme.Profile.buttonTitleUploadImage,
+			for: .normal
+		)
 		button.setTitleColor(Theme.color(usage: .main), for: .normal)
 		button.titleLabel?.font = Theme.font(style: .body)
 		button.event = nil

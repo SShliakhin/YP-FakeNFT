@@ -146,6 +146,18 @@ extension Theme {
 				comment: "Заголовок для редактирования профиля: Сайт"
 			)
 		}
+		static var buttonTitleChangePhoto: String {
+			NSLocalizedString(
+				"profile.buttonTitle.changePhoto",
+				comment: "Заголовок кнопки: Сменить фото"
+			)
+		}
+		static var buttonTitleUploadImage: String {
+			NSLocalizedString(
+				"profile.buttonTitle.uploadImage",
+				comment: "Заголовок кнопки: Загрузить изображение"
+			)
+		}
 	}
 
 	enum SortByTitle {
