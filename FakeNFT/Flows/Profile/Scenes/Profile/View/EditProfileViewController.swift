@@ -6,13 +6,7 @@ final class EditProfileViewController: UIViewController {
 	private let viewModel: ProfileViewModel
 
 	private var profileAvatarUrl: URL? {
-		didSet {
-			guard
-				oldValue != profileAvatarUrl,
-				let url = profileAvatarUrl
-			else { return }
-			updateAvatarImageByUrl(url)
-		}
+		avatarView.avatarUrl
 	}
 	private var profileName: String = "" {
 		didSet {
@@ -40,8 +34,7 @@ final class EditProfileViewController: UIViewController {
 
 	// MARK: - UI Elements
 	private lazy var closeButton: UIButton = makeCloseButton()
-
-	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
+	private lazy var avatarView = AvatarView()
 
 	private lazy var titleLabel: UILabel = makeStaticTextLabel(
 		text: Theme.Profile.editTitleName
@@ -101,7 +94,13 @@ private extension EditProfileViewController {
 	}
 
 	func updateItems(with profile: Profile) {
-		profileAvatarUrl = profile.avatar
+		avatarView.update(with: AvatarViewModel(
+			url: profile.avatar,
+			isUploadButtonHidden: true,
+			onTapUploadImage: { [weak self] in
+				self?.viewModel.didUserDo(request: .updateAvatar)
+			}
+		))
 		profileName = profile.name
 		profileDescription = profile.description
 		profileUrl = profile.website
@@ -143,19 +142,6 @@ extension EditProfileViewController: UITextViewDelegate {
 }
 
 private extension EditProfileViewController {
-	func updateAvatarImageByUrl(_ imageURL: URL) {
-		avatarImageView.kf.setImage(
-			with: imageURL,
-			placeholder: Appearance.imagePlaceholder,
-			options: [.transition(.fade(0.2))]
-		) { [weak self] result in
-			guard let self = self else { return }
-			if case .failure = result {
-				self.avatarImageView.image = Appearance.imagePlaceholder
-			}
-		}
-	}
-
 	func updateProfile() {
 		viewModel.didUserDo(request: .updateProfile(
 			ProfileUpdate(
@@ -218,7 +204,7 @@ private extension EditProfileViewController {
 
 		let vStack = UIStackView(
 			arrangedSubviews: [
-				avatarImageView,
+				avatarView,
 				vNameStack,
 				vDescriptionStack,
 				vUrlStack,
@@ -228,9 +214,7 @@ private extension EditProfileViewController {
 		vStack.axis = .vertical
 		vStack.spacing = Theme.spacing(usage: .standard3)
 		vStack.alignment = .center
-		avatarImageView.makeConstraints {
-			$0.size(Appearance.avatarSize)
-		}
+
 		vNameStack.makeConstraints { make in
 			[
 				make.leadingAnchor.constraint(equalTo: vStack.leadingAnchor),
@@ -286,16 +270,7 @@ private extension EditProfileViewController {
 
 		return button
 	}
-	func makeAvatarImageView() -> UIImageView {
-		let imageView = UIImageView()
-		imageView.contentMode = .scaleAspectFill
-		imageView.layer.cornerRadius = Appearance.avatarCornerRadius
-		imageView.layer.masksToBounds = true
 
-		imageView.kf.indicatorType = .activity
-
-		return imageView
-	}
 	func makeStaticTextLabel(text: String) -> UILabel {
 		let label = UILabel()
 		label.textColor = Theme.color(usage: .main)
@@ -413,10 +388,12 @@ extension EditProfileViewController {
 		let textBoxY = convertedResponderViewFrame.origin.y
 		let responderViewBottomY = textBoxY + convertedResponderViewFrame.size.height
 
-		if responderViewBottomY > keyboardTopY {
+		// почему то TextView не попадает под этот критерий
+		// убрал проверку, чтобы VC всегда подымался
+		// if responderViewBottomY > keyboardTopY {
 			let newFrameY = (textBoxY - keyboardTopY / 2) * -1
 			view.frame.origin.y = newFrameY
-		}
+		// }
 	}
 
 	@objc func keyboardWillHide(notification: NSNotification) {

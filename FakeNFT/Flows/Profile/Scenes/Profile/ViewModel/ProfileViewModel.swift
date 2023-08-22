@@ -40,6 +40,7 @@ enum ProfileRequest {
 	case editProfile
 	case goBack
 	case updateProfile(ProfileUpdate)
+	case updateAvatar
 }
 
 protocol ProfileViewModelInput: AnyObject {
@@ -73,6 +74,7 @@ final class DefaultProfileViewModel: ProfileViewModel {
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
+	private var mockAvatarUrls: [URL?] = Appearance.mockUrls
 
 	// MARK: - INPUT
 	var didSendEventClosure: ((ProfileEvents) -> Void)?
@@ -151,6 +153,8 @@ extension DefaultProfileViewModel {
 		case .updateProfile(let updateProfile):
 			guard let profile = profile.value else { return }
 			self.updateProfile(profile, with: updateProfile)
+		case .updateAvatar:
+			self.updateAvatar()
 		}
 	}
 }
@@ -192,5 +196,33 @@ private extension DefaultProfileViewModel {
 
 			self.isLoading.value = false
 		}
+	}
+
+	func updateAvatar() {
+		guard let profile = profile.value else { return }
+		let currentAvatar = profile.avatar
+		let newAvatar = mockAvatarUrls.filter { $0 != currentAvatar }
+			.compactMap { $0 }
+			.randomElement()
+		if !mockAvatarUrls.contains(currentAvatar) {
+			mockAvatarUrls.append(currentAvatar)
+		}
+		let newProfile = ProfileUpdate(
+			name: profile.name,
+			avatar: newAvatar,
+			description: profile.description,
+			website: profile.website
+		)
+		updateProfile(profile, with: newProfile)
+	}
+}
+
+private extension DefaultProfileViewModel {
+	enum Appearance {
+		static let mockUrls: [URL?] = [
+			URL(string: "https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/382f1545-aa14-4a7f-8f89-a1afb4656923/3840x"),
+			URL(string: "https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/6a1e205b-1fa4-480e-a57d-a14415362b96/3840x"),
+			URL(string: "https://code.s3.yandex.net/landings-v2-ios-developer/space.PNG")
+		]
 	}
 }
