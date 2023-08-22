@@ -2,7 +2,48 @@ import UIKit
 import Kingfisher
 
 final class NftItemCell: UICollectionViewCell {
-	fileprivate static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
+	fileprivate var imageUrl: URL? {
+		didSet { updateAvatarImageByUrl(imageUrl) }
+	}
+
+	fileprivate var isFavorite = false {
+		didSet {
+			likeButton.tintColor = isFavorite
+			? Theme.color(usage: .red)
+			: Theme.color(usage: .allDayWhite)
+		}
+	}
+
+	fileprivate var onTapFavorite: (() -> Void)? {
+		didSet { likeButton.event = onTapFavorite }
+	}
+
+	fileprivate var rating: Int = .zero {
+		didSet { ratingView.update(with: rating) }
+	}
+
+	fileprivate var titleText: String = "" {
+		didSet { titleLabel.text = titleText }
+	}
+
+	fileprivate var price: Double = .zero {
+		didSet { priceLabel.text = "\(price) ETN" }
+	}
+
+	fileprivate var isInCart = false {
+		didSet {
+			cartButton.setBackgroundImage(
+				isInCart
+				? Theme.image(kind: .deleteFromCartIcon)
+				: Theme.image(kind: .addToCartIcon),
+				for: .normal
+			)
+		}
+	}
+
+	fileprivate var onTapInCart: (() -> Void)? {
+		didSet { cartButton.event = onTapInCart }
+	}
 
 	// MARK: - UI Elements
 
@@ -18,6 +59,7 @@ final class NftItemCell: UICollectionViewCell {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 
+		applyStyle()
 		setConstraints()
 	}
 
@@ -30,14 +72,14 @@ final class NftItemCell: UICollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
+		avatarImageView.kf.cancelDownloadTask()
+
 		avatarImageView.image = nil
 		likeButton.tintColor = Theme.color(usage: .allDayWhite)
 		ratingView.update(with: .zero)
 		titleLabel.text = nil
 		priceLabel.text = nil
 		cartButton.setBackgroundImage(Theme.image(kind: .addToCartIcon), for: .normal)
-
-		avatarImageView.kf.cancelDownloadTask()
 	}
 }
 
@@ -58,40 +100,22 @@ struct NftItemCellModel {
 
 extension NftItemCellModel: ICellViewModel {
 	func setup(cell: NftItemCell) {
-		cell.avatarImageView.kf.setImage(
-			with: avatarImageURL,
-			placeholder: NftItemCell.imagePlaceholder,
-			options: [.transition(.fade(0.2))]
-		) { [weak cell] result in
-			guard let cell = cell else { return }
-			if case .failure = result {
-				cell.avatarImageView.image = NftItemCell.imagePlaceholder
-			}
-		}
-
-		cell.likeButton.tintColor = isFavorite
-		? Theme.color(usage: .red)
-		: Theme.color(usage: .allDayWhite)
-		cell.likeButton.event = {
-			onTapFavorite?()
-		}
-		cell.ratingView.update(with: rating)
-		cell.titleLabel.text = title
-		cell.priceLabel.text = "\(price) ETN"
-		cell.cartButton.setBackgroundImage(
-			isInCart
-			? Theme.image(kind: .deleteFromCartIcon)
-			: Theme.image(kind: .addToCartIcon),
-			for: .normal
-		)
-		cell.cartButton.event = {
-			onTapInCart?()
-		}
+		cell.imageUrl = avatarImageURL
+		cell.isFavorite = isFavorite
+		cell.onTapFavorite = onTapFavorite
+		cell.rating = rating
+		cell.titleText = title
+		cell.price = price
+		cell.isInCart = isInCart
+		cell.onTapInCart = onTapInCart
 	}
 }
 
 // MARK: - UI
 private extension NftItemCell {
+	func applyStyle() {
+		contentView.backgroundColor = Theme.color(usage: .white)
+	}
 	func setConstraints() {
 		let avatarContainer = UIView()
 		[
@@ -110,8 +134,12 @@ private extension NftItemCell {
 		leftVStack.axis = .vertical
 		leftVStack.spacing = Theme.spacing(usage: .standardHalf)
 		leftVStack.alignment = .leading
-		titleLabel.makeConstraints { [$0.heightAnchor.constraint(equalToConstant: 22)] }
-		priceLabel.makeConstraints { [$0.heightAnchor.constraint(equalToConstant: 12)] }
+		titleLabel.makeConstraints {
+			[$0.heightAnchor.constraint(equalToConstant: Appearance.titleLabelHeight)]
+		}
+		priceLabel.makeConstraints {
+			[$0.heightAnchor.constraint(equalToConstant: Appearance.priceLabelHeight)]
+		}
 
 		let bottomHStack = UIStackView(arrangedSubviews: [leftVStack, cartButton])
 		bottomHStack.alignment = .center
@@ -125,8 +153,10 @@ private extension NftItemCell {
 			ratingView,
 			bottomHStack
 		].forEach { mainVStack.addArrangedSubview($0) }
-		mainVStack.setCustomSpacing(5, after: ratingView)
-		avatarContainer.makeConstraints { [$0.heightAnchor.constraint(equalTo: $0.widthAnchor, multiplier: 1)] }
+		mainVStack.setCustomSpacing(Appearance.stackCustomSpacing, after: ratingView)
+		avatarContainer.makeConstraints {
+			[$0.heightAnchor.constraint(equalTo: $0.widthAnchor, multiplier: 1)]
+		}
 
 		bottomHStack.makeConstraints { make in
 			[
@@ -185,5 +215,26 @@ private extension NftItemCell {
 		button.tintColor = Theme.color(usage: .black)
 
 		return button
+	}
+}
+
+private extension NftItemCell {
+	enum Appearance {
+		static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
+		static let titleLabelHeight = 22.0
+		static let priceLabelHeight = 12.0
+		static let stackCustomSpacing = 5.0
+	}
+
+	func updateAvatarImageByUrl(_ url: URL?) {
+		avatarImageView.kf.setImage(
+			with: url,
+			placeholder: Appearance.imagePlaceholder,
+			options: [.transition(.fade(0.2))]
+		) { [weak self] result in
+			if case .failure = result {
+				self?.avatarImageView.image = Appearance.imagePlaceholder
+			}
+		}
 	}
 }

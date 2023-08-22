@@ -2,12 +2,17 @@ import UIKit
 import Kingfisher
 
 final class CollectionItemCell: UITableViewCell {
-	fileprivate static let imageWidth = UIScreen.main.bounds.width - 32
-	fileprivate static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
+	fileprivate var imageUrl: URL? {
+		didSet { updateCoverImageByUrl(imageUrl) }
+	}
+
+	fileprivate var descriptionText: String = "" {
+		didSet { descriptionLabel.text = descriptionText }
+	}
 
 	// MARK: - UI Elements
-	lazy var coverImageView: UIImageView = makeCoverImageView()
-	fileprivate lazy var descriptionLabel: UILabel = makeDescriptionLabel()
+	private lazy var coverImageView: UIImageView = makeCoverImageView()
+	private lazy var descriptionLabel: UILabel = makeDescriptionLabel()
 
 	// MARK: - Inits
 
@@ -27,10 +32,10 @@ final class CollectionItemCell: UITableViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
+		coverImageView.kf.cancelDownloadTask()
+
 		coverImageView.image = nil
 		descriptionLabel.text = nil
-
-		coverImageView.kf.cancelDownloadTask()
 	}
 }
 
@@ -45,23 +50,8 @@ struct CollectionItemCellModel {
 
 extension CollectionItemCellModel: ICellViewModel {
 	func setup(cell: CollectionItemCell) {
-
-		cell.descriptionLabel.text = description
-		cell.coverImageView.kf.setImage(
-			with: imageURL,
-			placeholder: CollectionItemCell.imagePlaceholder,
-			options: [.transition(.fade(0.2))]
-		) { [weak cell] result in
-			guard let cell = cell else { return }
-			switch result {
-			case .success(let value):
-				cell.coverImageView.image = value.image
-					.resize(withWidth: CollectionItemCell.imageWidth)
-			case .failure:
-				cell.coverImageView.image = CollectionItemCell.imagePlaceholder
-				cell.contentMode = .center
-			}
-		}
+		cell.imageUrl = imageURL
+		cell.descriptionText = description
 	}
 }
 
@@ -75,11 +65,15 @@ private extension CollectionItemCell {
 		vStack.axis = .vertical
 		vStack.spacing = Theme.spacing(usage: .standardHalf)
 
-		coverImageView.makeConstraints { [$0.heightAnchor.constraint(equalToConstant: 140)] }
-		descriptionLabel.makeConstraints { [$0.heightAnchor.constraint(equalToConstant: 22)] }
+		coverImageView.makeConstraints {
+			[$0.heightAnchor.constraint(equalToConstant: Appearance.coverHeight)]
+		}
+		descriptionLabel.makeConstraints {
+			[$0.heightAnchor.constraint(equalToConstant: Appearance.labelHeight)]
+		}
 
 		contentView.addSubview(vStack)
-		vStack.makeEqualToSuperview(insets: .init(top: .zero, left: 16, bottom: 21, right: 16))
+		vStack.makeEqualToSuperview(insets: Appearance.contentInsets)
 	}
 }
 
@@ -101,5 +95,38 @@ private extension CollectionItemCell {
 		label.textColor = Theme.color(usage: .main)
 
 		return label
+	}
+}
+
+private extension CollectionItemCell {
+	enum Appearance {
+		static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
+		static let imageWidth = UIScreen.main.bounds.width - 32.0
+		static let coverHeight = 140.0
+		static let labelHeight = 22.0
+		static let contentInsets: UIEdgeInsets = .init(
+			top: .zero,
+			left: 16,
+			bottom: 21,
+			right: 16
+		)
+	}
+
+	func updateCoverImageByUrl(_ url: URL?) {
+		coverImageView.kf.setImage(
+			with: url,
+			placeholder: Appearance.imagePlaceholder,
+			options: [.transition(.fade(0.2))]
+		) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let value):
+				self.coverImageView.image = value.image
+					.resize(withWidth: Appearance.imageWidth)
+			case .failure:
+				self.coverImageView.image = Appearance.imagePlaceholder
+				self.contentMode = .center
+			}
+		}
 	}
 }

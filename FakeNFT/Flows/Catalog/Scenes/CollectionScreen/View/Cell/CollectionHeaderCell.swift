@@ -2,23 +2,37 @@ import UIKit
 import Kingfisher
 
 final class CollectionHeaderCell: UICollectionViewCell {
-	fileprivate static let imageWidth = UIScreen.main.bounds.width
-	fileprivate static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
+	fileprivate var imageUrl: URL? {
+		didSet { updateCoverImageByUrl(imageUrl) }
+	}
+
+	fileprivate var titleText: String = "" {
+		didSet { titleLabel.text = titleText }
+	}
+
+	fileprivate var authorText: NSAttributedString? {
+		didSet { authorLabel.attributedText = authorText }
+	}
+
+	fileprivate var descriptionText: String = "" {
+		didSet { descriptionLabel.text = descriptionText }
+	}
+
+	fileprivate var onTapAuthor: (() -> Void)?
 
 	// MARK: - UI Elements
 
-	fileprivate lazy var coverImageView: UIImageView = makeCoverImageView()
-	fileprivate lazy var titleLabel: UILabel = makeTitleLabel()
-	fileprivate lazy var authorLabel: UILabel = makeAuthorLabel()
-	fileprivate lazy var descriptionLabel: UILabel = makeDescriptionLabel()
-
-	fileprivate var onTapAuthor: (() -> Void)?
+	private lazy var coverImageView: UIImageView = makeCoverImageView()
+	private lazy var titleLabel: UILabel = makeTitleLabel()
+	private lazy var authorLabel: UILabel = makeAuthorLabel()
+	private lazy var descriptionLabel: UILabel = makeDescriptionLabel()
 
 	// MARK: - Inits
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 
+		applyStyle()
 		setConstraints()
 	}
 
@@ -30,12 +44,13 @@ final class CollectionHeaderCell: UICollectionViewCell {
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
+
+		coverImageView.kf.cancelDownloadTask()
+
 		coverImageView.image = nil
 		titleLabel.text = nil
 		authorLabel.attributedText = nil
 		descriptionLabel.text = nil
-
-		coverImageView.kf.cancelDownloadTask()
 	}
 }
 
@@ -73,46 +88,35 @@ extension CollectionHeaderCellModel: ICellViewModel {
 			linkText: author
 		)
 
-		cell.coverImageView.kf.setImage(
-			with: imageURL,
-			placeholder: CollectionHeaderCell.imagePlaceholder,
-			options: [.transition(.fade(0.2))]
-		) { [weak cell] result in
-			guard let cell = cell else { return }
-			switch result {
-			case .success(let value):
-				cell.coverImageView.image = value.image
-					.resize(withWidth: CollectionHeaderCell.imageWidth)
-			case .failure:
-				cell.coverImageView.image = CollectionHeaderCell.imagePlaceholder
-				cell.contentMode = .center
-			}
-		}
+		cell.imageUrl = imageURL
 
-		cell.titleLabel.text = title
-		cell.authorLabel.attributedText = makeLinkInsideText(data: data)
-		cell.descriptionLabel.text = description
+		cell.titleText = title
+		cell.authorText = makeLinkInsideText(data: data)
+		cell.descriptionText = description
 		cell.onTapAuthor = onTapAuthor
 	}
 }
 
 // MARK: - UI
 private extension CollectionHeaderCell {
+	func applyStyle() {
+		contentView.backgroundColor = Theme.color(usage: .white)
+	}
 	func setConstraints() {
 		let vStack = UIStackView()
 		vStack.axis = .vertical
 		vStack.alignment = .leading
-		vStack.spacing = 13
+		vStack.spacing = Appearance.textStackSpacing
 		[
 			titleLabel,
 			authorLabel,
 			descriptionLabel
 		].forEach { vStack.addArrangedSubview($0) }
-		vStack.setCustomSpacing(5, after: authorLabel)
+		vStack.setCustomSpacing(Appearance.stackCustomSpacing, after: authorLabel)
 
 		let view = UIView()
 		view.addSubview(vStack)
-		vStack.makeEqualToSuperview(insets: .init(horizontal: Theme.spacing(usage: .standard2), vertical: .zero))
+		vStack.makeEqualToSuperview(insets: Appearance.textContentInsets)
 
 		let mainVStack = UIStackView(arrangedSubviews: [coverImageView, view])
 		mainVStack.axis = .vertical
@@ -185,5 +189,36 @@ private extension CollectionHeaderCellModel {
 		attributedText.addAttribute(.foregroundColor, value: data.linkColor, range: linkRange)
 
 		return attributedText
+	}
+}
+
+private extension CollectionHeaderCell {
+	enum Appearance {
+		static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
+		static let imageWidth = UIScreen.main.bounds.width
+		static let textStackSpacing = 13.0
+		static let stackCustomSpacing = 5.0
+		static let textContentInsets: UIEdgeInsets = .init(
+			horizontal: Theme.spacing(usage: .standard2),
+			vertical: .zero
+		)
+	}
+
+	func updateCoverImageByUrl(_ url: URL?) {
+		coverImageView.kf.setImage(
+			with: url,
+			placeholder: Appearance.imagePlaceholder,
+			options: [.transition(.fade(0.2))]
+		) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let value):
+				self.coverImageView.image = value.image
+					.resize(withWidth: Appearance.imageWidth)
+			case .failure:
+				self.coverImageView.image = Appearance.imagePlaceholder
+				self.contentMode = .center
+			}
+		}
 	}
 }
