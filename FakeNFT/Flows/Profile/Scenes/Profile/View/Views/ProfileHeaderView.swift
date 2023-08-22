@@ -2,7 +2,6 @@ import UIKit
 import Kingfisher
 
 final class ProfileHeaderView: UIView {
-	private let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
 
 	// MARK: - UI Elements
 	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
@@ -24,7 +23,7 @@ final class ProfileHeaderView: UIView {
 	}
 }
 
-// MARK: - Data model for cell
+// MARK: - Data model for view
 
 struct ProfileHeaderViewModel {
 	let url: URL?
@@ -38,7 +37,7 @@ extension ProfileHeaderView {
 	func update(with profile: Profile) -> Self {
 		avatarImageView.kf.setImage(
 			with: profile.avatar,
-			placeholder: imagePlaceholder,
+			placeholder: Appearance.imagePlaceholder,
 			options: [
 				.transition(.fade(0.2)),
 				.cacheSerializer(FormatIndicatedCacheSerializer.png)
@@ -46,7 +45,7 @@ extension ProfileHeaderView {
 		) { [weak self] result in
 			guard let self = self else { return }
 			if case .failure = result {
-				self.avatarImageView.image = self.imagePlaceholder
+				self.avatarImageView.image = Appearance.imagePlaceholder
 			}
 		}
 		titleLabel.text = profile.name
@@ -58,7 +57,7 @@ extension ProfileHeaderView {
 
 	@discardableResult
 	func update(with model: ProfileHeaderViewModel) -> Self {
-		avatarImageView.image = imagePlaceholder
+		avatarImageView.image = Appearance.imagePlaceholder
 		avatarImageView.layer.borderColor = Theme.color(usage: .black).cgColor
 		avatarImageView.layer.borderWidth = Appearance.avatarBorderWidth
 		titleLabel.text = model.title
@@ -135,6 +134,7 @@ private extension ProfileHeaderView {
 
 private extension ProfileHeaderView {
 	enum Appearance {
+		static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
 		static let avatarSize: CGSize = .init(width: 70, height: 70)
 		static let avatarCornerRadius = 35.0
 		static let avatarBorderWidth = 1.0
