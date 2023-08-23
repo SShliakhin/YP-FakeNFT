@@ -104,11 +104,19 @@ private extension MyNftsItemCell {
 		let middleVStack = makeMiddleVStack()
 		let priceVStack = makePriceVStack()
 
+		let textHStack = UIStackView(
+			arrangedSubviews: [
+				middleVStack,
+				UIView(),
+				priceVStack
+			]
+		)
+		textHStack.alignment = .center
+
 		let mainHStack = UIStackView(
 			arrangedSubviews: [
 				avatarContainer,
-				middleVStack,
-				priceVStack
+				textHStack
 			]
 		)
 		mainHStack.alignment = .center
