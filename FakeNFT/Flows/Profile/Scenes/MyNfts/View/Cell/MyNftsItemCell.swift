@@ -22,7 +22,7 @@ final class MyNftsItemCell: UITableViewCell {
 		didSet { authorLabel.text = author }
 	}
 	fileprivate var price: String = "" {
-		didSet { priceLabel.text = "\(price) ETN" }
+		didSet { priceLabel.text = price }
 	}
 	fileprivate var onTapFavorite: (() -> Void)? {
 		didSet { likeButton.event = onTapFavorite }
@@ -288,7 +288,7 @@ struct MyNftsItemCellProvider: PreviewProvider {
 			title: "Lilo",
 			rating: 3,
 			author: "John Doe",
-			price: "1,78",
+			price: Theme.getPriceStringFromDouble(1.78),
 			onTapFavorite: nil
 		)
 		let cell = MyNftsItemCell()

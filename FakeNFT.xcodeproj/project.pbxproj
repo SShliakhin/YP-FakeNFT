@@ -68,11 +68,14 @@
 		5A51DA062A85C3CA00235E7D /* SortCollectionsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */; };
 		5A51DA172A87215600235E7D /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA162A87215600235E7D /* UIImage+.swift */; };
 		5A7EA4592A8F38EE004C5402 /* GetNftsProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA4582A8F38EE004C5402 /* GetNftsProfileUseCase.swift */; };
-		5A7EA45B2A8F7BD8004C5402 /* SortMyNtfsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45A2A8F7BD8004C5402 /* SortMyNtfsBy.swift */; };
+		5A7EA45B2A8F7BD8004C5402 /* SortMyNftsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */; };
 		5A7EA45D2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */; };
 		5A7EA45F2A8FE83B004C5402 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45E2A8FE83B004C5402 /* ProfileViewModel.swift */; };
 		5A7EA4612A8FEA99004C5402 /* ProfileItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA4602A8FEA99004C5402 /* ProfileItemCell.swift */; };
 		5A97DED02A95FC31009EEB30 /* NavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97DECF2A95FC31009EEB30 /* NavBarView.swift */; };
+		5A97DED32A962044009EEB30 /* MyNftsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97DED22A962044009EEB30 /* MyNftsViewModel.swift */; };
+		5A97DED52A964AC2009EEB30 /* GetAuthorsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97DED42A964AC2009EEB30 /* GetAuthorsUseCase.swift */; };
+		5A97DED72A9664BD009EEB30 /* Theme+NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97DED62A9664BD009EEB30 /* Theme+NumberFormatter.swift */; };
 		5AA339812A956CD9002C2C8E /* FavoriteItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA339802A956CD9002C2C8E /* FavoriteItemCell.swift */; };
 		5AA5C8BA2A88D12100510684 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C8B92A88D12100510684 /* WebViewController.swift */; };
 		5AA5C8BC2A88F58700510684 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C8BB2A88F58700510684 /* WebViewModel.swift */; };
@@ -179,11 +182,14 @@
 		5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCollectionsBy.swift; sourceTree = "<group>"; };
 		5A51DA162A87215600235E7D /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		5A7EA4582A8F38EE004C5402 /* GetNftsProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNftsProfileUseCase.swift; sourceTree = "<group>"; };
-		5A7EA45A2A8F7BD8004C5402 /* SortMyNtfsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortMyNtfsBy.swift; sourceTree = "<group>"; };
+		5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortMyNftsBy.swift; sourceTree = "<group>"; };
 		5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSetSortMyNtfsOptionUseCase.swift; sourceTree = "<group>"; };
 		5A7EA45E2A8FE83B004C5402 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		5A7EA4602A8FEA99004C5402 /* ProfileItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileItemCell.swift; sourceTree = "<group>"; };
 		5A97DECF2A95FC31009EEB30 /* NavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarView.swift; sourceTree = "<group>"; };
+		5A97DED22A962044009EEB30 /* MyNftsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNftsViewModel.swift; sourceTree = "<group>"; };
+		5A97DED42A964AC2009EEB30 /* GetAuthorsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAuthorsUseCase.swift; sourceTree = "<group>"; };
+		5A97DED62A9664BD009EEB30 /* Theme+NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme+NumberFormatter.swift"; sourceTree = "<group>"; };
 		5AA339802A956CD9002C2C8E /* FavoriteItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItemCell.swift; sourceTree = "<group>"; };
 		5AA5C8B92A88D12100510684 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		5AA5C8BB2A88F58700510684 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
@@ -406,6 +412,7 @@
 			isa = PBXGroup;
 			children = (
 				5A04699E2A7BC8980026D783 /* ProfileFlow.swift */,
+				5A97DED62A9664BD009EEB30 /* Theme+NumberFormatter.swift */,
 				5A97DECE2A95FC0E009EEB30 /* Views */,
 				5A0D32142A8E788700EF98F5 /* Data */,
 				5A0D32172A8E7A5C00EF98F5 /* UseCase */,
@@ -523,6 +530,7 @@
 				5A0D321E2A8E871100EF98F5 /* GetLikesProfileUseCase.swift */,
 				5A0D32202A8E879000EF98F5 /* PutLikesProfileUseCase.swift */,
 				5A7EA4582A8F38EE004C5402 /* GetNftsProfileUseCase.swift */,
+				5A97DED42A964AC2009EEB30 /* GetAuthorsUseCase.swift */,
 				5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */,
 			);
 			path = UseCases;
@@ -542,6 +550,14 @@
 				5A97DECF2A95FC31009EEB30 /* NavBarView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5A97DED12A962026009EEB30 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5A97DED22A962044009EEB30 /* MyNftsViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		5AA3397D2A956C17002C2C8E /* Favorites */ = {
@@ -614,7 +630,7 @@
 				5AAB67752A81435700E95CB2 /* Author.swift */,
 				5AAB67772A81462200E95CB2 /* NftIDs.swift */,
 				5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */,
-				5A7EA45A2A8F7BD8004C5402 /* SortMyNtfsBy.swift */,
+				5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */,
 				5A0D32102A8DF60F00EF98F5 /* Profile.swift */,
 			);
 			path = Model;
@@ -623,6 +639,7 @@
 		5ABCAE7A2A952C940023C5C2 /* MyNfts */ = {
 			isa = PBXGroup;
 			children = (
+				5A97DED12A962026009EEB30 /* ViewModel */,
 				5ABCAE7B2A952CB90023C5C2 /* View */,
 			);
 			path = MyNfts;
@@ -880,11 +897,13 @@
 				5AAB67722A81314E00E95CB2 /* Collection.swift in Sources */,
 				5A04698F2A7ABE180026D783 /* ProfileViewController.swift in Sources */,
 				5AAB67782A81462200E95CB2 /* NftIDs.swift in Sources */,
+				5A97DED32A962044009EEB30 /* MyNftsViewModel.swift in Sources */,
 				5AA5C8BC2A88F58700510684 /* WebViewModel.swift in Sources */,
 				5A0469782A7ABCC50026D783 /* UIViewController+Preview.swift in Sources */,
 				5A04697C2A7ABCC50026D783 /* UIViewController+hideKeyboard.swift in Sources */,
 				5AB4D8792A7D3C6A00E1757D /* Theme+Images.swift in Sources */,
 				5A0469752A7ABCC50026D783 /* UIView+Constraints.swift in Sources */,
+				5A97DED72A9664BD009EEB30 /* Theme+NumberFormatter.swift in Sources */,
 				5A0469832A7ABCC50026D783 /* ICellViewModel.swift in Sources */,
 				5AAB676B2A812D1A00E95CB2 /* ProfileDTO.swift in Sources */,
 				5A0469972A7ACCAB0026D783 /* AppAppearance.swift in Sources */,
@@ -917,7 +936,7 @@
 				5A51DA172A87215600235E7D /* UIImage+.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				5ABCAE7E2A952D7E0023C5C2 /* MyNftsItemCell.swift in Sources */,
-				5A7EA45B2A8F7BD8004C5402 /* SortMyNtfsBy.swift in Sources */,
+				5A7EA45B2A8F7BD8004C5402 /* SortMyNftsBy.swift in Sources */,
 				5A7EA45D2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift in Sources */,
 				5A04697E2A7ABCC50026D783 /* UITableView+Extensions.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
@@ -929,6 +948,7 @@
 				5A04696A2A7ABCC50026D783 /* APIError.swift in Sources */,
 				5A0469812A7ABCC50026D783 /* ILoadWithProgressHUD.swift in Sources */,
 				5A0D320F2A8DD7CD00EF98F5 /* Theme+Localizable.swift in Sources */,
+				5A97DED52A964AC2009EEB30 /* GetAuthorsUseCase.swift in Sources */,
 				5A04697A2A7ABCC50026D783 /* UIView+Animations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

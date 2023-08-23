@@ -95,6 +95,7 @@ enum FakeNFTError: Error {
 	case brokenLikes
 	case brokenOrder
 	case noProfile
+	case noAuthors
 }
 
 extension FakeNFTError: CustomStringConvertible {
@@ -118,6 +119,8 @@ extension FakeNFTError: CustomStringConvertible {
 			return Theme.NetworkError.brokenOrder
 		case .noProfile:
 			return Theme.NetworkError.noProfile
+		case .noAuthors:
+			return Theme.NetworkError.noAuthors
 		}
 	}
 

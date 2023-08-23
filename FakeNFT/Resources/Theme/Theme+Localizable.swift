@@ -101,6 +101,12 @@ extension Theme {
 				comment: "Ошибка сети: Профайл не получен."
 			)
 		}
+		static var noAuthors: String {
+			NSLocalizedString(
+				"error.noAuthors",
+				comment: "Ошибка сети: Авторы не получены."
+			)
+		}
 	}
 
 	enum Profile {
