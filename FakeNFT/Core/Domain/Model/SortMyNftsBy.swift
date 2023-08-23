@@ -1,10 +1,10 @@
-enum SortMyNtfsBy: String {
+enum SortMyNftsBy: String {
 	case name
 	case price
 	case rating
 }
 
-extension SortMyNtfsBy: CustomStringConvertible {
+extension SortMyNftsBy: CustomStringConvertible {
 	var description: String {
 		switch self {
 		case .name:
