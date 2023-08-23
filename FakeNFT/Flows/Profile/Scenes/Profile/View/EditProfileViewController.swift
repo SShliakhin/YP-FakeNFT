@@ -385,10 +385,10 @@ extension EditProfileViewController {
 			from: responderView.superview
 		)
 		let textBoxY = convertedResponderViewFrame.origin.y
-		let responderViewBottomY = textBoxY + convertedResponderViewFrame.size.height
 
 		// почему то TextView не попадает под этот критерий
 		// убрал проверку, чтобы VC всегда подымался
+		// let responderViewBottomY = textBoxY + convertedResponderViewFrame.size.height
 		// if responderViewBottomY > keyboardTopY {
 			let newFrameY = (textBoxY - keyboardTopY / 2) * -1
 			view.frame.origin.y = newFrameY
@@ -406,15 +406,14 @@ struct EditProfileViewControllerProvider: PreviewProvider {
 	static var previews: some View {
 		let dep = DefaultProfileViewModel.Dependencies(
 			getProfile: ProfileUseCaseProvider.instance.getProfile,
-			putProfile: ProfileUseCaseProvider.instance.putProfile,
-			myNFTsVM: MyNFTsViewModel(),
-			favoritesVM: FavoritesViewModel()
+			putProfile: ProfileUseCaseProvider.instance.putProfile
 		)
 		let viewModel: ProfileViewModel = DefaultProfileViewModel(dep: dep)
 		let editProfileViewController = EditProfileViewController(viewModel: viewModel)
 		editProfileViewController.updateItems(with: Profile(
 			name: "Joaquin Phoenix", // Студентус Практикумус
 			avatar: URL(string: "https://code.s3.yandex.net/landings-v2-ios-developer/space.PNG"),
+			// swiftlint:disable:next line_length
 			description: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям.",
 			website: URL(string: "Joaquin_Phoenix.com"),
 			nfts: [],
