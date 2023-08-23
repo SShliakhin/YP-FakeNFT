@@ -88,8 +88,8 @@ struct ProfileFlow: IFlow {
 	}
 
 	func makeSortAlertVC(
-		sortCases: [SortMyNtfsBy],
-		completion: @escaping (SortMyNtfsBy) -> Void
+		sortCases: [SortMyNftsBy],
+		completion: @escaping (SortMyNftsBy) -> Void
 	) -> UIViewController {
 		let alert = UIAlertController(
 			title: Theme.AlertTitles.sortTitle,

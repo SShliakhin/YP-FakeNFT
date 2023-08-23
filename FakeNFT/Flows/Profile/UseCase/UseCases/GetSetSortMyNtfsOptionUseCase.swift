@@ -1,9 +1,9 @@
 protocol SortMyNtfsOptionOut {
-	var sortBy: SortMyNtfsBy { get }
+	var sortBy: SortMyNftsBy { get }
 }
 
 protocol SortMyNtfsOptionIn {
-	func setOption(_ kind: SortMyNtfsBy)
+	func setOption(_ kind: SortMyNftsBy)
 }
 
 final class GetSetSortMyNtfsOptionUseCase {
@@ -13,8 +13,8 @@ final class GetSetSortMyNtfsOptionUseCase {
 
 // MARK: - SortMyNtfsOptionOut
 extension GetSetSortMyNtfsOptionUseCase: SortMyNtfsOptionOut {
-	var sortBy: SortMyNtfsBy {
-		guard let kind: SortMyNtfsBy = .init(rawValue: sortOption) else {
+	var sortBy: SortMyNftsBy {
+		guard let kind: SortMyNftsBy = .init(rawValue: sortOption) else {
 			return .name
 		}
 		return kind
@@ -23,7 +23,7 @@ extension GetSetSortMyNtfsOptionUseCase: SortMyNtfsOptionOut {
 
 // MARK: - SortMyNtfsOptionIn
 extension GetSetSortMyNtfsOptionUseCase: SortMyNtfsOptionIn {
-	func setOption(_ kind: SortMyNtfsBy) {
+	func setOption(_ kind: SortMyNftsBy) {
 		sortOption = kind.rawValue
 	}
 }
