@@ -7,6 +7,7 @@ struct Nft {
 	let rating: Int
 	let images: [URL]
 	let price: Double
+	let authorID: String
 
 	var cover: URL? {
 		images.first
@@ -27,5 +28,6 @@ extension Nft {
 			.compactMap { URL(string: $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
 			} ?? []
 		self.price = dto.price ?? 0
+		self.authorID = dto.author
 	}
 }
