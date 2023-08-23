@@ -37,8 +37,6 @@ extension NavBarView {
 		goBackButton.event = data.onTapGoBackButton
 		sortButton.event = data.onTapSortButton
 
-		setConstraints()
-
 		return self
 	}
 }
@@ -52,21 +50,18 @@ private extension NavBarView {
 		let stack = UIStackView(
 			arrangedSubviews: [
 				goBackButton,
+				UIView(),
 				titleLabel,
+				UIView(),
 				sortButton
 			]
 		)
 		stack.alignment = .center
-		stack.spacing = Theme.spacing(usage: .standard3)
-		stack.setCustomSpacing(Appearance.stackCustomSpacing, after: titleLabel)
 
 		goBackButton.makeConstraints { $0.size(Appearance.goBackButtonSize) }
 		sortButton.makeConstraints { $0.size(Appearance.sortButtonSize) }
-
-		if goBackButton.isHidden || sortButton.isHidden {
-			titleLabel.makeConstraints {
-				[$0.centerXAnchor.constraint(equalTo: stack.centerXAnchor)]
-			}
+		titleLabel.makeConstraints {
+			[$0.centerXAnchor.constraint(equalTo: stack.centerXAnchor)]
 		}
 
 		addSubview(stack)
@@ -87,7 +82,12 @@ private extension NavBarView {
 
 	func makeGoBackButton() -> UIButton {
 		let button = UIButton(type: .custom)
-		button.setImage(Theme.image(kind: .goBack), for: .normal)
+
+		let semibold = UIImage.SymbolConfiguration(weight: .semibold)
+		button.setImage(
+			Theme.image(kind: .goBack).withConfiguration(semibold),
+			for: .normal
+		)
 		button.tintColor = Theme.color(usage: .black)
 
 		return button
@@ -108,7 +108,6 @@ private extension NavBarView {
 			horizontal: 9,
 			vertical: .zero
 		)
-		static let stackCustomSpacing = 6.0
 		static let goBackButtonSize: CGSize = .init(width: 24, height: 24)
 		static let sortButtonSize: CGSize = .init(width: 42, height: 42)
 	}
