@@ -72,6 +72,7 @@
 		5A7EA45D2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */; };
 		5A7EA45F2A8FE83B004C5402 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45E2A8FE83B004C5402 /* ProfileViewModel.swift */; };
 		5A7EA4612A8FEA99004C5402 /* ProfileItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA4602A8FEA99004C5402 /* ProfileItemCell.swift */; };
+		5A97DED02A95FC31009EEB30 /* NavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97DECF2A95FC31009EEB30 /* NavBarView.swift */; };
 		5AA339812A956CD9002C2C8E /* FavoriteItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA339802A956CD9002C2C8E /* FavoriteItemCell.swift */; };
 		5AA5C8BA2A88D12100510684 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C8B92A88D12100510684 /* WebViewController.swift */; };
 		5AA5C8BC2A88F58700510684 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C8BB2A88F58700510684 /* WebViewModel.swift */; };
@@ -182,6 +183,7 @@
 		5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSetSortMyNtfsOptionUseCase.swift; sourceTree = "<group>"; };
 		5A7EA45E2A8FE83B004C5402 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		5A7EA4602A8FEA99004C5402 /* ProfileItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileItemCell.swift; sourceTree = "<group>"; };
+		5A97DECF2A95FC31009EEB30 /* NavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarView.swift; sourceTree = "<group>"; };
 		5AA339802A956CD9002C2C8E /* FavoriteItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItemCell.swift; sourceTree = "<group>"; };
 		5AA5C8B92A88D12100510684 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		5AA5C8BB2A88F58700510684 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				5A04699E2A7BC8980026D783 /* ProfileFlow.swift */,
+				5A97DECE2A95FC0E009EEB30 /* Views */,
 				5A0D32142A8E788700EF98F5 /* Data */,
 				5A0D32172A8E7A5C00EF98F5 /* UseCase */,
 				5A0D32182A8E7A8100EF98F5 /* Scenes */,
@@ -529,6 +532,14 @@
 			isa = PBXGroup;
 			children = (
 				5A0823AD2A83C2190047A8AC /* RatingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5A97DECE2A95FC0E009EEB30 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5A97DECF2A95FC31009EEB30 /* NavBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -902,6 +913,7 @@
 				5A04697D2A7ABCC50026D783 /* UIColor+Dynamic.swift in Sources */,
 				5A0469902A7ABE180026D783 /* ShoppingCartViewController.swift in Sources */,
 				5A0D321F2A8E871100EF98F5 /* GetLikesProfileUseCase.swift in Sources */,
+				5A97DED02A95FC31009EEB30 /* NavBarView.swift in Sources */,
 				5A51DA172A87215600235E7D /* UIImage+.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				5ABCAE7E2A952D7E0023C5C2 /* MyNftsItemCell.swift in Sources */,
