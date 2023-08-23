@@ -1,13 +1,5 @@
 import UIKit
 
-final class MyNFTsViewModel {
-	var nfts: Observable<[String]> = Observable([])
-}
-
-final class FavoritesViewModel {
-	var likes: Observable<[String]> = Observable([])
-}
-
 struct ProfileFlow: IFlow {
 	func start() -> UIViewController {
 		showProfile()
@@ -16,9 +8,7 @@ struct ProfileFlow: IFlow {
 	func showProfile() -> UIViewController {
 		let dep = DefaultProfileViewModel.Dependencies(
 			getProfile: ProfileUseCaseProvider.instance.getProfile,
-			putProfile: ProfileUseCaseProvider.instance.putProfile,
-			myNFTsVM: MyNFTsViewModel(),
-			favoritesVM: FavoritesViewModel()
+			putProfile: ProfileUseCaseProvider.instance.putProfile
 		)
 		let viewModel: ProfileViewModel = DefaultProfileViewModel(dep: dep)
 		let view = ProfileViewController(viewModel: viewModel)
@@ -66,7 +56,37 @@ struct ProfileFlow: IFlow {
 	}
 
 	func makeMyNftsVC(profile: Profile) -> UIViewController {
-		UIViewController()
+		let dep = DefaultMyNftsViewModel.Dependencies(
+			profile: profile,
+			getMyNfts: ProfileUseCaseProvider.instance.getNfts,
+			getSetSortOption: ProfileUseCaseProvider.instance.getSetSortMyNtfsOption,
+			putLikes: ProfileUseCaseProvider.instance.putLikes,
+			getAuthors: ProfileUseCaseProvider.instance.getAuthors
+		)
+		let viewModel = DefaultMyNftsViewModel(dep: dep)
+		let view = MyNftsViewController(viewModel: viewModel)
+		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
+			switch event {
+			case .showErrorAlert(let message, let withRetry):
+				let alert = makeErrorAlertVC(
+					message: message,
+					completion: withRetry
+					? { viewModel?.didUserDo(request: .retryAction) }
+					: nil
+				)
+				view?.present(alert, animated: true)
+			case .showSortAlert:
+				let alert = makeSortAlertVC(
+					sortCases: [.name, .price, .rating],
+					completion: { viewModel?.didUserDo(request: .selectSortBy($0)) }
+				)
+				view?.present(alert, animated: true)
+			case .close:
+				view?.navigationController?.popViewController(animated: true)
+			}
+		}
+
+		return view
 	}
 
 	func makeFavoritesVC(profile: Profile) -> UIViewController {

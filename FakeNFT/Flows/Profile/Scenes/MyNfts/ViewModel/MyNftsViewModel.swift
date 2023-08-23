@@ -3,13 +3,14 @@ import Foundation
 enum MyNftsEvents {
 	case showErrorAlert(String, withRetry: Bool)
 	case showSortAlert
-	case selectMyNfts
+	case close
 }
 
 enum MyNftsRequest {
 	case selectSort
 	case selectSortBy(SortMyNftsBy)
 	case retryAction
+	case goBack
 }
 
 protocol MyNftsViewModelInput: AnyObject {
@@ -51,9 +52,7 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	var didSendEventClosure: ((MyNftsEvents) -> Void)?
 
 	// MARK: - OUTPUT
-	var items: Observable<[Nft]> = Observable([]) {
-		didSet { fetchAuthors() }
-	}
+	var items: Observable<[Nft]> = Observable([])
 	var authors: Observable<[Author]> = Observable([])
 	var likes: Observable<[String]> = Observable([])
 	var isLoading: Observable<Bool> = Observable(false)
@@ -106,6 +105,8 @@ extension DefaultMyNftsViewModel {
 			switch result {
 			case .success(let nfts):
 				self.items.value = nfts
+				self.sortMyNfts()
+				self.fetchAuthors()
 			case .failure(let error):
 				self.items.value = []
 				self.retryAction = { self.viewIsReady() }
@@ -128,6 +129,8 @@ extension DefaultMyNftsViewModel {
 			sortMyNfts()
 		case .retryAction:
 			retryAction?()
+		case .goBack:
+			didSendEventClosure?(.close)
 		}
 	}
 }
@@ -137,6 +140,8 @@ private extension DefaultMyNftsViewModel {
 		isLoading.value = true
 
 		let authorsID = Array(Set(items.value.map { $0.authorID }))
+		// можно предположить что автор нужен один - такой case реализован в каталоге
+		// добавлю при сливании
 		dependencies.getAuthors.invoke(authorIDs: authorsID) { [weak self] result in
 			guard let self = self else { return }
 

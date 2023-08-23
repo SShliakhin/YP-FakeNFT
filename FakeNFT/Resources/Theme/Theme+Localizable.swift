@@ -176,6 +176,30 @@ extension Theme {
 				comment: "Некоторый текст: Цена"
 			)
 		}
+		static var emptyVCFavorites: String {
+			NSLocalizedString(
+				"profile.emptyVC.favorites",
+				comment: "Сообщение для пустого экрана: У Вас ещё нет избранных NFT"
+			)
+		}
+		static var emptyVCMyNFTs: String {
+			NSLocalizedString(
+				"profile.emptyVC.myNFTs",
+				comment: "Сообщение для пустого экрана: У Вас ещё нет NFT"
+			)
+		}
+		static var titleVCFavorites: String {
+			NSLocalizedString(
+				"profile.titleVC.favorites",
+				comment: "Заголовок экрана: Избранные NFT"
+			)
+		}
+		static var titleVCMyNFTs: String {
+			NSLocalizedString(
+				"profile.titleVC.myNFTs",
+				comment: "Заголовок экрана: Мои NFT"
+			)
+		}
 	}
 
 	enum SortByTitle {
