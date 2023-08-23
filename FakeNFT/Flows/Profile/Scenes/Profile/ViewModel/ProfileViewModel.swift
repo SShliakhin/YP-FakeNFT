@@ -69,8 +69,6 @@ final class DefaultProfileViewModel: ProfileViewModel {
 	struct Dependencies {
 		let getProfile: GetProfileUseCase
 		let putProfile: PutProfileUseCase
-		let myNFTsVM: MyNFTsViewModel
-		let favoritesVM: FavoritesViewModel
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
