@@ -1,6 +1,5 @@
 import Foundation
 
-// TODO: - перенести в Theme
 extension Theme {
 	// MARK: - замена NumberFormatter
 	static func getPriceStringFromDouble(
