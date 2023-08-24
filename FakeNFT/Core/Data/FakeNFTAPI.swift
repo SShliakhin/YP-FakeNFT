@@ -11,7 +11,7 @@ enum FakeNFTAPI {
 
 	case getCollections(SortCollectionsBy)
 	case getCollection(String)
-	case getNFTs
+	case getNFTs(SortMyNftsBy)
 	case getNFT(String)
 	case getOrder
 	case putOrder
@@ -74,6 +74,24 @@ extension FakeNFTAPI: API {
 				]
 			case .nftsCount:
 				return nil
+			}
+		case .getNFTs(let sortBy):
+			switch sortBy {
+			case .name:
+				return [
+					URLQueryItem(name: "sortBy", value: "name"),
+					URLQueryItem(name: "order", value: "asc")
+				]
+			case .price:
+				return [
+					URLQueryItem(name: "sortBy", value: "price"),
+					URLQueryItem(name: "order", value: "desc")
+				]
+			case .rating:
+				return [
+					URLQueryItem(name: "sortBy", value: "rating"),
+					URLQueryItem(name: "order", value: "desc")
+				]
 			}
 		case .getNFTsByAuthor(let id):
 			return [

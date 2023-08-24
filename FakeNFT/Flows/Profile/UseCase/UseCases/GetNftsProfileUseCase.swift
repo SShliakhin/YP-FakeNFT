@@ -2,6 +2,7 @@ import Foundation
 
 protocol GetNftsProfileUseCase {
 	func invoke(nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
+	func invoke(sortBy: SortMyNftsBy, nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
 	func invoke(nftID: String, completion: @escaping (Result<Nft, FakeNFTError>) -> Void)
 }
 
@@ -14,10 +15,14 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 	}
 
 	func invoke(nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void) {
+		invoke(sortBy: .rating, nftIDs: nftIDs, completion: completion)
+	}
+
+	func invoke(sortBy: SortMyNftsBy, nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
-		let resource = FakeNFTAPI.getNFTs
+		let resource = FakeNFTAPI.getNFTs(sortBy)
 		let request = Request(endpoint: resource.url)
 
 		task = network.send(request) { [weak self] ( result: Result<[NftDTO], APIError>) in

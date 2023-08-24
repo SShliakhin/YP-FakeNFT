@@ -94,10 +94,10 @@ extension DefaultMyNftsViewModel {
 	func viewIsReady() {
 		isLoading.value = true
 
-		// первоначально загрузим nfts тем что есть в profile
-		// ??? let sortBy = dependencies.getSetSortOption.sortBy
-		let nftIDs = dependencies.profile.nfts
-		dependencies.getMyNfts.invoke(nftIDs: nftIDs) { [weak self] result in
+		dependencies.getMyNfts.invoke(
+			sortBy: dependencies.getSetSortOption.sortBy, // предсортировка на сервере
+			nftIDs: dependencies.profile.nfts
+		) { [weak self] result in
 			guard let self = self else { return }
 
 			switch result {
