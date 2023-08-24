@@ -6,6 +6,8 @@ enum WebEvents {
 
 enum WebRequest {
 	case goBack
+	case didStartToLoad
+	case didFinishLoading
 }
 
 protocol WebViewModelInput: AnyObject {
@@ -17,6 +19,7 @@ protocol WebViewModelInput: AnyObject {
 
 protocol WebViewModelOutput: AnyObject {
 	var url: Observable<URL?> { get }
+	var isLoading: Observable<Bool> { get }
 }
 
 typealias WebViewModel = (
@@ -35,6 +38,7 @@ final class DefaultWebViewModel: WebViewModel {
 
 	// MARK: - OUTPUT
 	var url: Observable<URL?> = Observable(nil)
+	var isLoading: Observable<Bool> = Observable(false)
 
 	// MARK: - Inits
 
@@ -53,7 +57,12 @@ extension DefaultWebViewModel {
 	func didUserDo(request: WebRequest) {
 		switch request {
 		case .goBack:
+			isLoading.value = false
 			didSendEventClosure?(.close)
+		case .didStartToLoad:
+			isLoading.value = true
+		case .didFinishLoading:
+			isLoading.value = false
 		}
 	}
 }

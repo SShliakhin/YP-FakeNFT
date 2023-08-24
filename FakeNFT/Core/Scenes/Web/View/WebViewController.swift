@@ -1,11 +1,19 @@
 import UIKit
 import WebKit
+import ProgressHUD
 
 final class WebViewController: UIViewController, WKNavigationDelegate {
 	private let viewModel: WebViewModel
 
 	// MARK: - UI Elements
-	private lazy var goBackButton: UIButton = makeGoBackButton()
+	private lazy var navBarView = NavBarView()
+		.update(with: NavBarInputData(
+			title: "",
+			isGoBackButtonHidden: false,
+			isSortButtonHidden: true,
+			onTapGoBackButton: { [weak self] in self?.viewModel.didUserDo(request: .goBack) },
+			onTapSortButton: nil
+		))
 	private lazy var webView: WKWebView = makeWebView()
 
 	// MARK: - Inits
@@ -55,13 +63,20 @@ private extension WebViewController {
 			guard let url = url else { return }
 			self?.webView.load(URLRequest(url: url))
 		}
+		viewModel.isLoading.observe(on: self) { isLoading in
+			isLoading ? ProgressHUD.show() : ProgressHUD.dismiss()
+		}
 	}
 }
 
-// MARK: - Actions
-private extension WebViewController {
-	@objc func didTapGoBackButton(_ sender: Any) {
-		viewModel.didUserDo(request: .goBack)
+// MARK: - WKNavigationDelegate
+
+extension WebViewController {
+	func webView(_ webView: WKWebView, didCommit navigation: WKNavigation) {
+		viewModel.didUserDo(request: .didStartToLoad)
+	}
+	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
+		viewModel.didUserDo(request: .didFinishLoading)
 	}
 }
 
@@ -72,17 +87,20 @@ private extension WebViewController {
 	}
 	func setConstraints() {
 		[
-			webView,
-			goBackButton
+			navBarView,
+			webView
 		].forEach { view.addSubview($0) }
-		webView.makeEqualToSuperviewToSafeArea(insets: .init(top: 42))
-		goBackButton.makeConstraints { $0.size(Theme.size(kind: .small)) }
-		goBackButton.makeConstraints { make in
+		navBarView.makeConstraints { make in
 			[
-				make.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 9),
-				make.topAnchor.constraint(equalTo: view.topAnchor, constant: 55)
+				make.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+				make.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+				make.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+				make.heightAnchor.constraint(equalToConstant: Appearance.navBarViewHeight)
 			]
 		}
+		webView.makeEqualToSuperviewToSafeArea(
+			insets: .init(top: Appearance.navBarViewHeight)
+		)
 	}
 }
 
@@ -103,13 +121,22 @@ private extension WebViewController {
 		webView.navigationDelegate = self
 		webView.allowsBackForwardNavigationGestures = true
 
+		webView.navigationDelegate = self
+
 		// избегаю эффекта резинки - не нравится в темной теме белый фон
 		webView.scrollView.bounces = false
 		// но на нижней границе только так
-		webView.scrollView.contentInset = UIEdgeInsets(
-			top: .zero, left: .zero, bottom: 1, right: .zero
-		)
+		webView.scrollView.contentInset = Appearance.scrollViewContentInset
 
 		return webView
+	}
+}
+
+private extension WebViewController {
+	enum Appearance {
+		static let navBarViewHeight = 42.0
+		static let scrollViewContentInset: UIEdgeInsets = .init(
+			top: .zero, left: .zero, bottom: 1, right: .zero
+		)
 	}
 }
