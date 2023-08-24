@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-final class FavoriteItemCell: UICollectionViewCell {
+final class FavoritesItemCell: UICollectionViewCell {
 	fileprivate var imageUrl: URL? {
 		didSet { updateAvatarImageByUrl(imageUrl) }
 	}
@@ -19,7 +19,7 @@ final class FavoriteItemCell: UICollectionViewCell {
 		didSet { ratingView.update(with: rating) }
 	}
 	fileprivate var price: String = "" {
-		didSet { priceLabel.text = "\(price) ETN" }
+		didSet { priceLabel.text = price }
 	}
 	fileprivate var onTapFavorite: (() -> Void)? {
 		didSet { likeButton.event = onTapFavorite }
@@ -63,7 +63,7 @@ final class FavoriteItemCell: UICollectionViewCell {
 
 // MARK: - Data model for cell
 
-struct FavoriteItemCellModel {
+struct FavoritesItemCellModel {
 	let avatarImageURL: URL?
 	let isFavorite: Bool
 	let title: String
@@ -74,8 +74,8 @@ struct FavoriteItemCellModel {
 
 // MARK: - ICellViewModel
 
-extension FavoriteItemCellModel: ICellViewModel {
-	func setup(cell: FavoriteItemCell) {
+extension FavoritesItemCellModel: ICellViewModel {
+	func setup(cell: FavoritesItemCell) {
 		cell.imageUrl = avatarImageURL
 		cell.isFavorite = isFavorite
 		cell.onTapFavorite = onTapFavorite
@@ -86,7 +86,7 @@ extension FavoriteItemCellModel: ICellViewModel {
 }
 
 // MARK: - UI
-private extension FavoriteItemCell {
+private extension FavoritesItemCell {
 	func applyStyle() {
 		contentView.backgroundColor = Theme.color(usage: .white)
 	}
@@ -152,7 +152,7 @@ private extension FavoriteItemCell {
 }
 
 // MARK: - UI make
-private extension FavoriteItemCell {
+private extension FavoritesItemCell {
 	func makeAvatarImageView() -> UIImageView {
 		let imageView = UIImageView()
 		imageView.contentMode = .scaleAspectFit
@@ -189,7 +189,7 @@ private extension FavoriteItemCell {
 	}
 }
 
-private extension FavoriteItemCell {
+private extension FavoritesItemCell {
 	enum Appearance {
 		static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
 		static let imageSize: CGSize = .init(width: 80, height: 80)
@@ -215,9 +215,9 @@ private extension FavoriteItemCell {
 
 #if canImport(SwiftUI) && DEBUG
 import SwiftUI
-struct FavoriteItemCellProvider: PreviewProvider {
+struct FavoritesItemCellProvider: PreviewProvider {
 	static var previews: some View {
-		let model = FavoriteItemCellModel(
+		let model = FavoritesItemCellModel(
 			avatarImageURL: nil,
 			isFavorite: true,
 			title: "Archie",
@@ -225,10 +225,10 @@ struct FavoriteItemCellProvider: PreviewProvider {
 			price: "1,78",
 			onTapFavorite: nil
 		)
-		let cell = FavoriteItemCell()
+		let cell = FavoritesItemCell()
 		model.setup(cell: cell)
 
-		let model2 = FavoriteItemCellModel(
+		let model2 = FavoritesItemCellModel(
 			avatarImageURL: nil,
 			isFavorite: true,
 			title: "Pixi",
@@ -236,7 +236,7 @@ struct FavoriteItemCellProvider: PreviewProvider {
 			price: "1,78",
 			onTapFavorite: nil
 		)
-		let cell2 = FavoriteItemCell()
+		let cell2 = FavoritesItemCell()
 		model2.setup(cell: cell2)
 
 		return Group {
