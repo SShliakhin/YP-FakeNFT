@@ -1,5 +1,3 @@
-import Foundation
-
 enum MyNftsEvents {
 	case showErrorAlert(String, withRetry: Bool)
 	case showSortAlert

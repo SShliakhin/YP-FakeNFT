@@ -15,6 +15,7 @@ struct ProfileFlow: IFlow {
 		// swiftlint:disable:next closure_body_length
 		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
+
 			case .showErrorAlert(let message, let withRetry):
 				let alert = makeErrorAlertVC(
 					message: message,
@@ -23,16 +24,20 @@ struct ProfileFlow: IFlow {
 					: nil
 				)
 				view?.present(alert, animated: true)
+
 			case .selectEditProfile:
 				guard let viewModel = viewModel else { return }
 				let editProfileView = EditProfileViewController(viewModel: viewModel)
 				view?.present(editProfileView, animated: true)
+
 			case .selectMyNfts(let profile):
 				let myNftsVC = makeMyNftsVC(profile: profile)
 				view?.show(myNftsVC, sender: view)
+
 			case .selectFavorites(let profile):
 				let favoritesVC = makeFavoritesVC(profile: profile)
 				view?.show(favoritesVC, sender: view)
+
 			case .selectAbout(let url):
 				if let url = url {
 					let webViewVC = makeWebViewVC(url: url)
@@ -41,6 +46,7 @@ struct ProfileFlow: IFlow {
 					let alert = makeErrorAlertVC(message: Theme.Profile.incorrectURL)
 					view?.present(alert, animated: true)
 				}
+
 			case .close:
 				view?.presentedViewController?.dismiss(animated: true)
 			}
@@ -67,6 +73,7 @@ struct ProfileFlow: IFlow {
 		let view = MyNftsViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
+
 			case .showErrorAlert(let message, let withRetry):
 				let alert = makeErrorAlertVC(
 					message: message,
@@ -75,12 +82,14 @@ struct ProfileFlow: IFlow {
 					: nil
 				)
 				view?.present(alert, animated: true)
+
 			case .showSortAlert:
 				let alert = makeSortAlertVC(
-					sortCases: [.name, .price, .rating],
+					sortCases: [.price, .rating, .name],
 					completion: { viewModel?.didUserDo(request: .selectSortBy($0)) }
 				)
 				view?.present(alert, animated: true)
+
 			case .close:
 				view?.navigationController?.popViewController(animated: true)
 			}
@@ -90,7 +99,31 @@ struct ProfileFlow: IFlow {
 	}
 
 	func makeFavoritesVC(profile: Profile) -> UIViewController {
-		UIViewController()
+		let dep = DefaultFavoritesViewModel.Dependencies(
+			profile: profile,
+			getMyNfts: ProfileUseCaseProvider.instance.getNfts,
+			putLikes: ProfileUseCaseProvider.instance.putLikes
+		)
+		let viewModel = DefaultFavoritesViewModel(dep: dep)
+		let view = FavoritesViewController(viewModel: viewModel)
+		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
+			switch event {
+
+			case .showErrorAlert(let message, withRetry: let withRetry):
+				let alert = makeErrorAlertVC(
+					message: message,
+					completion: withRetry
+					? { viewModel?.didUserDo(request: .retryAction) }
+					: nil
+				)
+				view?.present(alert, animated: true)
+
+			case .close:
+				view?.navigationController?.popViewController(animated: true)
+			}
+		}
+
+		return view
 	}
 
 	func makeWebViewVC(url: URL) -> UIViewController {

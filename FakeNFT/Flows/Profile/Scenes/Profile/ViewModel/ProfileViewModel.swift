@@ -1,5 +1,4 @@
 import Foundation
-import UIKit
 
 struct ProfileUpdate {
 	let name: String

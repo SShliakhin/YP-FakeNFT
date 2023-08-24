@@ -302,7 +302,7 @@ private extension EditProfileViewController {
 		textView.font = Theme.font(style: .body)
 
 		// опытным путем дошел до -5, по другому не получается(, есть идеи?
-		textView.textContainerInset = .init(horizontal: -5, vertical: 0)
+		textView.textContainerInset = .init(horizontal: -5, vertical: .zero)
 
 		textView.delegate = self
 
@@ -342,6 +342,7 @@ private extension EditProfileViewController {
 }
 
 // MARK: Keyboard
+// TODO: - претендент на вынес в библиотеку - как расширение UIViewController
 
 extension EditProfileViewController {
 	func setupDismissKeyboardGesture() {
@@ -424,6 +425,8 @@ struct EditProfileViewControllerProvider: PreviewProvider {
 	}
 }
 #endif
+
+// TODO: - претендент на вынес в библиотеку
 
 extension UIResponder {
 

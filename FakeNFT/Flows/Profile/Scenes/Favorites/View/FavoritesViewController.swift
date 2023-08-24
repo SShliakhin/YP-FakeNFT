@@ -158,14 +158,14 @@ private extension FavoritesViewController {
 
 		let groupSize = NSCollectionLayoutSize(
 			widthDimension: .fractionalWidth(1.0),
-			heightDimension: .absolute(80)
+			heightDimension: .absolute(Appearance.cellHeight)
 		)
 		let group = NSCollectionLayoutGroup.horizontal(
 			layoutSize: groupSize,
 			subitem: item,
 			count: 2
 		)
-		group.interItemSpacing = .fixed(7.0)
+		group.interItemSpacing = .fixed(Appearance.groupInterItemSpacing)
 
 		let section = createLayoutSection(
 			group: group,
@@ -200,6 +200,7 @@ private extension FavoritesViewController {
 		static let navBarViewHeight = 42.0
 		static let collectionViewInsets: UIEdgeInsets = .init(top: 62)
 		static let cellHeight = 80.0
+		static let groupInterItemSpacing = 7.0
 		static let sectionInterGroupSpacing = 20.0
 		static let sectionContentInsets: NSDirectionalEdgeInsets = .init(
 			top: .zero, leading: 16, bottom: .zero, trailing: 16
