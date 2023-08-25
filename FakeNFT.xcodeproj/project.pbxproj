@@ -523,9 +523,9 @@
 		5A0D32182A8E7A8100EF98F5 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				5AE76DA42A91F29200BAC6B2 /* Profile */,
-				5ABCAE7A2A952C940023C5C2 /* MyNfts */,
-				5AA3397D2A956C17002C2C8E /* Favorites */,
+				5AE76DA42A91F29200BAC6B2 /* ProfileScreen */,
+				5ABCAE7A2A952C940023C5C2 /* MyNftsScreen */,
+				5AA3397D2A956C17002C2C8E /* FavoritesScreen */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -569,13 +569,13 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		5AA3397D2A956C17002C2C8E /* Favorites */ = {
+		5AA3397D2A956C17002C2C8E /* FavoritesScreen */ = {
 			isa = PBXGroup;
 			children = (
 				5A87756F2A96DAF400413F4B /* ViewModel */,
 				5AA3397E2A956C9E002C2C8E /* View */,
 			);
-			path = Favorites;
+			path = FavoritesScreen;
 			sourceTree = "<group>";
 		};
 		5AA3397E2A956C9E002C2C8E /* View */ = {
@@ -647,13 +647,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		5ABCAE7A2A952C940023C5C2 /* MyNfts */ = {
+		5ABCAE7A2A952C940023C5C2 /* MyNftsScreen */ = {
 			isa = PBXGroup;
 			children = (
 				5A97DED12A962026009EEB30 /* ViewModel */,
 				5ABCAE7B2A952CB90023C5C2 /* View */,
 			);
-			path = MyNfts;
+			path = MyNftsScreen;
 			sourceTree = "<group>";
 		};
 		5ABCAE7B2A952CB90023C5C2 /* View */ = {
@@ -700,13 +700,13 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		5AE76DA42A91F29200BAC6B2 /* Profile */ = {
+		5AE76DA42A91F29200BAC6B2 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
 				5AE76DA12A91F21E00BAC6B2 /* ViewModel */,
 				5AE76DA22A91F24500BAC6B2 /* View */,
 			);
-			path = Profile;
+			path = ProfileScreen;
 			sourceTree = "<group>";
 		};
 		5AE76DA72A92098A00BAC6B2 /* Views */ = {
