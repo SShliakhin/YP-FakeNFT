@@ -53,9 +53,10 @@
 		5A04699D2A7BC8650026D783 /* ShoppingCartFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04699C2A7BC8650026D783 /* ShoppingCartFlow.swift */; };
 		5A04699F2A7BC8990026D783 /* ProfileFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04699E2A7BC8980026D783 /* ProfileFlow.swift */; };
 		5A0469A12A7BC8DB0026D783 /* StatisticsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0469A02A7BC8DB0026D783 /* StatisticsFlow.swift */; };
-		5A0823AA2A82D7640047A8AC /* CatalogAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A0823A92A82D7640047A8AC /* CatalogAssets.xcassets */; };
 		5A0823AC2A82DD850047A8AC /* CollectionItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0823AB2A82DD850047A8AC /* CollectionItemCell.swift */; };
 		5A0823AE2A83C2190047A8AC /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0823AD2A83C2190047A8AC /* RatingView.swift */; };
+		5A0CF77D2A98B995003AB20D /* WebCatalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0CF77C2A98B995003AB20D /* WebCatalogViewModel.swift */; };
+		5A0CF77F2A98BA8E003AB20D /* WebCatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0CF77E2A98BA8E003AB20D /* WebCatalogViewController.swift */; };
 		5A0D32032A8DB89E00EF98F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A0D32052A8DB89E00EF98F5 /* Localizable.strings */; };
 		5A0D320A2A8DBE7700EF98F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A0D320C2A8DBE7700EF98F5 /* InfoPlist.strings */; };
 		5A0D320F2A8DD7CD00EF98F5 /* Theme+Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D320E2A8DD7CD00EF98F5 /* Theme+Localizable.swift */; };
@@ -164,9 +165,10 @@
 		5A04699C2A7BC8650026D783 /* ShoppingCartFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartFlow.swift; sourceTree = "<group>"; };
 		5A04699E2A7BC8980026D783 /* ProfileFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlow.swift; sourceTree = "<group>"; };
 		5A0469A02A7BC8DB0026D783 /* StatisticsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFlow.swift; sourceTree = "<group>"; };
-		5A0823A92A82D7640047A8AC /* CatalogAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CatalogAssets.xcassets; sourceTree = "<group>"; };
 		5A0823AB2A82DD850047A8AC /* CollectionItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItemCell.swift; sourceTree = "<group>"; };
 		5A0823AD2A83C2190047A8AC /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		5A0CF77C2A98B995003AB20D /* WebCatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebCatalogViewModel.swift; sourceTree = "<group>"; };
+		5A0CF77E2A98BA8E003AB20D /* WebCatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebCatalogViewController.swift; sourceTree = "<group>"; };
 		5A0D32042A8DB89E00EF98F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A0D32062A8DB8B600EF98F5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A0D320B2A8DBE7700EF98F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -404,7 +406,6 @@
 				5AAB67892A81FB4200E95CB2 /* Data */,
 				5AAB67882A81FAD500E95CB2 /* Domain */,
 				5A51DA072A85CA2600235E7D /* Scenes */,
-				5A0823A92A82D7640047A8AC /* CatalogAssets.xcassets */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -438,6 +439,31 @@
 				5A0D31FF2A8DB18C00EF98F5 /* Extensions */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		5A0CF7792A98B90F003AB20D /* WebScreen */ = {
+			isa = PBXGroup;
+			children = (
+				5A0CF77A2A98B936003AB20D /* ViewModel */,
+				5A0CF77B2A98B957003AB20D /* View */,
+			);
+			path = WebScreen;
+			sourceTree = "<group>";
+		};
+		5A0CF77A2A98B936003AB20D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5A0CF77C2A98B995003AB20D /* WebCatalogViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5A0CF77B2A98B957003AB20D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5A0CF77E2A98BA8E003AB20D /* WebCatalogViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		5A0D31FB2A8DB00900EF98F5 /* Data */ = {
@@ -495,6 +521,7 @@
 		5A51DA072A85CA2600235E7D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				5A0CF7792A98B90F003AB20D /* WebScreen */,
 				5A51DA082A85CA4D00235E7D /* CatalogScreen */,
 				5A51DA0C2A85CC5900235E7D /* CollectionScreen */,
 			);
@@ -788,7 +815,6 @@
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				5A0D32032A8DB89E00EF98F5 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
-				5A0823AA2A82D7640047A8AC /* CatalogAssets.xcassets in Resources */,
 				5A0D320A2A8DBE7700EF98F5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -866,8 +892,10 @@
 				5A51DA102A85DA0E00235E7D /* NftItemCell.swift in Sources */,
 				5AAB675C2A81103400E95CB2 /* CatalogServiceProvider.swift in Sources */,
 				5A04698F2A7ABE180026D783 /* ProfileViewController.swift in Sources */,
+				5A0CF77D2A98B995003AB20D /* WebCatalogViewModel.swift in Sources */,
 				5AAB67782A81462200E95CB2 /* NftIDs.swift in Sources */,
 				5AA5C8BC2A88F58700510684 /* WebViewModel.swift in Sources */,
+				5A0CF77F2A98BA8E003AB20D /* WebCatalogViewController.swift in Sources */,
 				5A0469782A7ABCC50026D783 /* UIViewController+Preview.swift in Sources */,
 				5A04697C2A7ABCC50026D783 /* UIViewController+hideKeyboard.swift in Sources */,
 				5A51DA022A8570D700235E7D /* CatalogViewModel.swift in Sources */,

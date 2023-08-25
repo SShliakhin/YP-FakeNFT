@@ -74,9 +74,9 @@ struct CatalogFlow: IFlow {
 	}
 
 	func makeWebViewVC(url: URL) -> UIViewController {
-		let dep = DefaultWebViewModel.Dependencies(url: url)
-		let viewModel = DefaultWebViewModel(dep: dep)
-		let view = WebViewController(viewModel: viewModel)
+		let dep = DefaultWebCatalogViewModel.Dependencies(url: url)
+		let viewModel = DefaultWebCatalogViewModel(dep: dep)
+		let view = WebCatalogViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view] event in
 			switch event {
 			case .close:
