@@ -410,6 +410,7 @@
 				5A0469622A7ABCC50026D783 /* UIColor+Dynamic.swift */,
 				5A0469602A7ABCC50026D783 /* UIColor+Hex.swift */,
 				5A04695F2A7ABCC50026D783 /* UIView+Animations.swift */,
+				5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */,
 				5A0469612A7ABCC50026D783 /* UIViewController+hideKeyboard.swift */,
 				5A0469632A7ABCC50026D783 /* UITableView+Extensions.swift */,
 				5A0469652A7ABCC50026D783 /* UICollectionView+Extensions.swift */,
@@ -486,7 +487,6 @@
 				5A0D31FC2A8DB05800EF98F5 /* Domain */,
 				5A0D31FD2A8DB0CF00EF98F5 /* Scenes */,
 				5A51DA0E2A85CC8900235E7D /* Views */,
-				5A0D31FF2A8DB18C00EF98F5 /* Extensions */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -524,14 +524,6 @@
 				5A0469942A7ACBC80026D783 /* TabbarPage.swift */,
 			);
 			path = TabBar;
-			sourceTree = "<group>";
-		};
-		5A0D31FF2A8DB18C00EF98F5 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		5A0D32072A8DB92B00EF98F5 /* Localization */ = {
