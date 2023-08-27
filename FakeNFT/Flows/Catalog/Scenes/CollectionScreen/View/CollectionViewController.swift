@@ -2,11 +2,10 @@ import UIKit
 import ProgressHUD
 
 final class CollectionViewController: UIViewController {
-
 	private var viewModel: CollectionViewModel
 
 	// MARK: - UI Elements
-	private lazy var goBackButton: UIButton = makeGoBackButton()
+	private lazy var navBarView = NavBarView()
 	private lazy var collectionView: UICollectionView = makeCollectionView()
 
 	// MARK: - Inits
@@ -63,10 +62,21 @@ private extension CollectionViewController {
 
 	func updateSections() {
 		collectionView.reloadData()
+		checkAppearance()
 	}
 	func updateItems() {
 		guard collectionView.numberOfSections > 0 else { return }
 		collectionView.reloadSections([1])
+	}
+
+	func checkAppearance() {
+		navBarView.update(with: NavBarInputData(
+			title: "",
+			isGoBackButtonHidden: false,
+			isSortButtonHidden: true,
+			onTapGoBackButton: { [weak self] in self?.viewModel.didUserDo(request: .goBack) },
+			onTapSortButton: nil
+		))
 	}
 }
 
@@ -98,15 +108,16 @@ private extension CollectionViewController {
 	func setConstraints() {
 		[
 			collectionView,
-			goBackButton
+			navBarView
 		].forEach { view.addSubview($0) }
 
 		collectionView.makeEqualToSuperview()
-		goBackButton.makeConstraints { $0.size(Theme.size(kind: .small)) }
-		goBackButton.makeConstraints { make in
+		navBarView.makeConstraints { make in
 			[
-				make.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 9),
-				make.topAnchor.constraint(equalTo: view.topAnchor, constant: 55)
+				make.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+				make.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+				make.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+				make.heightAnchor.constraint(equalToConstant: Appearance.navBarViewHeight)
 			]
 		}
 	}
@@ -114,15 +125,6 @@ private extension CollectionViewController {
 
 // MARK: - UI make
 private extension CollectionViewController {
-	func makeGoBackButton() -> UIButton {
-		let button = UIButton(type: .custom)
-		button.setImage(Theme.image(kind: .goBack), for: .normal)
-		button.tintColor = Theme.color(usage: .black)
-		button.event = { [weak self] in self?.viewModel.didUserDo(request: .goBack) }
-
-		return button
-	}
-
 	func makeCollectionView() -> UICollectionView {
 		let layout = createLayout()
 
@@ -232,6 +234,7 @@ private extension CollectionViewController {
 
 private extension CollectionViewController {
 	enum Appearance {
+		static let navBarViewHeight = 42.0
 		static let groupListHeight = 192.0
 		static let sectionListContentInsets: NSDirectionalEdgeInsets = .init(
 			top: .zero, leading: 16, bottom: .zero, trailing: 16
