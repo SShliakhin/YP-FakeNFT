@@ -33,7 +33,7 @@
 		5A0469792A7ABCC50026D783 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04695E2A7ABCC50026D783 /* Array+Extensions.swift */; };
 		5A04697A2A7ABCC50026D783 /* UIView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04695F2A7ABCC50026D783 /* UIView+Animations.swift */; };
 		5A04697B2A7ABCC50026D783 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0469602A7ABCC50026D783 /* UIColor+Hex.swift */; };
-		5A04697C2A7ABCC50026D783 /* UIViewController+hideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0469612A7ABCC50026D783 /* UIViewController+hideKeyboard.swift */; };
+		5A04697C2A7ABCC50026D783 /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0469612A7ABCC50026D783 /* UIViewController+Keyboard.swift */; };
 		5A04697D2A7ABCC50026D783 /* UIColor+Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0469622A7ABCC50026D783 /* UIColor+Dynamic.swift */; };
 		5A04697E2A7ABCC50026D783 /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0469632A7ABCC50026D783 /* UITableView+Extensions.swift */; };
 		5A04697F2A7ABCC50026D783 /* UIButton+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0469642A7ABCC50026D783 /* UIButton+Event.swift */; };
@@ -75,6 +75,7 @@
 		5A51DA172A87215600235E7D /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA162A87215600235E7D /* UIImage+.swift */; };
 		5A51DA1B2A872C8400235E7D /* CollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA1A2A872C8400235E7D /* CollectionViewModel.swift */; };
 		5A5B91F82A9BB91600A4B7E3 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5B91F72A9BB91600A4B7E3 /* ProfileRepository.swift */; };
+		5A5B91FB2A9C170500A4B7E3 /* UIResponder+findFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5B91FA2A9C170500A4B7E3 /* UIResponder+findFirst.swift */; };
 		5A7EA4592A8F38EE004C5402 /* GetNftsProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA4582A8F38EE004C5402 /* GetNftsProfileUseCase.swift */; };
 		5A7EA45B2A8F7BD8004C5402 /* SortMyNftsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */; };
 		5A7EA45D2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */; };
@@ -167,7 +168,7 @@
 		5A04695E2A7ABCC50026D783 /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		5A04695F2A7ABCC50026D783 /* UIView+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Animations.swift"; sourceTree = "<group>"; };
 		5A0469602A7ABCC50026D783 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
-		5A0469612A7ABCC50026D783 /* UIViewController+hideKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+hideKeyboard.swift"; sourceTree = "<group>"; };
+		5A0469612A7ABCC50026D783 /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		5A0469622A7ABCC50026D783 /* UIColor+Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Dynamic.swift"; sourceTree = "<group>"; };
 		5A0469632A7ABCC50026D783 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		5A0469642A7ABCC50026D783 /* UIButton+Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Event.swift"; sourceTree = "<group>"; };
@@ -212,6 +213,7 @@
 		5A51DA1A2A872C8400235E7D /* CollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewModel.swift; sourceTree = "<group>"; };
 		5A5B91F72A9BB91600A4B7E3 /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
 		5A5B91F92A9BFBB800A4B7E3 /* CatalogFlowDecomposition_SAS_c4gr4.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CatalogFlowDecomposition_SAS_c4gr4.md; sourceTree = "<group>"; };
+		5A5B91FA2A9C170500A4B7E3 /* UIResponder+findFirst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+findFirst.swift"; sourceTree = "<group>"; };
 		5A7EA4582A8F38EE004C5402 /* GetNftsProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNftsProfileUseCase.swift; sourceTree = "<group>"; };
 		5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortMyNftsBy.swift; sourceTree = "<group>"; };
 		5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSetSortMyNtfsOptionUseCase.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 		5A0469532A7ABCC50026D783 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5A5B91FA2A9C170500A4B7E3 /* UIResponder+findFirst.swift */,
 				5A0469592A7ABCC50026D783 /* UIView+Constraints.swift */,
 				5A51DA162A87215600235E7D /* UIImage+.swift */,
 				5A0469582A7ABCC50026D783 /* UserDefaultsBacked.swift */,
@@ -411,7 +414,7 @@
 				5A0469602A7ABCC50026D783 /* UIColor+Hex.swift */,
 				5A04695F2A7ABCC50026D783 /* UIView+Animations.swift */,
 				5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */,
-				5A0469612A7ABCC50026D783 /* UIViewController+hideKeyboard.swift */,
+				5A0469612A7ABCC50026D783 /* UIViewController+Keyboard.swift */,
 				5A0469632A7ABCC50026D783 /* UITableView+Extensions.swift */,
 				5A0469652A7ABCC50026D783 /* UICollectionView+Extensions.swift */,
 			);
@@ -1070,6 +1073,7 @@
 				5A0D32132A8E788000EF98F5 /* ProfileServiceProvider.swift in Sources */,
 				5A7EA4592A8F38EE004C5402 /* GetNftsProfileUseCase.swift in Sources */,
 				5A04699F2A7BC8990026D783 /* ProfileFlow.swift in Sources */,
+				5A5B91FB2A9C170500A4B7E3 /* UIResponder+findFirst.swift in Sources */,
 				5A7EA4612A8FEA99004C5402 /* ProfileItemCell.swift in Sources */,
 				5A0469742A7ABCC50026D783 /* UserDefaultsBacked.swift in Sources */,
 				5A0469492A7ABC990026D783 /* Theme+Fonts.swift in Sources */,
@@ -1081,7 +1085,7 @@
 				5A97DED32A962044009EEB30 /* MyNftsViewModel.swift in Sources */,
 				5AA5C8BC2A88F58700510684 /* WebViewModel.swift in Sources */,
 				5A0469782A7ABCC50026D783 /* UIViewController+Preview.swift in Sources */,
-				5A04697C2A7ABCC50026D783 /* UIViewController+hideKeyboard.swift in Sources */,
+				5A04697C2A7ABCC50026D783 /* UIViewController+Keyboard.swift in Sources */,
 				5A51DA022A8570D700235E7D /* CatalogViewModel.swift in Sources */,
 				5AB4D8792A7D3C6A00E1757D /* Theme+Images.swift in Sources */,
 				5A97DED92A967454009EEB30 /* MyNftsViewController.swift in Sources */,

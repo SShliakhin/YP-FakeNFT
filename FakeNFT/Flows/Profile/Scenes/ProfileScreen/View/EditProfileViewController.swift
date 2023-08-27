@@ -341,66 +341,6 @@ private extension EditProfileViewController {
 	}
 }
 
-// MARK: Keyboard
-// TODO: - претендент на вынес в библиотеку - как расширение UIViewController
-
-extension EditProfileViewController {
-	func setupDismissKeyboardGesture() {
-		let dismissKeyboardTap = UITapGestureRecognizer(
-			target: self,
-			action: #selector(viewTapped(_: ))
-		)
-		view.addGestureRecognizer(dismissKeyboardTap)
-	}
-
-	func setupKeyboardHiding() {
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(keyboardWillShow),
-			name: UIResponder.keyboardWillShowNotification,
-			object: nil
-		)
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(keyboardWillHide),
-			name: UIResponder.keyboardWillHideNotification,
-			object: nil
-		)
-	}
-
-	@objc func viewTapped(_ recognizer: UITapGestureRecognizer) {
-		view.endEditing(true) // resign first responder
-	}
-
-	@objc func keyboardWillShow(sender: NSNotification) {
-		guard let userInfo = sender.userInfo,
-			  let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
-			  UIResponder.currentFirst() is UITextField ||
-				UIResponder.currentFirst() is UITextView,
-			  let responderView = UIResponder.currentFirst() as? UIView
-		else { return }
-
-		let keyboardTopY = keyboardFrame.cgRectValue.origin.y
-		let convertedResponderViewFrame = view.convert(
-			responderView.frame,
-			from: responderView.superview
-		)
-		let textBoxY = convertedResponderViewFrame.origin.y
-
-		// почему то TextView не попадает под этот критерий
-		// убрал проверку, чтобы VC всегда подымался
-		// let responderViewBottomY = textBoxY + convertedResponderViewFrame.size.height
-		// if responderViewBottomY > keyboardTopY {
-			let newFrameY = (textBoxY - keyboardTopY / 2) * -1
-			view.frame.origin.y = newFrameY
-		// }
-	}
-
-	@objc func keyboardWillHide(notification: NSNotification) {
-		view.frame.origin.y = 0
-	}
-}
-
 #if canImport(SwiftUI) && DEBUG
 import SwiftUI
 struct EditProfileViewControllerProvider: PreviewProvider {
@@ -426,24 +366,3 @@ struct EditProfileViewControllerProvider: PreviewProvider {
 	}
 }
 #endif
-
-// TODO: - претендент на вынес в библиотеку
-
-extension UIResponder {
-
-	private enum Static {
-		static weak var responder: UIResponder?
-	}
-
-	/// Finds the current first responder
-	/// - Returns: the current UIResponder if it exists
-	static func currentFirst() -> UIResponder? {
-		Static.responder = nil
-		UIApplication.shared.sendAction(#selector(UIResponder._trap), to: nil, from: nil, for: nil)
-		return Static.responder
-	}
-
-	@objc private func _trap() {
-		Static.responder = self
-	}
-}
