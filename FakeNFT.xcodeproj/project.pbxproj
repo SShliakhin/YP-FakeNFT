@@ -184,6 +184,7 @@
 		5A51DA142A86C2F500235E7D /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		5A51DA162A87215600235E7D /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		5A51DA1A2A872C8400235E7D /* CollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewModel.swift; sourceTree = "<group>"; };
+		5A5B91F92A9BFBB800A4B7E3 /* CatalogFlowDecomposition_SAS_c4gr4.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CatalogFlowDecomposition_SAS_c4gr4.md; sourceTree = "<group>"; };
 		5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortMyNftsBy.swift; sourceTree = "<group>"; };
 		5AA5C8B92A88D12100510684 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		5AA5C8BB2A88F58700510684 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
@@ -243,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				5AB4D8772A7BDD7E00E1757D /* Readme.md */,
+				5A5B91F92A9BFBB800A4B7E3 /* CatalogFlowDecomposition_SAS_c4gr4.md */,
 				5A04693B2A7ABAEC0026D783 /* .gitignore */,
 				5A04693C2A7ABAEC0026D783 /* .swiftlint.yml */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
