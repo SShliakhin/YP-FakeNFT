@@ -156,20 +156,6 @@ private extension CollectionViewController {
 		}
 	}
 
-	func createLayoutSection(
-		group: NSCollectionLayoutGroup,
-		behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
-		interGroupSpacing: CGFloat,
-		supplementaryItem: [NSCollectionLayoutBoundarySupplementaryItem]
-	) -> NSCollectionLayoutSection {
-		let section = NSCollectionLayoutSection(group: group)
-		section.orthogonalScrollingBehavior = behavior
-		section.interGroupSpacing = interGroupSpacing
-		section.boundarySupplementaryItems = supplementaryItem
-
-		return section
-	}
-
 	func createHeaderLayout() -> NSCollectionLayoutSection {
 		let itemSize = NSCollectionLayoutSize(
 			widthDimension: .fractionalWidth(1.0),
@@ -184,21 +170,15 @@ private extension CollectionViewController {
 		let group = NSCollectionLayoutGroup.horizontal(
 			layoutSize: groupSize,
 			subitem: item,
-			count: 1 // кол-во элементов в группе
+			count: 1
 		)
 
 		let section = createLayoutSection(
-			group: group, // минимально let section = NSCollectionLayoutSection(group: group)
-			behavior: .none, // важно для скроллинга
-			interGroupSpacing: .zero, // по вертикали между группами
-			supplementaryItem: []
-		)
-		// отступы для секции
-		section.contentInsets = NSDirectionalEdgeInsets(
-			top: .zero,
-			leading: .zero,
-			bottom: Theme.spacing(usage: .standard3),
-			trailing: .zero
+			group: group,
+			behavior: .none,
+			interGroupSpacing: .zero,
+			supplementaryItem: [],
+			contentInsets: Appearance.sectionHeaderContentInsets
 		)
 
 		return section
@@ -213,29 +193,51 @@ private extension CollectionViewController {
 
 		let groupSize = NSCollectionLayoutSize(
 			widthDimension: .fractionalWidth(1.0),
-			heightDimension: .absolute(192)
+			heightDimension: .absolute(Appearance.groupListHeight)
 		)
 		let group = NSCollectionLayoutGroup.horizontal(
 			layoutSize: groupSize,
 			subitem: item,
-			count: 3 // кол-во элементов в группе
+			count: 3
 		)
 		group.interItemSpacing = .fixed(Theme.spacing(usage: .standard))
 
 		let section = createLayoutSection(
-			group: group, // минимально let section = NSCollectionLayoutSection(group: group)
-			behavior: .none, // важно для скроллинга
-			interGroupSpacing: Theme.spacing(usage: .standard), // по вертикали между группами
-			supplementaryItem: []
-		)
-		// отступы для секции
-		section.contentInsets = NSDirectionalEdgeInsets(
-			top: .zero,
-			leading: Theme.spacing(usage: .standard2),
-			bottom: .zero,
-			trailing: Theme.spacing(usage: .standard2)
+			group: group,
+			behavior: .none,
+			interGroupSpacing: Theme.spacing(usage: .standard),
+			supplementaryItem: [],
+			contentInsets: Appearance.sectionListContentInsets
 		)
 
 		return section
+	}
+
+	func createLayoutSection(
+		group: NSCollectionLayoutGroup,
+		behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
+		interGroupSpacing: CGFloat,
+		supplementaryItem: [NSCollectionLayoutBoundarySupplementaryItem],
+		contentInsets: NSDirectionalEdgeInsets
+	) -> NSCollectionLayoutSection {
+		let section = NSCollectionLayoutSection(group: group)
+		section.orthogonalScrollingBehavior = behavior
+		section.interGroupSpacing = interGroupSpacing
+		section.boundarySupplementaryItems = supplementaryItem
+		section.contentInsets = contentInsets
+
+		return section
+	}
+}
+
+private extension CollectionViewController {
+	enum Appearance {
+		static let groupListHeight = 192.0
+		static let sectionListContentInsets: NSDirectionalEdgeInsets = .init(
+			top: .zero, leading: 16, bottom: .zero, trailing: 16
+		)
+		static let sectionHeaderContentInsets = NSDirectionalEdgeInsets(
+			top: .zero, leading: .zero, bottom: 24, trailing: .zero
+		)
 	}
 }

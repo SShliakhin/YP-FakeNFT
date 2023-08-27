@@ -1,5 +1,3 @@
-import Foundation
-
 enum CatalogEvents {
 	case showErrorAlert(String)
 	case showSortAlert

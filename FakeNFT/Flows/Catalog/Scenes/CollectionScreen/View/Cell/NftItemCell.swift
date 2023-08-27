@@ -47,12 +47,12 @@ final class NftItemCell: UICollectionViewCell {
 
 	// MARK: - UI Elements
 
-	fileprivate lazy var avatarImageView: UIImageView = makeAvatarImageView()
-	fileprivate lazy var likeButton: UIButton = makeLikeButton()
-	fileprivate lazy var ratingView = RatingView()
-	fileprivate lazy var titleLabel: UILabel = makeTitleLabel()
-	fileprivate lazy var priceLabel: UILabel = makePriceLabel()
-	fileprivate lazy var cartButton: UIButton = makeCartButton()
+	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
+	private lazy var likeButton: UIButton = makeLikeButton()
+	private lazy var ratingView = RatingView()
+	private lazy var titleLabel: UILabel = makeTitleLabel()
+	private lazy var priceLabel: UILabel = makePriceLabel()
+	private lazy var cartButton: UIButton = makeCartButton()
 
 	// MARK: - Inits
 
