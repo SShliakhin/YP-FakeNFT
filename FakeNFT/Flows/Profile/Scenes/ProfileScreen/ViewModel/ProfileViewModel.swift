@@ -8,16 +8,16 @@ struct ProfileUpdate {
 }
 
 enum ProfileSection: CustomStringConvertible {
-	case myNFTs(Int)
-	case favoritesNFTS(Int)
+	case myNFTs(Int?)
+	case favoritesNFTS(Int?)
 	case about
 
 	var description: String {
 		switch self {
 		case .myNFTs(let count):
-			return String(format: Theme.Profile.myNftsCall, count)
+			return String(format: Theme.Profile.myNftsCall, count ?? 0)
 		case .favoritesNFTS(let count):
-			return String(format: Theme.Profile.favoritesCall, count)
+			return String(format: Theme.Profile.favoritesCall, count ?? 0)
 		case .about:
 			return Theme.Profile.aboutCall
 		}
@@ -27,8 +27,8 @@ enum ProfileSection: CustomStringConvertible {
 enum ProfileEvents {
 	case showErrorAlert(String, Bool)
 	case selectEditProfile
-	case selectMyNfts(Profile)
-	case selectFavorites(Profile)
+	case selectMyNfts
+	case selectFavorites
 	case selectAbout(URL?)
 	case close
 }
@@ -68,6 +68,7 @@ final class DefaultProfileViewModel: ProfileViewModel {
 	struct Dependencies {
 		let getProfile: GetProfileUseCase
 		let putProfile: PutProfileUseCase
+		let profileRepository: ProfileRepository
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
@@ -90,6 +91,20 @@ final class DefaultProfileViewModel: ProfileViewModel {
 
 	init(dep: Dependencies) {
 		dependencies = dep
+
+		self.bind(to: dep.profileRepository)
+	}
+}
+
+// MARK: - Bind
+
+private extension DefaultProfileViewModel {
+	func bind(to repository: ProfileRepository) {
+		repository.profile.observe(on: self) { [weak self] profile in
+			guard let self = self else { return }
+			self.profile.value = profile
+			self.makeItems()
+		}
 	}
 }
 
@@ -117,7 +132,7 @@ extension DefaultProfileViewModel {
 			switch result {
 			case .success(let profile):
 				self.profile.value = profile
-				self.makeItems(for: profile)
+				self.makeItems()
 			case .failure(let error):
 				self.retryAction = { self.viewIsReady() }
 				self.didSendEventClosure?(.showErrorAlert(error.description, true))
@@ -135,11 +150,9 @@ extension DefaultProfileViewModel {
 			let item = items.value[index]
 			switch item {
 			case .myNFTs:
-				guard let profile = profile.value else { return }
-				didSendEventClosure?(.selectMyNfts(profile))
+				didSendEventClosure?(.selectMyNfts)
 			case .favoritesNFTS:
-				guard let profile = profile.value else { return }
-				didSendEventClosure?(.selectFavorites(profile))
+				didSendEventClosure?(.selectFavorites)
 			case .about:
 				didSendEventClosure?(.selectAbout(profile.value?.website))
 			}
@@ -157,10 +170,10 @@ extension DefaultProfileViewModel {
 }
 
 private extension DefaultProfileViewModel {
-	func makeItems(for profile: Profile) {
+	func makeItems() {
 		items.value = [
-			ProfileSection.myNFTs(profile.nftsCount),
-			ProfileSection.favoritesNFTS(profile.likesCount),
+			ProfileSection.myNFTs(profile.value?.nftsCount),
+			ProfileSection.favoritesNFTS(profile.value?.likesCount),
 			ProfileSection.about
 		]
 	}

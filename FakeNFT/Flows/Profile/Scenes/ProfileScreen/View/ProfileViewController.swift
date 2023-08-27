@@ -3,7 +3,6 @@ import ProgressHUD
 
 final class ProfileViewController: UIViewController {
 	private let viewModel: ProfileViewModel
-	private var hasViewIsReady = false
 
 	// MARK: - UI Elements
 	private lazy var editProfileBarButtonItem: UIBarButtonItem = makeEditProfileBarButtonItem()
@@ -30,18 +29,6 @@ final class ProfileViewController: UIViewController {
 		setConstraints()
 
 		bind(to: viewModel)
-		viewModel.viewIsReady()
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		// временное решение: пока нет общего store, надо обновляться
-		if !hasViewIsReady {
-			hasViewIsReady = true
-			return
-		}
-
 		viewModel.viewIsReady()
 	}
 }

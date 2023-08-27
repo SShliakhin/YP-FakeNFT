@@ -5,4 +5,7 @@ final class ProfileServiceProvider {
 	lazy var apiClient: APIClient = {
 		APIClient(session: session)
 	}()
+	lazy var profileRepository: ProfileRepository = {
+		ProfileRepositoryImp()
+	}()
 }

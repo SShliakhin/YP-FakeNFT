@@ -32,9 +32,9 @@ typealias FavoritesViewModel = (
 
 final class DefaultFavoritesViewModel: FavoritesViewModel {
 	struct Dependencies {
-		let profile: Profile
-		let getMyNfts: GetNftsProfileUseCase
+		let getNfts: GetNftsProfileUseCase
 		let putLikes: PutLikesProfileUseCase
+		let profileRepository: ProfileRepository
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
@@ -54,6 +54,18 @@ final class DefaultFavoritesViewModel: FavoritesViewModel {
 
 	init(dep: Dependencies) {
 		dependencies = dep
+
+		self.bind(to: dep.profileRepository)
+	}
+}
+
+// MARK: - Bind
+
+private extension DefaultFavoritesViewModel {
+	func bind(to repository: ProfileRepository) {
+		repository.likes.observe(on: self) { [weak self] likes in
+			self?.updateItemsByIDs(likes)
+		}
 	}
 }
 
@@ -80,11 +92,13 @@ extension DefaultFavoritesViewModel {
 
 extension DefaultFavoritesViewModel {
 	func viewIsReady() {
+		updateItemsByIDs(dependencies.profileRepository.profileLikes)
+	}
+
+	private func updateItemsByIDs(_ likes: [String]) {
 		isLoading.value = true
 
-		// первоначально загрузим likes тем что есть в profile
-		let likes = dependencies.profile.likes
-		dependencies.getMyNfts.invoke(nftIDs: likes) { [weak self] result in
+		dependencies.getNfts.invoke(nftIDs: likes) { [weak self] result in
 			guard let self = self else { return }
 
 			switch result {

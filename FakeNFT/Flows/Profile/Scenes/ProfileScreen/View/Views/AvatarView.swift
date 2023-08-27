@@ -172,13 +172,13 @@ import SwiftUI
 struct AvatarViewPreviews: PreviewProvider {
 	static var previews: some View {
 		let model = AvatarViewModel(
-			url: AvatarView.Appearance.mockUrls.last!,
+			url: AvatarView.Appearance.mockUrls.last!, // swiftlint:disable:this force_unwrapping
 			isUploadButtonHidden: false,
 			onTapUploadImage: nil
 		)
 		let avatarView = AvatarView().update(with: model)
 		let model2 = AvatarViewModel(
-			url: AvatarView.Appearance.mockUrls.first!,
+			url: AvatarView.Appearance.mockUrls.first!, // swiftlint:disable:this force_unwrapping
 			isUploadButtonHidden: false,
 			onTapUploadImage: nil
 		)

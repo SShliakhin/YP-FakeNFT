@@ -1,18 +1,28 @@
 import Foundation
 
 protocol GetLikesProfileUseCase {
-	func invoke(completion: @escaping (Result<NftIDs, APIError>) -> Void)
+	func invoke(completion: @escaping (Result<NftIDs, FakeNFTError>) -> Void)
 }
 
 final class GetLikesProfileUseCaseImp: GetLikesProfileUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
+	private var profileRepository: ProfileRepository
 
-	init(apiClient: APIClient) {
+	init(
+		apiClient: APIClient,
+		profileRepository: ProfileRepository
+	) {
 		self.network = apiClient
+		self.profileRepository = profileRepository
 	}
 
-	func invoke(completion: @escaping (Result<NftIDs, APIError>) -> Void) {
+	func invoke(completion: @escaping (Result<NftIDs, FakeNFTError>) -> Void) {
+		if let profile = profileRepository.profile.value {
+			completion(.success(.init(nfts: profile.likes)))
+			return
+		}
+
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -23,11 +33,15 @@ final class GetLikesProfileUseCaseImp: GetLikesProfileUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let profileDTO):
-				let likes = profileDTO.likes ?? []
-				completion(.success(.init(nfts: likes)))
+				if let profile = Profile(from: profileDTO) {
+					self.profileRepository.profile.value = profile
+					completion(.success(.init(nfts: profile.likes)))
+				} else {
+					completion(.failure(.noProfile))
+				}
 				self.task = nil
 			case .failure(let error):
-				completion(.failure(error))
+				completion(.failure(.apiError(error)))
 				self.task = nil
 			}
 		}

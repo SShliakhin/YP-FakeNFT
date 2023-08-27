@@ -5,28 +5,50 @@ final class ProfileUseCaseProvider {
 
 	private let serviceProvider = ProfileServiceProvider()
 
+	lazy var profileRepository: ProfileRepository = {
+		serviceProvider.profileRepository
+	}()
+
 	lazy var getProfile: GetProfileUseCase = {
-		GetProfileUseCaseImp(apiClient: serviceProvider.apiClient)
+		GetProfileUseCaseImp(
+			apiClient: serviceProvider.apiClient,
+			profileRepository: profileRepository
+		)
 	}()
 
 	lazy var putProfile: PutProfileUseCase = {
-		PutProfileUseCaseImp(apiClient: serviceProvider.apiClient)
+		PutProfileUseCaseImp(
+			apiClient: serviceProvider.apiClient,
+			profileRepository: profileRepository
+		)
 	}()
 
 	lazy var getNfts: GetNftsProfileUseCase = {
-		GetNftsProfileUseCaseImp(apiClient: serviceProvider.apiClient)
+		GetNftsProfileUseCaseImp(
+			apiClient: serviceProvider.apiClient,
+			profileRepository: profileRepository
+		)
 	}()
 
 	lazy var getLikes: GetLikesProfileUseCase = {
-		GetLikesProfileUseCaseImp(apiClient: serviceProvider.apiClient)
+		GetLikesProfileUseCaseImp(
+			apiClient: serviceProvider.apiClient,
+			profileRepository: profileRepository
+		)
 	}()
 
 	lazy var putLikes: PutLikesProfileUseCase = {
-		PutLikesProfileUseCaseImp(apiClient: serviceProvider.apiClient)
+		PutLikesProfileUseCaseImp(
+			apiClient: serviceProvider.apiClient,
+			profileRepository: profileRepository
+		)
 	}()
 
 	lazy var getAuthors: GetAuthorsUseCase = {
-		GetAuthorsUseCaseImp(apiClient: serviceProvider.apiClient)
+		GetAuthorsUseCaseImp(
+			apiClient: serviceProvider.apiClient,
+			profileRepository: profileRepository
+		)
 	}()
 
 	lazy var getSetSortMyNtfsOption: SortMyNtfsOption = {

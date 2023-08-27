@@ -37,11 +37,11 @@ typealias MyNftsViewModel = (
 
 final class DefaultMyNftsViewModel: MyNftsViewModel {
 	struct Dependencies {
-		let profile: Profile
 		let getMyNfts: GetNftsProfileUseCase
 		let getSetSortOption: SortMyNtfsOption
 		let putLikes: PutLikesProfileUseCase
 		let getAuthors: GetAuthorsUseCase
+		let profileRepository: ProfileRepository
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
@@ -63,7 +63,21 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 
 	init(dep: Dependencies) {
 		dependencies = dep
-		likes.value = dep.profile.likes
+
+		self.bind(to: dep.profileRepository)
+	}
+}
+
+// MARK: - Bind
+
+private extension DefaultMyNftsViewModel {
+	func bind(to repository: ProfileRepository) {
+		repository.myNfts.observe(on: self) { [weak self] myNfts in
+			self?.updateItemsByIDs(myNfts)
+		}
+		repository.likes.observe(on: self) { [weak self] likes in
+			self?.likes.value = likes
+		}
 	}
 }
 
@@ -92,18 +106,23 @@ extension DefaultMyNftsViewModel {
 
 extension DefaultMyNftsViewModel {
 	func viewIsReady() {
+		likes.value = dependencies.profileRepository.profileLikes
+		updateItemsByIDs(dependencies.profileRepository.profileMyNtfs)
+	}
+
+	private func updateItemsByIDs(_ myNfts: [String]) {
 		isLoading.value = true
 
 		dependencies.getMyNfts.invoke(
 			sortBy: dependencies.getSetSortOption.sortBy, // предсортировка на сервере
-			nftIDs: dependencies.profile.nfts
+			nftIDs: myNfts
 		) { [weak self] result in
 			guard let self = self else { return }
 
 			switch result {
 			case .success(let nfts):
 				self.items.value = nfts
-				self.sortMyNfts()
+				self.sortMyNfts() // с repository предсортировка на сервере потеряла смысл(
 				self.fetchAuthors()
 			case .failure(let error):
 				self.items.value = []
@@ -138,8 +157,6 @@ private extension DefaultMyNftsViewModel {
 		isLoading.value = true
 
 		let authorsID = Array(Set(items.value.map { $0.authorID }))
-		// можно предположить что автор нужен один - такой case реализован в каталоге
-		// добавлю при сливании
 		dependencies.getAuthors.invoke(authorIDs: authorsID) { [weak self] result in
 			guard let self = self else { return }
 
@@ -174,7 +191,6 @@ private extension DefaultMyNftsViewModel {
 				self.likes.value = likes.nfts
 			case .failure(let error):
 				self.retryAction = nil
-				self.likes.value = self.likes.value
 				self.didSendEventClosure?(
 					.showErrorAlert(error.description, withRetry: false)
 				)

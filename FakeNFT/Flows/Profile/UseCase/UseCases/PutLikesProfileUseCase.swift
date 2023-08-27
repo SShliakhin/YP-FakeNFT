@@ -7,9 +7,14 @@ protocol PutLikesProfileUseCase {
 final class PutLikesProfileUseCaseImp: PutLikesProfileUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
+	private var profileRepository: ProfileRepository
 
-	init(apiClient: APIClient) {
+	init(
+		apiClient: APIClient,
+		profileRepository: ProfileRepository
+	) {
 		self.network = apiClient
+		self.profileRepository = profileRepository
 	}
 
 	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, FakeNFTError>) -> Void) {
@@ -27,11 +32,16 @@ final class PutLikesProfileUseCaseImp: PutLikesProfileUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let profileDTO):
-				let likesDTO = profileDTO.likes ?? []
-				if likesDTO == likes.nfts {
-					completion(.success(.init(nfts: likesDTO)))
+				if let profile = Profile(from: profileDTO) {
+					self.profileRepository.profile.value = profile
+					if profile.likes == likes.nfts {
+						self.profileRepository.likes.value = profile.likes
+						completion(.success(.init(nfts: profile.likes)))
+					} else {
+						completion(.failure(.brokenLikes))
+					}
 				} else {
-					completion(.failure(.brokenLikes))
+					completion(.failure(.noProfile))
 				}
 				self.task = nil
 			case .failure(let error):

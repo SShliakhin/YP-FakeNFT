@@ -8,7 +8,8 @@ struct ProfileFlow: IFlow {
 	func showProfile() -> UIViewController {
 		let dep = DefaultProfileViewModel.Dependencies(
 			getProfile: ProfileUseCaseProvider.instance.getProfile,
-			putProfile: ProfileUseCaseProvider.instance.putProfile
+			putProfile: ProfileUseCaseProvider.instance.putProfile,
+			profileRepository: ProfileUseCaseProvider.instance.profileRepository
 		)
 		let viewModel: ProfileViewModel = DefaultProfileViewModel(dep: dep)
 		let view = ProfileViewController(viewModel: viewModel)
@@ -30,12 +31,12 @@ struct ProfileFlow: IFlow {
 				let editProfileView = EditProfileViewController(viewModel: viewModel)
 				view?.present(editProfileView, animated: true)
 
-			case .selectMyNfts(let profile):
-				let myNftsVC = makeMyNftsVC(profile: profile)
+			case .selectMyNfts:
+				let myNftsVC = makeMyNftsVC()
 				view?.show(myNftsVC, sender: view)
 
-			case .selectFavorites(let profile):
-				let favoritesVC = makeFavoritesVC(profile: profile)
+			case .selectFavorites:
+				let favoritesVC = makeFavoritesVC()
 				view?.show(favoritesVC, sender: view)
 
 			case .selectAbout(let url):
@@ -61,13 +62,13 @@ struct ProfileFlow: IFlow {
 		return view
 	}
 
-	func makeMyNftsVC(profile: Profile) -> UIViewController {
+	func makeMyNftsVC() -> UIViewController {
 		let dep = DefaultMyNftsViewModel.Dependencies(
-			profile: profile,
 			getMyNfts: ProfileUseCaseProvider.instance.getNfts,
 			getSetSortOption: ProfileUseCaseProvider.instance.getSetSortMyNtfsOption,
 			putLikes: ProfileUseCaseProvider.instance.putLikes,
-			getAuthors: ProfileUseCaseProvider.instance.getAuthors
+			getAuthors: ProfileUseCaseProvider.instance.getAuthors,
+			profileRepository: ProfileUseCaseProvider.instance.profileRepository
 		)
 		let viewModel = DefaultMyNftsViewModel(dep: dep)
 		let view = MyNftsViewController(viewModel: viewModel)
@@ -98,11 +99,11 @@ struct ProfileFlow: IFlow {
 		return view
 	}
 
-	func makeFavoritesVC(profile: Profile) -> UIViewController {
+	func makeFavoritesVC() -> UIViewController {
 		let dep = DefaultFavoritesViewModel.Dependencies(
-			profile: profile,
-			getMyNfts: ProfileUseCaseProvider.instance.getNfts,
-			putLikes: ProfileUseCaseProvider.instance.putLikes
+			getNfts: ProfileUseCaseProvider.instance.getNfts,
+			putLikes: ProfileUseCaseProvider.instance.putLikes,
+			profileRepository: ProfileUseCaseProvider.instance.profileRepository
 		)
 		let viewModel = DefaultFavoritesViewModel(dep: dep)
 		let view = FavoritesViewController(viewModel: viewModel)
