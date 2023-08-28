@@ -4,10 +4,10 @@
 
 Цели приложения:
 
-[x] просмотр коллекций NFT;
-[ ] просмотр и покупка NFT (иммитируется);
-[ ] просмотр рейтинга пользователей;
-[x] просмотр и редактирование профиля пользователя.
+- [x] просмотр коллекций NFT;
+- [ ] просмотр и покупка NFT (иммитируется);
+- [ ] просмотр рейтинга пользователей;
+- [x] просмотр и редактирование профиля пользователя.
 
 [Скринкаст](https://disk.yandex.com.am/i/hVuT2MXjWcL-KA)
 
@@ -36,7 +36,7 @@
 # Getting started
 
 1. Убедитесь что на компьютере установлен Xcode версии 13 или выше.
-2. Загрузите файлы Tracker проекта из репозитория.
+2. Загрузите файлы YP-FakeNFT проекта из репозитория.
 3. Откройте файл проекта в Xcode.
 5. Запустите активную схему.
 
@@ -75,7 +75,7 @@
 # Dependencies
 
 - [Kingfisher](https://github.com/onevcat/Kingfisher) - для загрузки и кэширования изображений из Интернета;
-- [ProgressHUD](https://github.com/relatedcode/ProgressHUD) - для оповещения пользователя о статусе загрузке.
+- [ProgressHUD](https://github.com/relatedcode/ProgressHUD) - для оповещения пользователя о статусе загрузки.
 
 # Workflow
 
@@ -175,4 +175,4 @@ struct ViewProvider: PreviewProvider {
 
 # API
 
-* Постоянно обновляется, отслеживать [здесь](https://github.com/Yandex-Practicum/iOS-FakeNFT-StarterProject-Public/blob/main/API.html) - скопировать на диск и открывать локально
+* Постоянно обновляется, отслеживать [здесь](https://github.com/Yandex-Practicum/iOS-FakeNFT-StarterProject-Public/blob/main/API.html) - скопировать на диск и открывать локально.
