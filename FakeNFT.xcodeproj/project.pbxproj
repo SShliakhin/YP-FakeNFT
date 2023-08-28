@@ -67,6 +67,7 @@
 		5A0D32212A8E879000EF98F5 /* PutLikesProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32202A8E879000EF98F5 /* PutLikesProfileUseCase.swift */; };
 		5A3ED4B22A89FD6E003E367D /* UIViewController+Bars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */; };
 		5A3ED4B42A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B32A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift */; };
+		5A484C742A9CE959007AC212 /* SortMyNftsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */; };
 		5A51DA022A8570D700235E7D /* CatalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA012A8570D700235E7D /* CatalogViewModel.swift */; };
 		5A51DA062A85C3CA00235E7D /* SortCollectionsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */; };
 		5A51DA102A85DA0E00235E7D /* NftItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA0F2A85DA0E00235E7D /* NftItemCell.swift */; };
@@ -77,7 +78,6 @@
 		5A5B91F82A9BB91600A4B7E3 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5B91F72A9BB91600A4B7E3 /* ProfileRepository.swift */; };
 		5A5B91FB2A9C170500A4B7E3 /* UIResponder+findFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5B91FA2A9C170500A4B7E3 /* UIResponder+findFirst.swift */; };
 		5A7EA4592A8F38EE004C5402 /* GetNftsProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA4582A8F38EE004C5402 /* GetNftsProfileUseCase.swift */; };
-		5A7EA45B2A8F7BD8004C5402 /* SortMyNftsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */; };
 		5A7EA45D2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */; };
 		5A7EA45F2A8FE83B004C5402 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45E2A8FE83B004C5402 /* ProfileViewModel.swift */; };
 		5A7EA4612A8FEA99004C5402 /* ProfileItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA4602A8FEA99004C5402 /* ProfileItemCell.swift */; };
@@ -985,6 +985,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A484C742A9CE959007AC212 /* SortMyNftsBy.swift in Sources */,
 				5A04698E2A7ABE180026D783 /* CatalogViewController.swift in Sources */,
 				5A0469802A7ABCC50026D783 /* UICollectionView+Extensions.swift in Sources */,
 				5A04699B2A7BC59C0026D783 /* IFlow.swift in Sources */,
@@ -1064,9 +1065,7 @@
 				5A51DA172A87215600235E7D /* UIImage+.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				5ABCAE7E2A952D7E0023C5C2 /* MyNftsItemCell.swift in Sources */,
-				5A7EA45B2A8F7BD8004C5402 /* SortMyNftsBy.swift in Sources */,
 				5A7EA45D2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift in Sources */,
-				5A7EA45B2A8F7BD8004C5402 /* SortMyNftsBy.swift in Sources */,
 				5A04697E2A7ABCC50026D783 /* UITableView+Extensions.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				5A0469992A7BC0680026D783 /* CatalogFlow.swift in Sources */,
