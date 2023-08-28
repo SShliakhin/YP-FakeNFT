@@ -83,7 +83,6 @@
 		5A7EA4612A8FEA99004C5402 /* ProfileItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA4602A8FEA99004C5402 /* ProfileItemCell.swift */; };
 		5A8775712A96DB1A00413F4B /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8775702A96DB1A00413F4B /* FavoritesViewModel.swift */; };
 		5A8775732A96E3C300413F4B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8775722A96E3C300413F4B /* FavoritesViewController.swift */; };
-		5A8775752A97074600413F4B /* ProfileFlowDecomposition_SAS_c4gr4.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A8775742A97074600413F4B /* ProfileFlowDecomposition_SAS_c4gr4.md */; };
 		5A97DED02A95FC31009EEB30 /* NavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97DECF2A95FC31009EEB30 /* NavBarView.swift */; };
 		5A97DED32A962044009EEB30 /* MyNftsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97DED22A962044009EEB30 /* MyNftsViewModel.swift */; };
 		5A97DED52A964AC2009EEB30 /* GetAuthorsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97DED42A964AC2009EEB30 /* GetAuthorsUseCase.swift */; };
@@ -938,7 +937,6 @@
 				5A0D32032A8DB89E00EF98F5 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 				5A0D320A2A8DBE7700EF98F5 /* InfoPlist.strings in Resources */,
-				5A8775752A97074600413F4B /* ProfileFlowDecomposition_SAS_c4gr4.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
