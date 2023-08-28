@@ -4,9 +4,12 @@
 
 Цели приложения:
 
-- просмотр коллекций NFT;
-- просмотр и покупка NFT (иммитируется);
-- просмотр рейтинга пользователей.
+[x] просмотр коллекций NFT;
+[ ] просмотр и покупка NFT (иммитируется);
+[ ] просмотр рейтинга пользователей;
+[x] просмотр и редактирование профиля пользователя.
+
+[Скринкаст](https://disk.yandex.com.am/i/hVuT2MXjWcL-KA)
 
 # Table of Contents
 1. [Description](#description)
@@ -15,9 +18,9 @@
 4. [Arhitecture](#arhitecture)
 5. [Structure](#structure)
 6. [Dependencies](#dependencies)
-7. [Workflow](#workflow)
-8. [Task board](#task-board)
-9. [Design](#design)
+7. [Task board](#task-board)
+8. [Design](#design)
+9. [API](#api)
 
 # Description
 
@@ -26,7 +29,7 @@
 - Пользователь может добавлять понравившиеся NFT в избранное.
 - Пользователь может удалять и добавлять товары в корзину, а также оплачивать заказ (покупка иммитируется).
 - Пользователь может посмотреть рейтинг пользователей и информацию о пользователях.
-- Пользователь может смотреть информацию и своем профиле, включая информацию об избранных и принадлежащих ему NFT.
+- Пользователь может смотреть информацию в своем профиле, включая информацию об избранных и принадлежащих ему NFT.
 
 Полное описание функциональных требований находится в [техническом задании](https://github.com/Yandex-Practicum/iOS-FakeNFT-StarterProject-Public/blob/main/Readme.md)
 
@@ -45,11 +48,24 @@
 
 * MVVM
 * Layout: Anchors, CompositionalLayout
+* Singleton, Repository, Observer, propertyWrapper
+* UserDefaults
+* SPM
+
+## Other
+
+- поддержка темной темы
+- локализация на русский язык
+- обработка ошибок
+- кастомные лаунч скрин и иконка
+- кэширование результатов запросов в сеть
+- пред-сортировка на бэкенде
+- хранение выбранных способов сортировки
 
 # Structure
 
 * "Core": глобальные объекты приложения
-* "Flows": Независимые флоу, с набором моделей, сцен и сервисов, согласно эпику
+* "Flows": Независимые флоу, с набором сцен согласно эпику
 * "Library": Протоколы, расширения и утилиты
 * "Resources": Ресурсы приложения: картинки, шрифты и другие типы ресурсов. А также файлы и группы файлов:
     - Theme+.swift - расширения, которые содержат статические методы по поддержке работы с ресурсами приложения и некоторые дополнительные сервисные методы.
@@ -58,7 +74,8 @@
 
 # Dependencies
 
-[In progress]
+- [Kingfisher](https://github.com/onevcat/Kingfisher) - для загрузки и кэширования изображений из Интернета;
+- [ProgressHUD](https://github.com/relatedcode/ProgressHUD) - для оповещения пользователя о статусе загрузке.
 
 # Workflow
 
@@ -122,7 +139,7 @@ docs: update description of run() method
 
 В проекте используются:
 
-- [SwiftLint](https://github.com/realm/SwiftLint) - для обеспечения соблюдения стиля и соглашений Swift
+- [SwiftLint](https://github.com/realm/SwiftLint) - для обеспечения соблюдения стиля и соглашений Swift (версия 44, так как старый Xcode, возможно потребуется отключить в фазах сборки)
 
 ```sh
 brew update
@@ -151,12 +168,11 @@ struct ViewProvider: PreviewProvider {
 #endif
 ```
 
-# Task board
-
-[In progress]
-
 # Design
 
 * Инструментом для дизайна является [Figma](https://www.figma.com)
 * [Дизайн приложения](https://www.figma.com/file/k1LcgXHGTHIeiCv4XuPbND/FakeNFT-(YP)?node-id=96-5542&t=YdNbOI8EcqdYmDeg-0)
 
+# API
+
+* Постоянно обновляется, отслеживать [здесь](https://github.com/Yandex-Practicum/iOS-FakeNFT-StarterProject-Public/blob/main/API.html) - скопировать на диск и открывать локально
