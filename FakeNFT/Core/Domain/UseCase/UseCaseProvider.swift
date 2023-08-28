@@ -1,9 +1,9 @@
-final class ProfileUseCaseProvider {
+final class UseCaseProvider {
 	// MARK: - Singleton
-	static let instance = ProfileUseCaseProvider()
+	static let instance = UseCaseProvider()
 	private init() {}
 
-	private let serviceProvider = ProfileServiceProvider()
+	private let serviceProvider = ServiceProvider()
 
 	lazy var profileRepository: ProfileRepository = {
 		serviceProvider.profileRepository

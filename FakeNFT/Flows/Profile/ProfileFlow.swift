@@ -7,9 +7,9 @@ struct ProfileFlow: IFlow {
 
 	func showProfile() -> UIViewController {
 		let dep = DefaultProfileViewModel.Dependencies(
-			getProfile: ProfileUseCaseProvider.instance.getProfile,
-			putProfile: ProfileUseCaseProvider.instance.putProfile,
-			profileRepository: ProfileUseCaseProvider.instance.profileRepository
+			getProfile: UseCaseProvider.instance.getProfile,
+			putProfile: UseCaseProvider.instance.putProfile,
+			profileRepository: UseCaseProvider.instance.profileRepository
 		)
 		let viewModel: ProfileViewModel = DefaultProfileViewModel(dep: dep)
 		let view = ProfileViewController(viewModel: viewModel)
@@ -64,11 +64,11 @@ struct ProfileFlow: IFlow {
 
 	func makeMyNftsVC() -> UIViewController {
 		let dep = DefaultMyNftsViewModel.Dependencies(
-			getMyNfts: ProfileUseCaseProvider.instance.getNfts,
-			getSetSortOption: ProfileUseCaseProvider.instance.getSetSortMyNtfsOption,
-			putLikes: ProfileUseCaseProvider.instance.putLikes,
-			getAuthors: ProfileUseCaseProvider.instance.getAuthors,
-			profileRepository: ProfileUseCaseProvider.instance.profileRepository
+			getMyNfts: UseCaseProvider.instance.getNfts,
+			getSetSortOption: UseCaseProvider.instance.getSetSortMyNtfsOption,
+			putLikes: UseCaseProvider.instance.putLikes,
+			getAuthors: UseCaseProvider.instance.getAuthors,
+			profileRepository: UseCaseProvider.instance.profileRepository
 		)
 		let viewModel = DefaultMyNftsViewModel(dep: dep)
 		let view = MyNftsViewController(viewModel: viewModel)
@@ -101,9 +101,9 @@ struct ProfileFlow: IFlow {
 
 	func makeFavoritesVC() -> UIViewController {
 		let dep = DefaultFavoritesViewModel.Dependencies(
-			getNfts: ProfileUseCaseProvider.instance.getNfts,
-			putLikes: ProfileUseCaseProvider.instance.putLikes,
-			profileRepository: ProfileUseCaseProvider.instance.profileRepository
+			getNfts: UseCaseProvider.instance.getNfts,
+			putLikes: UseCaseProvider.instance.putLikes,
+			profileRepository: UseCaseProvider.instance.profileRepository
 		)
 		let viewModel = DefaultFavoritesViewModel(dep: dep)
 		let view = FavoritesViewController(viewModel: viewModel)

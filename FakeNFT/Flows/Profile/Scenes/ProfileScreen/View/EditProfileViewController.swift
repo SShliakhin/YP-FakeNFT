@@ -346,9 +346,9 @@ import SwiftUI
 struct EditProfileViewControllerProvider: PreviewProvider {
 	static var previews: some View {
 		let dep = DefaultProfileViewModel.Dependencies(
-			getProfile: ProfileUseCaseProvider.instance.getProfile,
-			putProfile: ProfileUseCaseProvider.instance.putProfile,
-			profileRepository: ProfileUseCaseProvider.instance.profileRepository
+			getProfile: UseCaseProvider.instance.getProfile,
+			putProfile: UseCaseProvider.instance.putProfile,
+			profileRepository: UseCaseProvider.instance.profileRepository
 		)
 		let viewModel: ProfileViewModel = DefaultProfileViewModel(dep: dep)
 		let editProfileViewController = EditProfileViewController(viewModel: viewModel)
