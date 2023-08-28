@@ -18,7 +18,7 @@
 4. [Arhitecture](#arhitecture)
 5. [Structure](#structure)
 6. [Dependencies](#dependencies)
-7. [Task board](#task-board)
+7. [Workflow](#workflow)
 8. [Design](#design)
 9. [API](#api)
 
@@ -78,8 +78,6 @@
 - [ProgressHUD](https://github.com/relatedcode/ProgressHUD) - для оповещения пользователя о статусе загрузки.
 
 # Workflow
-
-[In progress]
 
 ## Branches
 
