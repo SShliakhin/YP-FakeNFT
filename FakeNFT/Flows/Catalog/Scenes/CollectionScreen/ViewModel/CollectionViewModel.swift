@@ -58,10 +58,10 @@ typealias CollectionViewModel = (
 final class DefaultCollectionViewModel: CollectionViewModel {
 	struct Dependencies {
 		let collection: Collection
-		let getAuthor: GetAuthorUseCase
-		let getNfts: GetNftsUseCase
-		let getLikes: GetLikesUseCase
-		let putLikes: PutLikesUseCase
+		let getAuthor: GetAuthorsUseCase
+		let getNfts: GetNftsProfileUseCase
+		let getLikes: GetLikesProfileUseCase
+		let putLikes: PutLikesProfileUseCase
 		let getOrder: GetOrderUseCase
 		let putOrder: PutOrderUseCase
 	}
@@ -242,7 +242,7 @@ private extension DefaultCollectionViewModel {
 
 	func fetchAuthor(group: DispatchGroup, authorID: String) {
 		group.enter()
-		dependencies.getAuthor.invoke(userID: authorID) { [weak self] result in
+		dependencies.getAuthor.invoke(authorID: authorID) { [weak self] result in
 			switch result {
 			case .success(let author):
 				self?.author = author

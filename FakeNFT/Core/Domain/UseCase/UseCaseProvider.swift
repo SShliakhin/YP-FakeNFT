@@ -9,6 +9,10 @@ final class UseCaseProvider {
 		serviceProvider.profileRepository
 	}()
 
+	lazy var getCollections: GetCollectionsUseCase = {
+		GetCollectionsUseCaseImp(apiClient: serviceProvider.apiClient)
+	}()
+
 	lazy var getProfile: GetProfileUseCase = {
 		GetProfileUseCaseImp(
 			apiClient: serviceProvider.apiClient,
@@ -51,7 +55,19 @@ final class UseCaseProvider {
 		)
 	}()
 
+	lazy var getOrder: GetOrderUseCase = {
+		GetOrderUseCaseImp(apiClient: serviceProvider.apiClient)
+	}()
+
+	lazy var putOrder: PutOrderUseCase = {
+		PutOrderUseCaseImp(apiClient: serviceProvider.apiClient)
+	}()
+
 	lazy var getSetSortMyNtfsOption: SortMyNtfsOption = {
 		GetSetSortMyNtfsOptionUseCase()
+	}()
+
+	lazy var getSetSortCollectionsOption: SortCollectionsOption = {
+		GetSetSortCollectionsOptionUseCase()
 	}()
 }

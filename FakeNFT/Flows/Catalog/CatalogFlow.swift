@@ -7,8 +7,8 @@ struct CatalogFlow: IFlow {
 
 	func showCatalogOfCollections() -> UIViewController {
 		let dep = DefaultCatalogViewModel.Dependencies(
-			getCollections: CatalogUseCaseProvider.instance.getCollections,
-			getSetSortOption: CatalogUseCaseProvider.instance.getSetSortCollectionsOption
+			getCollections: UseCaseProvider.instance.getCollections,
+			getSetSortOption: UseCaseProvider.instance.getSetSortCollectionsOption
 		)
 		let viewModel = DefaultCatalogViewModel(dep: dep)
 		let view = CatalogViewController(viewModel: viewModel)
@@ -38,12 +38,12 @@ struct CatalogFlow: IFlow {
 	func makeCollectionVCBy(collection: Collection) -> UIViewController {
 		let dep = DefaultCollectionViewModel.Dependencies(
 			collection: collection,
-			getAuthor: CatalogUseCaseProvider.instance.getAuthor,
-			getNfts: CatalogUseCaseProvider.instance.getNfts,
-			getLikes: CatalogUseCaseProvider.instance.getLikes,
-			putLikes: CatalogUseCaseProvider.instance.putLikes,
-			getOrder: CatalogUseCaseProvider.instance.getOrder,
-			putOrder: CatalogUseCaseProvider.instance.putOrder
+			getAuthor: UseCaseProvider.instance.getAuthors,
+			getNfts: UseCaseProvider.instance.getNfts,
+			getLikes: UseCaseProvider.instance.getLikes,
+			putLikes: UseCaseProvider.instance.putLikes,
+			getOrder: UseCaseProvider.instance.getOrder,
+			putOrder: UseCaseProvider.instance.putOrder
 		)
 		let viewModel = DefaultCollectionViewModel(dep: dep)
 		let view = CollectionViewController(viewModel: viewModel)

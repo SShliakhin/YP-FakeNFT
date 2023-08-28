@@ -3,6 +3,7 @@ import Foundation
 protocol GetNftsProfileUseCase {
 	func invoke(nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
 	func invoke(sortBy: SortMyNftsBy, nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
+	func invoke(authorID: String, completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
 	func invoke(nftID: String, completion: @escaping (Result<Nft, FakeNFTError>) -> Void)
 }
 
@@ -46,6 +47,31 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 					let newNfts = nfts.filter { nftIDs.contains($0.id) }
 					self.profileRepository.addNfts(newNfts)
 					completion(.success(newNfts))
+				}
+				self.task = nil
+			case .failure(let error):
+				completion(.failure(.apiError(error)))
+				self.task = nil
+			}
+		}
+	}
+
+	func invoke(authorID: String, completion: @escaping (Result<[Nft], FakeNFTError>) -> Void) {
+		assert(Thread.isMainThread)
+		guard task == nil else { return }
+
+		let resource = FakeNFTAPI.getNFTsByAuthor(authorID)
+		let request = Request(endpoint: resource.url)
+
+		task = network.send(request) { [weak self] ( result: Result<[NftDTO], APIError>) in
+			guard let self = self else { return }
+			switch result {
+			case .success(let nftsDTO):
+				let nfts = nftsDTO.compactMap { Nft(from: $0) }
+				if nfts.isEmpty {
+					completion(.failure(.noNftsByAuthorID(authorID)))
+				} else {
+					completion(.success(nfts))
 				}
 				self.task = nil
 			case .failure(let error):
