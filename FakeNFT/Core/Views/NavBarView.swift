@@ -47,25 +47,26 @@ private extension NavBarView {
 		backgroundColor = .clear
 	}
 	func setConstraints() {
-		let stack = UIStackView(
-			arrangedSubviews: [
-				goBackButton,
-				UIView(),
-				titleLabel,
-				UIView(),
-				sortButton
-			]
+		let containerView = UIView(
+			subviews: titleLabel, goBackButton, sortButton
 		)
-		stack.alignment = .center
 
-		goBackButton.makeConstraints { $0.size(Appearance.goBackButtonSize) }
-		sortButton.makeConstraints { $0.size(Appearance.sortButtonSize) }
-		titleLabel.makeConstraints {
-			[$0.centerXAnchor.constraint(equalTo: stack.centerXAnchor)]
+		titleLabel.makeEqualToSuperviewCenter()
+		goBackButton.makeConstraints { make in
+			[
+				make.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+				make.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+			]
+		}
+		sortButton.makeConstraints { make in
+			[
+				make.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+				make.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+			]
 		}
 
-		addSubview(stack)
-		stack.makeEqualToSuperview(insets: Appearance.contentInsets)
+		addSubview(containerView)
+		containerView.makeEqualToSuperview(insets: Appearance.contentInsets)
 	}
 }
 
@@ -108,8 +109,6 @@ private extension NavBarView {
 			horizontal: 9,
 			vertical: .zero
 		)
-		static let goBackButtonSize: CGSize = .init(width: 24, height: 24)
-		static let sortButtonSize: CGSize = .init(width: 42, height: 42)
 	}
 }
 
