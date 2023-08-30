@@ -117,11 +117,9 @@ private extension NftItemCell {
 		contentView.backgroundColor = Theme.color(usage: .white)
 	}
 	func setConstraints() {
-		let avatarContainer = UIView()
-		[
-			avatarImageView,
-			likeButton
-		].forEach { avatarContainer.addSubview($0) }
+		let avatarContainer = UIView(
+			subviews: avatarImageView, likeButton
+		)
 		avatarImageView.makeEqualToSuperview()
 		likeButton.makeConstraints { make in
 			[
@@ -130,7 +128,9 @@ private extension NftItemCell {
 			]
 		}
 
-		let leftVStack = UIStackView(arrangedSubviews: [titleLabel, priceLabel])
+		let leftVStack = UIStackView(
+			arrangedSubviews: [titleLabel, priceLabel]
+		)
 		leftVStack.axis = .vertical
 		leftVStack.spacing = Theme.spacing(usage: .standardHalf)
 		leftVStack.alignment = .leading
@@ -141,23 +141,23 @@ private extension NftItemCell {
 			[$0.heightAnchor.constraint(equalToConstant: Appearance.priceLabelHeight)]
 		}
 
-		let bottomHStack = UIStackView(arrangedSubviews: [leftVStack, cartButton])
+		let bottomHStack = UIStackView(
+			arrangedSubviews: [leftVStack, cartButton]
+		)
 		bottomHStack.alignment = .center
 
-		let mainVStack = UIStackView()
+		let mainVStack = UIStackView(
+			arrangedSubviews: [avatarContainer, ratingView, bottomHStack]
+		)
 		mainVStack.axis = .vertical
 		mainVStack.alignment = .leading
 		mainVStack.spacing = Theme.spacing(usage: .standard)
-		[
-			avatarContainer,
-			ratingView,
-			bottomHStack
-		].forEach { mainVStack.addArrangedSubview($0) }
+
 		mainVStack.setCustomSpacing(Appearance.stackCustomSpacing, after: ratingView)
+
 		avatarContainer.makeConstraints {
 			[$0.heightAnchor.constraint(equalTo: $0.widthAnchor, multiplier: 1)]
 		}
-
 		bottomHStack.makeConstraints { make in
 			[
 				make.leadingAnchor.constraint(equalTo: mainVStack.leadingAnchor),

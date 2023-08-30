@@ -108,11 +108,9 @@ private extension FavoritesItemCell {
 	}
 
 	func makeAvatarContainerView() -> UIView {
-		let view = UIView()
-		[
-			avatarImageView,
-			likeButton
-		].forEach { view.addSubview($0) }
+		let view = UIView(
+			subviews: avatarImageView, likeButton
+		)
 		avatarImageView.makeEqualToSuperview()
 		likeButton.makeConstraints { make in
 			[

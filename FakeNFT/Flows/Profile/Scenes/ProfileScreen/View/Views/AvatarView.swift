@@ -19,7 +19,7 @@ final class AvatarView: UIView {
 	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
 	private lazy var avatarButton: UIButton = makeAvatarButton()
 	private lazy var uploadImageButton: UIButton = makeUploadImageButton()
-	private lazy var buttonContainer = UIView()
+	private lazy var uploadImageButtonContainer = UIView()
 
 	// MARK: - Inits
 
@@ -48,7 +48,7 @@ extension AvatarView {
 	@discardableResult
 	func update(with model: AvatarViewModel) -> Self {
 		profileAvatarUrl = model.url
-		buttonContainer.isHidden = model.isUploadButtonHidden
+		uploadImageButtonContainer.isHidden = model.isUploadButtonHidden
 		uploadImageButton.event = model.onTapUploadImage
 
 		return self
@@ -61,24 +61,24 @@ private extension AvatarView {
 		backgroundColor = .clear
 	}
 	func setConstraints() {
-		let imageContainer = UIView()
-		[
-			avatarImageView,
-			avatarButton
-		].forEach { imageContainer.addSubview($0) }
+		let imageContainer = UIView(
+			subviews: avatarImageView, avatarButton
+		)
 		avatarImageView.makeConstraints {
 			$0.size(Appearance.avatarSize)
 		}
 		avatarImageView.makeEqualToSuperview()
 		avatarButton.makeEqualToSuperview()
 
-		buttonContainer.addSubview(uploadImageButton)
+		uploadImageButtonContainer.addSubview(uploadImageButton)
 		uploadImageButton.makeConstraints {
 			[$0.heightAnchor.constraint(equalToConstant: Appearance.buttonLimitHeight)]
 		}
 		uploadImageButton.makeEqualToSuperview(insets: Appearance.buttonInsets)
 
-		let vStack = UIStackView(arrangedSubviews: [imageContainer, buttonContainer])
+		let vStack = UIStackView(
+			arrangedSubviews: [imageContainer, uploadImageButtonContainer]
+		)
 		vStack.axis = .vertical
 		vStack.alignment = .center
 
@@ -113,7 +113,7 @@ private extension AvatarView {
 		button.titleLabel?.textColor = Theme.color(usage: .allDayWhite)
 		button.event = { [weak self] in
 			guard let self = self else { return }
-			self.buttonContainer.isHidden = !self.buttonContainer.isHidden
+			self.uploadImageButtonContainer.isHidden = !self.uploadImageButtonContainer.isHidden
 		}
 
 		return button
@@ -159,7 +159,6 @@ private extension AvatarView {
 		)
 		static let buttonLimitHeight = 22.0
 
-		static let avatarBorderWidth = 1.0
 		static let mockUrls: [URL?] = [
 			URL(string: "https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/382f1545-aa14-4a7f-8f89-a1afb4656923/3840x"),
 			URL(string: "https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/6a1e205b-1fa4-480e-a57d-a14415362b96/3840x")
