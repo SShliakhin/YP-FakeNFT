@@ -4,6 +4,11 @@ extension UIView {
 
 	var forcedSuperview: UIView { superview! } // swiftlint:disable:this force_unwrapping
 
+	convenience init(subviews: UIView...) {
+		self.init(frame: .zero)
+		subviews.forEach { self.addSubview($0) }
+	}
+
 	private func height(constant: CGFloat) -> NSLayoutConstraint {
 		NSLayoutConstraint(
 			item: self,
