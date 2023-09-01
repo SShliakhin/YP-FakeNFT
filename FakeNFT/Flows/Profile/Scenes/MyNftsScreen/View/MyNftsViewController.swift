@@ -1,5 +1,6 @@
 import UIKit
 import ProgressHUD
+import StoreKit
 
 final class MyNftsViewController: UIViewController {
 	private let viewModel: MyNftsViewModel
@@ -55,6 +56,7 @@ private extension MyNftsViewController {
 		}
 		viewModel.likes.observe(on: self) { [weak self] _ in
 			self?.updateItems()
+			self?.checkTimeToReview()
 		}
 		viewModel.isLoading.observe(on: self) { isLoading in
 			isLoading ? ProgressHUD.show() : ProgressHUD.dismiss()
@@ -64,6 +66,12 @@ private extension MyNftsViewController {
 	func updateItems() {
 		tableView.reloadData()
 		checkAppearance()
+	}
+
+	func checkTimeToReview() {
+		if viewModel.isTimeToRequestReview {
+			SKStoreReviewController.requestReview()
+		}
 	}
 
 	func checkAppearance() {

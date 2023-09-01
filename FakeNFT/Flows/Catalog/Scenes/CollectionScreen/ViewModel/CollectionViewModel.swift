@@ -46,6 +46,8 @@ protocol CollectionViewModelOutput: AnyObject {
 	var numberOfSection: Int { get }
 	var cellModels: [ICellViewAnyModel.Type] { get }
 
+	var isTimeToRequestReview: Bool { get }
+
 	func numberOfItemInSection(_ index: Int) -> Int
 	func cellModelInSectionAtIndex(section: Int, index: Int) -> ICellViewAnyModel
 }
@@ -83,6 +85,11 @@ final class DefaultCollectionViewModel: CollectionViewModel {
 		dataSource.value.count
 	}
 	var cellModels: [ICellViewAnyModel.Type] = [NftItemCellModel.self, CollectionHeaderCellModel.self]
+
+	var isTimeToRequestReview: Bool {
+		guard !likes.value.isEmpty else { return false }
+		return likes.value.count % 5 == 0
+	}
 
 	// MARK: - Inits
 

@@ -1,5 +1,6 @@
 import UIKit
 import ProgressHUD
+import StoreKit
 
 final class CollectionViewController: UIViewController {
 	private var viewModel: CollectionViewModel
@@ -51,6 +52,7 @@ private extension CollectionViewController {
 		}
 		viewModel.likes.observe(on: self) { [weak self] _ in
 			self?.updateItems()
+			self?.checkTimeToReview()
 		}
 		viewModel.order.observe(on: self) { [weak self] _ in
 			self?.updateItems()
@@ -67,6 +69,12 @@ private extension CollectionViewController {
 	func updateItems() {
 		guard collectionView.numberOfSections > 0 else { return }
 		collectionView.reloadSections([1])
+	}
+
+	func checkTimeToReview() {
+		if viewModel.isTimeToRequestReview {
+			SKStoreReviewController.requestReview()
+		}
 	}
 
 	func checkAppearance() {

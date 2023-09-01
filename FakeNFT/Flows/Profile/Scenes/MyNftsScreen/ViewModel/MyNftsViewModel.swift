@@ -27,6 +27,8 @@ protocol MyNftsViewModelOutput: AnyObject {
 	var isEmpty: Bool { get }
 	var cellModels: [ICellViewAnyModel.Type] { get }
 
+	var isTimeToRequestReview: Bool { get }
+
 	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel
 }
 
@@ -45,6 +47,7 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
+	private var hasReview = false
 
 	// MARK: - INPUT
 	var didSendEventClosure: ((MyNftsEvents) -> Void)?
@@ -58,6 +61,14 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	var numberOfItems: Int { items.value.count }
 	var isEmpty: Bool { items.value.isEmpty }
 	var cellModels: [ICellViewAnyModel.Type] = [MyNftsItemCellModel.self]
+
+	var isTimeToRequestReview: Bool {
+		if hasReview {
+			return false
+		}
+		hasReview = likes.value.count % 5 == 0
+		return hasReview
+	}
 
 	// MARK: - Inits
 
