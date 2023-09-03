@@ -1,6 +1,8 @@
 import UIKit
 
 struct CatalogFlow: IFlow {
+	private let catalogModuleFactory: CatalogModuleFactory = ModuleFactoryImp()
+
 	func start() -> UIViewController {
 		showCatalogOfCollections()
 	}
@@ -11,17 +13,17 @@ struct CatalogFlow: IFlow {
 			getSetSortOption: UseCaseProvider.instance.getSetSortCollectionsOption
 		)
 		let viewModel = DefaultCatalogViewModel(dep: dep)
-		let view = CatalogViewController(viewModel: viewModel)
+		let view = catalogModuleFactory.makeCatalogViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
 			case .showErrorAlert(let message):
-				let alert = makeErrorAlertVC(
+				let alert = catalogModuleFactory.makeErrorAlertVC(
 					message: message,
 					completion: { viewModel?.didUserDo(request: .retryAction) }
 				)
 				view?.present(alert, animated: true)
 			case .showSortAlert:
-				let alert = makeSortAlertVC(
+				let alert = catalogModuleFactory.makeSortAlertVC(
 					sortCases: [.name, .nftsCount],
 					completion: { viewModel?.didUserDo(request: .selectSortBy($0)) }
 				)
@@ -46,11 +48,11 @@ struct CatalogFlow: IFlow {
 			putOrder: UseCaseProvider.instance.putOrder
 		)
 		let viewModel = DefaultCollectionViewModel(dep: dep)
-		let view = CollectionViewController(viewModel: viewModel)
+		let view = catalogModuleFactory.makeCollectionViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
 			case .showErrorAlert(let message, let withRetry):
-				let alert = makeErrorAlertVC(
+				let alert = catalogModuleFactory.makeErrorAlertVC(
 					message: message,
 					completion: withRetry
 					? { viewModel?.didUserDo(request: .retryAction) }
@@ -64,7 +66,10 @@ struct CatalogFlow: IFlow {
 					let webViewVC = makeWebViewVC(url: url)
 					view?.show(webViewVC, sender: view)
 				} else {
-					let alert = makeErrorAlertVC(message: Theme.Author.incorrectURL)
+					let alert = catalogModuleFactory.makeErrorAlertVC(
+						message: Theme.Author.incorrectURL,
+						completion: nil
+					)
 					view?.present(alert, animated: true)
 				}
 			}
@@ -76,7 +81,7 @@ struct CatalogFlow: IFlow {
 	func makeWebViewVC(url: URL) -> UIViewController {
 		let dep = DefaultWebViewModel.Dependencies(url: url)
 		let viewModel = DefaultWebViewModel(dep: dep)
-		let view = WebViewController(viewModel: viewModel)
+		let view = catalogModuleFactory.makeWebViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view] event in
 			switch event {
 			case .close:
@@ -85,52 +90,5 @@ struct CatalogFlow: IFlow {
 		}
 
 		return view
-	}
-
-	func makeSortAlertVC(
-		sortCases: [SortCollectionsBy],
-		completion: @escaping (SortCollectionsBy) -> Void
-	) -> UIViewController {
-		let alert = UIAlertController(
-			title: Theme.AlertTitles.sortTitle,
-			message: nil,
-			preferredStyle: .actionSheet
-		)
-		sortCases.forEach { sortCase in
-			alert.addAction(
-				UIAlertAction(title: sortCase.description, style: .default) { _ in
-					completion(sortCase)
-				}
-			)
-		}
-		alert.addAction(
-			UIAlertAction(title: Theme.ActionsNames.close, style: .cancel)
-		)
-
-		return alert
-	}
-
-	func makeErrorAlertVC(
-		message: String,
-		completion: (() -> Void)? = nil
-	) -> UIViewController {
-		let alert = UIAlertController(
-			title: Theme.AlertTitles.errorTitle,
-			message: message,
-			preferredStyle: .alert
-		)
-		if let completion = completion {
-			alert.addAction(
-				UIAlertAction(title: Theme.ActionsNames.retry, style: .default) { _ in
-					completion()
-				}
-			)
-		} else {
-			alert.addAction(
-				UIAlertAction(title: Theme.ActionsNames.okey, style: .default)
-			)
-		}
-
-		return alert
 	}
 }

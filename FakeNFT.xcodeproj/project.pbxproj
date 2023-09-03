@@ -65,6 +65,8 @@
 		5A0D321D2A8E854800EF98F5 /* PutProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D321C2A8E854800EF98F5 /* PutProfileUseCase.swift */; };
 		5A0D321F2A8E871100EF98F5 /* GetLikesProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D321E2A8E871100EF98F5 /* GetLikesProfileUseCase.swift */; };
 		5A0D32212A8E879000EF98F5 /* PutLikesProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32202A8E879000EF98F5 /* PutLikesProfileUseCase.swift */; };
+		5A1B6D742AA4D9F000A1BCB4 /* CommonModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D732AA4D9F000A1BCB4 /* CommonModuleFactory.swift */; };
+		5A1B6D762AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */; };
 		5A3ED4B22A89FD6E003E367D /* UIViewController+Bars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */; };
 		5A3ED4B42A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B32A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift */; };
 		5A484C742A9CE959007AC212 /* SortMyNftsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */; };
@@ -108,6 +110,7 @@
 		5AB4D8792A7D3C6A00E1757D /* Theme+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB4D8782A7D3C6A00E1757D /* Theme+Images.swift */; };
 		5ABCAE792A94977C0023C5C2 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABCAE782A94977C0023C5C2 /* AvatarView.swift */; };
 		5ABCAE7E2A952D7E0023C5C2 /* MyNftsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABCAE7D2A952D7E0023C5C2 /* MyNftsItemCell.swift */; };
+		5AC7EBE52AA3D6F20021D0BF /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC7EBE42AA3D6F20021D0BF /* SplashViewController.swift */; };
 		5AE76DA62A91F2CC00BAC6B2 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */; };
 		5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */; };
 /* End PBXBuildFile section */
@@ -194,6 +197,8 @@
 		5A0D321C2A8E854800EF98F5 /* PutProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutProfileUseCase.swift; sourceTree = "<group>"; };
 		5A0D321E2A8E871100EF98F5 /* GetLikesProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesProfileUseCase.swift; sourceTree = "<group>"; };
 		5A0D32202A8E879000EF98F5 /* PutLikesProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutLikesProfileUseCase.swift; sourceTree = "<group>"; };
+		5A1B6D732AA4D9F000A1BCB4 /* CommonModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModuleFactory.swift; sourceTree = "<group>"; };
+		5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactoryImp.swift; sourceTree = "<group>"; };
 		5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Bars.swift"; sourceTree = "<group>"; };
 		5A3ED4B32A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSetSortCollectionsOptionUseCase.swift; sourceTree = "<group>"; };
 		5A51DA012A8570D700235E7D /* CatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewModel.swift; sourceTree = "<group>"; };
@@ -240,6 +245,7 @@
 		5AB4D8782A7D3C6A00E1757D /* Theme+Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Theme+Images.swift"; sourceTree = "<group>"; };
 		5ABCAE782A94977C0023C5C2 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		5ABCAE7D2A952D7E0023C5C2 /* MyNftsItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNftsItemCell.swift; sourceTree = "<group>"; };
+		5AC7EBE42AA3D6F20021D0BF /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -488,6 +494,7 @@
 		5A0D31FC2A8DB05800EF98F5 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				5A1B6D722AA4D9C600A1BCB4 /* Factories */,
 				5AAB676F2A8130FF00E95CB2 /* Model */,
 				5AAB676E2A8130A400E95CB2 /* DTO */,
 				5A0D32172A8E7A5C00EF98F5 /* UseCase */,
@@ -500,6 +507,7 @@
 			children = (
 				5A0D31FE2A8DB0E600EF98F5 /* TabBar */,
 				5AA5C8B82A88D0FA00510684 /* Web */,
+				5AC7EBE42AA3D6F20021D0BF /* SplashViewController.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -557,6 +565,15 @@
 				5A3ED4B32A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		5A1B6D722AA4D9C600A1BCB4 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				5A1B6D732AA4D9F000A1BCB4 /* CommonModuleFactory.swift */,
+				5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */,
+			);
+			path = Factories;
 			sourceTree = "<group>";
 		};
 		5A51DA072A85CA2600235E7D /* Scenes */ = {
@@ -1032,6 +1049,7 @@
 				5AAB676B2A812D1A00E95CB2 /* ProfileDTO.swift in Sources */,
 				5A0469972A7ACCAB0026D783 /* AppAppearance.swift in Sources */,
 				5AAB67762A81435700E95CB2 /* Author.swift in Sources */,
+				5A1B6D762AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift in Sources */,
 				5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */,
 				5A7EA45F2A8FE83B004C5402 /* ProfileViewModel.swift in Sources */,
 				5AAB67742A8132AF00E95CB2 /* Nft.swift in Sources */,
@@ -1057,11 +1075,13 @@
 				5A0D32162A8E796000EF98F5 /* UseCaseProvider.swift in Sources */,
 				5A04697D2A7ABCC50026D783 /* UIColor+Dynamic.swift in Sources */,
 				5A51DA1B2A872C8400235E7D /* CollectionViewModel.swift in Sources */,
+				5A1B6D742AA4D9F000A1BCB4 /* CommonModuleFactory.swift in Sources */,
 				5A0469902A7ABE180026D783 /* ShoppingCartViewController.swift in Sources */,
 				5A0D321F2A8E871100EF98F5 /* GetLikesProfileUseCase.swift in Sources */,
 				5A97DED02A95FC31009EEB30 /* NavBarView.swift in Sources */,
 				5A51DA172A87215600235E7D /* UIImage+.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				5AC7EBE52AA3D6F20021D0BF /* SplashViewController.swift in Sources */,
 				5ABCAE7E2A952D7E0023C5C2 /* MyNftsItemCell.swift in Sources */,
 				5A7EA45D2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift in Sources */,
 				5A04697E2A7ABCC50026D783 /* UITableView+Extensions.swift in Sources */,

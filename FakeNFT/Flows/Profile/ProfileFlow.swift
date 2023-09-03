@@ -1,6 +1,8 @@
 import UIKit
 
 struct ProfileFlow: IFlow {
+	private let profileModuleFactory: ProfileModuleFactory = ModuleFactoryImp()
+
 	func start() -> UIViewController {
 		showProfile()
 	}
@@ -12,13 +14,13 @@ struct ProfileFlow: IFlow {
 			profileRepository: UseCaseProvider.instance.profileRepository
 		)
 		let viewModel: ProfileViewModel = DefaultProfileViewModel(dep: dep)
-		let view = ProfileViewController(viewModel: viewModel)
+		let view = profileModuleFactory.makeProfileViewController(viewModel: viewModel)
 		// swiftlint:disable:next closure_body_length
 		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
 
 			case .showErrorAlert(let message, let withRetry):
-				let alert = makeErrorAlertVC(
+				let alert = profileModuleFactory.makeErrorAlertVC(
 					message: message,
 					completion: withRetry
 					? { viewModel?.didUserDo(request: .retryAction) }
@@ -28,7 +30,7 @@ struct ProfileFlow: IFlow {
 
 			case .selectEditProfile:
 				guard let viewModel = viewModel else { return }
-				let editProfileView = EditProfileViewController(viewModel: viewModel)
+				let editProfileView = profileModuleFactory.makeEditProfileViewController(viewModel: viewModel)
 				view?.present(editProfileView, animated: true)
 
 			case .selectMyNfts:
@@ -44,7 +46,10 @@ struct ProfileFlow: IFlow {
 					let webViewVC = makeWebViewVC(url: url)
 					view?.show(webViewVC, sender: view)
 				} else {
-					let alert = makeErrorAlertVC(message: Theme.Profile.incorrectURL)
+					let alert = profileModuleFactory.makeErrorAlertVC(
+						message: Theme.Profile.incorrectURL,
+						completion: nil
+					)
 					view?.present(alert, animated: true)
 				}
 
@@ -52,12 +57,6 @@ struct ProfileFlow: IFlow {
 				view?.presentedViewController?.dismiss(animated: true)
 			}
 		}
-
-		return view
-	}
-
-	func makeEditProfileVC(profileVM: ProfileViewModel) -> UIViewController {
-		let view = EditProfileViewController(viewModel: profileVM)
 
 		return view
 	}
@@ -71,12 +70,12 @@ struct ProfileFlow: IFlow {
 			profileRepository: UseCaseProvider.instance.profileRepository
 		)
 		let viewModel = DefaultMyNftsViewModel(dep: dep)
-		let view = MyNftsViewController(viewModel: viewModel)
+		let view = profileModuleFactory.makeMyNftsViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
 
 			case .showErrorAlert(let message, let withRetry):
-				let alert = makeErrorAlertVC(
+				let alert = profileModuleFactory.makeErrorAlertVC(
 					message: message,
 					completion: withRetry
 					? { viewModel?.didUserDo(request: .retryAction) }
@@ -85,7 +84,7 @@ struct ProfileFlow: IFlow {
 				view?.present(alert, animated: true)
 
 			case .showSortAlert:
-				let alert = makeSortAlertVC(
+				let alert = profileModuleFactory.makeSortAlertVC(
 					sortCases: [.price, .rating, .name],
 					completion: { viewModel?.didUserDo(request: .selectSortBy($0)) }
 				)
@@ -106,12 +105,12 @@ struct ProfileFlow: IFlow {
 			profileRepository: UseCaseProvider.instance.profileRepository
 		)
 		let viewModel = DefaultFavoritesViewModel(dep: dep)
-		let view = FavoritesViewController(viewModel: viewModel)
+		let view = profileModuleFactory.makeFavoritesViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view, weak viewModel] event in
 			switch event {
 
 			case .showErrorAlert(let message, withRetry: let withRetry):
-				let alert = makeErrorAlertVC(
+				let alert = profileModuleFactory.makeErrorAlertVC(
 					message: message,
 					completion: withRetry
 					? { viewModel?.didUserDo(request: .retryAction) }
@@ -130,7 +129,7 @@ struct ProfileFlow: IFlow {
 	func makeWebViewVC(url: URL) -> UIViewController {
 		let dep = DefaultWebViewModel.Dependencies(url: url)
 		let viewModel = DefaultWebViewModel(dep: dep)
-		let view = WebViewController(viewModel: viewModel)
+		let view = profileModuleFactory.makeWebViewController(viewModel: viewModel)
 		viewModel.didSendEventClosure = { [weak view] event in
 			switch event {
 			case .close:
@@ -139,52 +138,5 @@ struct ProfileFlow: IFlow {
 		}
 
 		return view
-	}
-
-	func makeSortAlertVC(
-		sortCases: [SortMyNftsBy],
-		completion: @escaping (SortMyNftsBy) -> Void
-	) -> UIViewController {
-		let alert = UIAlertController(
-			title: Theme.AlertTitles.sortTitle,
-			message: nil,
-			preferredStyle: .actionSheet
-		)
-		sortCases.forEach { sortCase in
-			alert.addAction(
-				UIAlertAction(title: sortCase.description, style: .default) { _ in
-					completion(sortCase)
-				}
-			)
-		}
-		alert.addAction(
-			UIAlertAction(title: Theme.ActionsNames.close, style: .cancel)
-		)
-
-		return alert
-	}
-
-	func makeErrorAlertVC(
-		message: String,
-		completion: (() -> Void)? = nil
-	) -> UIViewController {
-		let alert = UIAlertController(
-			title: Theme.AlertTitles.errorTitle,
-			message: message,
-			preferredStyle: .alert
-		)
-		if let completion = completion {
-			alert.addAction(
-				UIAlertAction(title: Theme.ActionsNames.retry, style: .default) { _ in
-					completion()
-				}
-			)
-		} else {
-			alert.addAction(
-				UIAlertAction(title: Theme.ActionsNames.okey, style: .default)
-			)
-		}
-
-		return alert
 	}
 }
