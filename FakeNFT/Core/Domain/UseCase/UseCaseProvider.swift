@@ -1,66 +1,67 @@
 final class UseCaseProvider {
-	// MARK: - Singleton
-	static let instance = UseCaseProvider()
-	private init() {}
+	struct Dependencies {
+		let apiClient: APIClient
+		let profileRepository: ProfileRepository
+	}
 
-	private let serviceProvider = ServiceProvider()
+	private let dependencies: Dependencies
 
-	lazy var profileRepository: ProfileRepository = {
-		serviceProvider.profileRepository
-	}()
+	init(dependencies: Dependencies) {
+		self.dependencies = dependencies
+	}
 
 	lazy var getCollections: GetCollectionsUseCase = {
-		GetCollectionsUseCaseImp(apiClient: serviceProvider.apiClient)
+		GetCollectionsUseCaseImp(apiClient: dependencies.apiClient)
 	}()
 
 	lazy var getProfile: GetProfileUseCase = {
 		GetProfileUseCaseImp(
-			apiClient: serviceProvider.apiClient,
-			profileRepository: profileRepository
+			apiClient: dependencies.apiClient,
+			profileRepository: dependencies.profileRepository
 		)
 	}()
 
 	lazy var putProfile: PutProfileUseCase = {
 		PutProfileUseCaseImp(
-			apiClient: serviceProvider.apiClient,
-			profileRepository: profileRepository
+			apiClient: dependencies.apiClient,
+			profileRepository: dependencies.profileRepository
 		)
 	}()
 
 	lazy var getNfts: GetNftsProfileUseCase = {
 		GetNftsProfileUseCaseImp(
-			apiClient: serviceProvider.apiClient,
-			profileRepository: profileRepository
+			apiClient: dependencies.apiClient,
+			profileRepository: dependencies.profileRepository
 		)
 	}()
 
 	lazy var getLikes: GetLikesProfileUseCase = {
 		GetLikesProfileUseCaseImp(
-			apiClient: serviceProvider.apiClient,
-			profileRepository: profileRepository
+			apiClient: dependencies.apiClient,
+			profileRepository: dependencies.profileRepository
 		)
 	}()
 
 	lazy var putLikes: PutLikesProfileUseCase = {
 		PutLikesProfileUseCaseImp(
-			apiClient: serviceProvider.apiClient,
-			profileRepository: profileRepository
+			apiClient: dependencies.apiClient,
+			profileRepository: dependencies.profileRepository
 		)
 	}()
 
 	lazy var getAuthors: GetAuthorsUseCase = {
 		GetAuthorsUseCaseImp(
-			apiClient: serviceProvider.apiClient,
-			profileRepository: profileRepository
+			apiClient: dependencies.apiClient,
+			profileRepository: dependencies.profileRepository
 		)
 	}()
 
 	lazy var getOrder: GetOrderUseCase = {
-		GetOrderUseCaseImp(apiClient: serviceProvider.apiClient)
+		GetOrderUseCaseImp(apiClient: dependencies.apiClient)
 	}()
 
 	lazy var putOrder: PutOrderUseCase = {
-		PutOrderUseCaseImp(apiClient: serviceProvider.apiClient)
+		PutOrderUseCaseImp(apiClient: dependencies.apiClient)
 	}()
 
 	lazy var getSetSortMyNtfsOption: SortMyNtfsOption = {

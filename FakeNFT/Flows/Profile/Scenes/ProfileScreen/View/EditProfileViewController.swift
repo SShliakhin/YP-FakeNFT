@@ -326,7 +326,6 @@ private extension EditProfileViewController {
 		static let imagePlaceholder = Theme.image(kind: .imagePlaceholder)
 		static let avatarSize: CGSize = .init(width: 70, height: 70)
 		static let avatarCornerRadius = 35.0
-		static let avatarBorderWidth = 1.0
 
 		static let textInsets: UIEdgeInsets = .init(
 			horizontal: Theme.spacing(usage: .standard2),
@@ -345,12 +344,7 @@ private extension EditProfileViewController {
 import SwiftUI
 struct EditProfileViewControllerProvider: PreviewProvider {
 	static var previews: some View {
-		let dep = DefaultProfileViewModel.Dependencies(
-			getProfile: UseCaseProvider.instance.getProfile,
-			putProfile: UseCaseProvider.instance.putProfile,
-			profileRepository: UseCaseProvider.instance.profileRepository
-		)
-		let viewModel: ProfileViewModel = DefaultProfileViewModel(dep: dep)
+		let viewModel = AppDIContainer().makeProfileFlowDIContainer().makeProfileViewModel()
 		let editProfileViewController = EditProfileViewController(viewModel: viewModel)
 		editProfileViewController.updateItems(with: Profile(
 			name: "Joaquin Phoenix", // Студентус Практикумус

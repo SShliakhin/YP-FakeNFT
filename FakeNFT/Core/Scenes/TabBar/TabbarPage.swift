@@ -1,8 +1,8 @@
 import UIKit
 
-enum TabbarPage: Int {
-	case profile
-	case catalog
+enum TabbarPage {
+	case profile(ProfileFlowDIContainer)
+	case catalog(CatalogFlowDIContainer)
 	case shoppingCart
 	case statistics
 
@@ -44,10 +44,16 @@ enum TabbarPage: Int {
 	}
 	func pageFlow() -> IFlow {
 		switch self {
-		case .profile:
-			return ProfileFlow()
-		case .catalog:
-			return CatalogFlow()
+		case .profile(let container):
+			return ProfileFlow(
+				profileModuleFactory: ModuleFactoryImp(),
+				profileDIContainer: container
+			)
+		case .catalog(let container):
+			return CatalogFlow(
+				catalogModuleFactory: ModuleFactoryImp(),
+				catalogDIContainer: container
+			)
 		case .shoppingCart:
 			return ShoppingCartFlow()
 		case .statistics:

@@ -59,7 +59,6 @@
 		5A0D320A2A8DBE7700EF98F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A0D320C2A8DBE7700EF98F5 /* InfoPlist.strings */; };
 		5A0D320F2A8DD7CD00EF98F5 /* Theme+Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D320E2A8DD7CD00EF98F5 /* Theme+Localizable.swift */; };
 		5A0D32112A8DF60F00EF98F5 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32102A8DF60F00EF98F5 /* Profile.swift */; };
-		5A0D32132A8E788000EF98F5 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32122A8E788000EF98F5 /* ServiceProvider.swift */; };
 		5A0D32162A8E796000EF98F5 /* UseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32152A8E796000EF98F5 /* UseCaseProvider.swift */; };
 		5A0D321A2A8E7B6A00EF98F5 /* GetProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32192A8E7B6A00EF98F5 /* GetProfileUseCase.swift */; };
 		5A0D321D2A8E854800EF98F5 /* PutProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D321C2A8E854800EF98F5 /* PutProfileUseCase.swift */; };
@@ -67,6 +66,9 @@
 		5A0D32212A8E879000EF98F5 /* PutLikesProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32202A8E879000EF98F5 /* PutLikesProfileUseCase.swift */; };
 		5A1B6D742AA4D9F000A1BCB4 /* CommonModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D732AA4D9F000A1BCB4 /* CommonModuleFactory.swift */; };
 		5A1B6D762AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */; };
+		5A1B6D782AA5644D00A1BCB4 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D772AA5644D00A1BCB4 /* AppDIContainer.swift */; };
+		5A1B6D7A2AA582A300A1BCB4 /* CatalogFlowDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D792AA582A300A1BCB4 /* CatalogFlowDIContainer.swift */; };
+		5A1B6D7D2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D7C2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift */; };
 		5A3ED4B22A89FD6E003E367D /* UIViewController+Bars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */; };
 		5A3ED4B42A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3ED4B32A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift */; };
 		5A484C742A9CE959007AC212 /* SortMyNftsBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */; };
@@ -191,7 +193,6 @@
 		5A0D320D2A8DBE7800EF98F5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A0D320E2A8DD7CD00EF98F5 /* Theme+Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme+Localizable.swift"; sourceTree = "<group>"; };
 		5A0D32102A8DF60F00EF98F5 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		5A0D32122A8E788000EF98F5 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		5A0D32152A8E796000EF98F5 /* UseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseProvider.swift; sourceTree = "<group>"; };
 		5A0D32192A8E7B6A00EF98F5 /* GetProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileUseCase.swift; sourceTree = "<group>"; };
 		5A0D321C2A8E854800EF98F5 /* PutProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutProfileUseCase.swift; sourceTree = "<group>"; };
@@ -199,6 +200,9 @@
 		5A0D32202A8E879000EF98F5 /* PutLikesProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutLikesProfileUseCase.swift; sourceTree = "<group>"; };
 		5A1B6D732AA4D9F000A1BCB4 /* CommonModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModuleFactory.swift; sourceTree = "<group>"; };
 		5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactoryImp.swift; sourceTree = "<group>"; };
+		5A1B6D772AA5644D00A1BCB4 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
+		5A1B6D792AA582A300A1BCB4 /* CatalogFlowDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogFlowDIContainer.swift; sourceTree = "<group>"; };
+		5A1B6D7C2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowDIContainer.swift; sourceTree = "<group>"; };
 		5A3ED4B12A89FD6E003E367D /* UIViewController+Bars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Bars.swift"; sourceTree = "<group>"; };
 		5A3ED4B32A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSetSortCollectionsOptionUseCase.swift; sourceTree = "<group>"; };
 		5A51DA012A8570D700235E7D /* CatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewModel.swift; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				5A0469962A7ACCAB0026D783 /* AppAppearance.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
+				5A1B6D7B2AA582DA00A1BCB4 /* DIContainer */,
 				5A0469912A7ABE610026D783 /* Core */,
 				5A0469842A7ABE180026D783 /* Flows */,
 				5A04694A2A7ABCC50026D783 /* Library */,
@@ -486,7 +491,6 @@
 			children = (
 				5A5B91F62A9BB8FE00A4B7E3 /* Repositories */,
 				5AAB67592A8043ED00E95CB2 /* FakeNFTAPI.swift */,
-				5A0D32122A8E788000EF98F5 /* ServiceProvider.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -574,6 +578,16 @@
 				5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */,
 			);
 			path = Factories;
+			sourceTree = "<group>";
+		};
+		5A1B6D7B2AA582DA00A1BCB4 /* DIContainer */ = {
+			isa = PBXGroup;
+			children = (
+				5A1B6D772AA5644D00A1BCB4 /* AppDIContainer.swift */,
+				5A1B6D792AA582A300A1BCB4 /* CatalogFlowDIContainer.swift */,
+				5A1B6D7C2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift */,
+			);
+			path = DIContainer;
 			sourceTree = "<group>";
 		};
 		5A51DA072A85CA2600235E7D /* Scenes */ = {
@@ -1024,9 +1038,9 @@
 				5A04696B2A7ABCC50026D783 /* Model.swift in Sources */,
 				5A04696E2A7ABCC50026D783 /* NetworkTask.swift in Sources */,
 				5A0469482A7ABC990026D783 /* Theme+Sizes+Spacing.swift in Sources */,
-				5A0D32132A8E788000EF98F5 /* ServiceProvider.swift in Sources */,
 				5A7EA4592A8F38EE004C5402 /* GetNftsProfileUseCase.swift in Sources */,
 				5A04699F2A7BC8990026D783 /* ProfileFlow.swift in Sources */,
+				5A1B6D7D2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift in Sources */,
 				5A5B91FB2A9C170500A4B7E3 /* UIResponder+findFirst.swift in Sources */,
 				5A7EA4612A8FEA99004C5402 /* ProfileItemCell.swift in Sources */,
 				5A0469742A7ABCC50026D783 /* UserDefaultsBacked.swift in Sources */,
@@ -1044,11 +1058,13 @@
 				5A97DED92A967454009EEB30 /* MyNftsViewController.swift in Sources */,
 				5AAB67862A81F1F400E95CB2 /* PutOrderUseCase.swift in Sources */,
 				5A0469752A7ABCC50026D783 /* UIView+Constraints.swift in Sources */,
+				5A1B6D782AA5644D00A1BCB4 /* AppDIContainer.swift in Sources */,
 				5A97DED72A9664BD009EEB30 /* Theme+NumberFormatter.swift in Sources */,
 				5A0469832A7ABCC50026D783 /* ICellViewModel.swift in Sources */,
 				5AAB676B2A812D1A00E95CB2 /* ProfileDTO.swift in Sources */,
 				5A0469972A7ACCAB0026D783 /* AppAppearance.swift in Sources */,
 				5AAB67762A81435700E95CB2 /* Author.swift in Sources */,
+				5A1B6D7A2AA582A300A1BCB4 /* CatalogFlowDIContainer.swift in Sources */,
 				5A1B6D762AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift in Sources */,
 				5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */,
 				5A7EA45F2A8FE83B004C5402 /* ProfileViewModel.swift in Sources */,

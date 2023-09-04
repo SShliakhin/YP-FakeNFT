@@ -1,10 +1,12 @@
 import UIKit
 
 final class MainTabBarController: UITabBarController {
+	private let appDIContainer = AppDIContainer()
+
 	private lazy var pages: [TabbarPage] = {
 		[
-			.profile,
-			.catalog,
+			.profile(appDIContainer.makeProfileFlowDIContainer()),
+			.catalog(appDIContainer.makeCatalogFlowDIContainer()),
 			.shoppingCart,
 			.statistics
 		].sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
