@@ -4,7 +4,7 @@ protocol AppFactory {
 	func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, Coordinator)
 }
 
-protocol MainDIContainer {
+protocol MainFlowDIContainer {
 	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer
 	func makeCatalogFlowDIContainer() -> CatalogFlowDIContainer
 }
@@ -60,7 +60,7 @@ extension AppDIContainer: AppFactory {
 
 // MARK: - MainDIContainer
 
-extension AppDIContainer: MainDIContainer {
+extension AppDIContainer: MainFlowDIContainer {
 	// MARK: - DIContainers of flows
 	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer {
 		let dep = ProfileFlowDIContainerImp.Dependencies(

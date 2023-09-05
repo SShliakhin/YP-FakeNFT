@@ -10,7 +10,7 @@ protocol AppContextIn {
 	func setAuthDate()
 }
 
-// class or struct or enum???
+// class or struct???
 final class AppContextImp: AppContextOut {
 	@UserDefaultsBacked(key: "first-start")
 	var isFirstStart = true

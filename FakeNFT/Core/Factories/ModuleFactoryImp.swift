@@ -1,4 +1,4 @@
-import UIKit // потом убрать
+import UIKit
 
 final class ModuleFactoryImp: CommonModuleFactory,
 	OnboardingModuleFactory,

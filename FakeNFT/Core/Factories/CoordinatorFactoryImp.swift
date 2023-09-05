@@ -10,7 +10,7 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
 		AuthCoordinator(router: router, factory: ModuleFactoryImp())
 	}
 
-	func makeTabbarCoordinator(container: MainDIContainer) -> (configurator: Coordinator, toPresent: Presentable?) {
+	func makeTabbarCoordinator(container: MainFlowDIContainer) -> (configurator: Coordinator, toPresent: Presentable?) {
 		let pages: [TabbarPage] = {
 			[
 				.profile,

@@ -4,13 +4,13 @@ final class TabbarCoordinator: BaseCoordinator {
 	private let pages: [TabbarPage]
 	private let tabbarController: UITabBarController
 	private let coordinatorFactory: CoordinatorFactory
-	private let container: MainDIContainer
+	private let container: MainFlowDIContainer
 
 	init(
 		pages: [TabbarPage],
 		tabbarController: UITabBarController,
 		coordinatorFactory: CoordinatorFactory,
-		container: MainDIContainer
+		container: MainFlowDIContainer
 	) {
 		self.pages = pages
 		self.tabbarController = tabbarController
