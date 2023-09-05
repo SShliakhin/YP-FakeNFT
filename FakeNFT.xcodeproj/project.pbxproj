@@ -339,7 +339,7 @@
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				5A1B6D7B2AA582DA00A1BCB4 /* Application */,
 				5A0469912A7ABE610026D783 /* Core */,
-				5A0469842A7ABE180026D783 /* Flows */,
+				5A3C0AD92AA7EFF8007DD9AF /* Presentation */,
 				5A04694A2A7ABCC50026D783 /* Library */,
 				5A0469402A7ABC720026D783 /* Resources */,
 			);
@@ -523,6 +523,7 @@
 				5AAB67592A8043ED00E95CB2 /* FakeNFTAPI.swift */,
 				5A0D32152A8E796000EF98F5 /* UseCaseProvider.swift */,
 				5A5B91F72A9BB91600A4B7E3 /* ProfileRepository.swift */,
+				5A1B6D8D2AA61EF000A1BCB4 /* AppContext.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -596,12 +597,8 @@
 		5A1B6D7B2AA582DA00A1BCB4 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				5A0469962A7ACCAB0026D783 /* AppAppearance.swift */,
-				5A1B6D8D2AA61EF000A1BCB4 /* AppContext.swift */,
 				5A1B6D8B2AA61CDB00A1BCB4 /* AppCoordinator.swift */,
 				5A1B6D772AA5644D00A1BCB4 /* AppDIContainer.swift */,
-				5A51DA0E2A85CC8900235E7D /* Views */,
-				5A0D31FD2A8DB0CF00EF98F5 /* Scenes */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -715,6 +712,17 @@
 				5A1B6DC22AA6C08E00A1BCB4 /* TabbarPage.swift */,
 			);
 			path = MainFlow;
+			sourceTree = "<group>";
+		};
+		5A3C0AD92AA7EFF8007DD9AF /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				5A51DA0E2A85CC8900235E7D /* Views */,
+				5A0D31FD2A8DB0CF00EF98F5 /* Scenes */,
+				5A0469842A7ABE180026D783 /* Flows */,
+				5A0469962A7ACCAB0026D783 /* AppAppearance.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		5A51DA072A85CA2600235E7D /* Scenes */ = {
