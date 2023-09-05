@@ -1,4 +1,13 @@
-import Foundation
+import UIKit
+
+protocol AppFactory {
+	func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, Coordinator)
+}
+
+protocol MainDIContainer {
+	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer
+	func makeCatalogFlowDIContainer() -> CatalogFlowDIContainer
+}
 
 final class AppDIContainer {
 	private let session = URLSession(configuration: .default)
@@ -21,20 +30,38 @@ final class AppDIContainer {
 		)
 		return UseCaseProvider(dependencies: dep)
 	}()
+}
 
+// MARK: - AppFactory
+
+extension AppDIContainer: AppFactory {
+	func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, Coordinator) {
+		let window = UIWindow(windowScene: scene)
+		window.makeKeyAndVisible()
+
+		let navigationController = UINavigationController()
+
+		let router = RouterImp(rootController: navigationController)
+		let coordinator = makeApplicationCoordinator(router: router)
+
+		window.rootViewController = navigationController
+		return (window, coordinator)
+	}
+
+	private func makeApplicationCoordinator(router: Router) -> Coordinator {
+		AppCoordinator(
+			coordinatorFactory: CoordinatorFactoryImp(),
+			router: router,
+			appContext: AppContextImp(),
+			container: self
+		)
+	}
+}
+
+// MARK: - MainDIContainer
+
+extension AppDIContainer: MainDIContainer {
 	// MARK: - DIContainers of flows
-	func makeOnboardingFlowDIContainer() -> OnboardingFlowDIContainer {
-		OnboardingFlowDIContainer()
-	}
-
-	func makeAuthFlowDIContainer() -> AuthFlowDIContainer {
-		AuthFlowDIContainer()
-	}
-
-	func makeMainFlowDIContainer() -> MainFlowDIContainer {
-		MainFlowDIContainer()
-	}
-
 	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer {
 		let dep = ProfileFlowDIContainerImp.Dependencies(
 			getProfile: useCases.getProfile,
@@ -62,9 +89,3 @@ final class AppDIContainer {
 		return CatalogFlowDIContainerImp(dependencies: dep)
 	}
 }
-
-final class OnboardingFlowDIContainer {}
-
-final class AuthFlowDIContainer {}
-
-final class MainFlowDIContainer {}

@@ -9,20 +9,16 @@ final class ModuleFactoryImp: CommonModuleFactory,
 	StatisticsModuleFactory {
 
 	// MARK: - CommonModuleFactory
-
-	func makeMainTabBarController() -> UIViewController {
-		MainTabBarController()
-	}
-	func makeSplashViewController() -> UIViewController {
+	func makeSplashViewController() -> Presentable {
 		SplashViewController()
 	}
-	func makeWebViewController(viewModel: WebViewModel) -> UIViewController {
+	func makeWebViewController(viewModel: WebViewModel) -> Presentable {
 		WebViewController(viewModel: viewModel)
 	}
 	func makeErrorAlertVC(
 		message: String,
 		completion: (() -> Void)? = nil
-	) -> UIViewController {
+	) -> Presentable {
 		let alert = UIAlertController(
 			title: Theme.AlertTitles.errorTitle,
 			message: message,
@@ -45,7 +41,7 @@ final class ModuleFactoryImp: CommonModuleFactory,
 	func makeSortAlertVC<T: CustomStringConvertible>(
 		sortCases: [T],
 		completion: @escaping (T) -> Void
-	) -> UIViewController {
+	) -> Presentable {
 		let alert = UIAlertController(
 			title: Theme.AlertTitles.sortTitle,
 			message: nil,
@@ -66,37 +62,44 @@ final class ModuleFactoryImp: CommonModuleFactory,
 	}
 
 	// MARK: - OnboardingModuleFactory
-	func makeOnboardingViewController() -> UIViewController {
-		SplashViewController()
+	func makeOnboardingViewController(viewModel: OnboardingViewModel) -> Presentable {
+		OnboardingViewController(viewModel: viewModel)
 	}
 
 	// MARK: - AuthModuleFactory
-	func makeAuthViewController() -> UIViewController {
-		SplashViewController()
+	func makeAuthViewController(viewModel: AuthViewModel) -> Presentable {
+		AuthViewController(viewModel: viewModel)
 	}
 
 	// MARK: - ProfileModuleFactory
-	func makeProfileViewController(viewModel: ProfileViewModel) -> UIViewController {
+	func makeProfileViewController(viewModel: ProfileViewModel) -> Presentable {
 		ProfileViewController(viewModel: viewModel)
 	}
-	func makeEditProfileViewController(viewModel: ProfileViewModel) -> UIViewController {
+	func makeEditProfileViewController(viewModel: ProfileViewModel) -> Presentable {
 		EditProfileViewController(viewModel: viewModel)
 	}
-	func makeMyNftsViewController(viewModel: MyNftsViewModel) -> UIViewController {
+	func makeMyNftsViewController(viewModel: MyNftsViewModel) -> Presentable {
 		MyNftsViewController(viewModel: viewModel)
 	}
-	func makeFavoritesViewController(viewModel: FavoritesViewModel) -> UIViewController {
+	func makeFavoritesViewController(viewModel: FavoritesViewModel) -> Presentable {
 		FavoritesViewController(viewModel: viewModel)
 	}
 
 	// MARK: - CatalogModuleFactory
-	func makeCatalogViewController(viewModel: CatalogViewModel) -> UIViewController {
+	func makeCatalogViewController(viewModel: CatalogViewModel) -> Presentable {
 		CatalogViewController(viewModel: viewModel)
 	}
-	func makeCollectionViewController(viewModel: CollectionViewModel) -> UIViewController {
+	func makeCollectionViewController(viewModel: CollectionViewModel) -> Presentable {
 		CollectionViewController(viewModel: viewModel)
 	}
 
 	// MARK: - ShoppingCartModuleFactory
+	func makeShoppinCartViewController(viewModel: ShoppingCartViewModel) -> Presentable {
+		ShoppingCartViewController()
+	}
+
 	// MARK: - StatisticsModuleFactory
+	func makeStatisticsViewController(viewModel: StatisticsViewModel) -> Presentable {
+		StatisticsViewController()
+	}
 }

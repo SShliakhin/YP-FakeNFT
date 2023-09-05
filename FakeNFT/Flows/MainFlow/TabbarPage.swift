@@ -1,8 +1,8 @@
 import UIKit
 
 enum TabbarPage {
-	case profile(ProfileFlowDIContainer)
-	case catalog(CatalogFlowDIContainer)
+	case profile
+	case catalog
 	case shoppingCart
 	case statistics
 
@@ -40,24 +40,6 @@ enum TabbarPage {
 			return Theme.image(kind: .bagIcon)
 		case .statistics:
 			return Theme.image(kind: .statisticsIcon)
-		}
-	}
-	func pageFlow() -> IFlow {
-		switch self {
-		case .profile(let container):
-			return ProfileFlow(
-				profileModuleFactory: ModuleFactoryImp(),
-				profileDIContainer: container
-			)
-		case .catalog(let container):
-			return CatalogFlow(
-				catalogModuleFactory: ModuleFactoryImp(),
-				catalogDIContainer: container
-			)
-		case .shoppingCart:
-			return ShoppingCartFlow()
-		case .statistics:
-			return StatisticsFlow()
 		}
 	}
 }
