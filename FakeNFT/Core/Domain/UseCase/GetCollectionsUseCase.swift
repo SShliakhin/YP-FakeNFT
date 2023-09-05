@@ -23,7 +23,7 @@ final class GetCollectionsUseCaseImp: GetCollectionsUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let collectionsDTO):
-				let collections = collectionsDTO.compactMap { Collection(from: $0) }
+				let collections = collectionsDTO.compactMap { $0.toDomain() }
 				if collections.isEmpty {
 					completion(.failure(.noCollections))
 				} else {

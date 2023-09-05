@@ -34,7 +34,7 @@ final class GetAuthorsUseCaseImp: GetAuthorsUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let userDTO):
-				if let author = Author(from: userDTO) {
+				if let author = userDTO.toDomainAuthor() {
 					self.profileRepository.addAuthor(author)
 					completion(.success(author))
 				} else {
@@ -64,7 +64,7 @@ final class GetAuthorsUseCaseImp: GetAuthorsUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let usersDTO):
-				let users = usersDTO.compactMap { Author(from: $0) }
+				let users = usersDTO.compactMap { $0.toDomainAuthor() }
 				if users.isEmpty {
 					completion(.failure(.noAuthors))
 				} else {

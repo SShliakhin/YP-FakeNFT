@@ -33,7 +33,7 @@ final class GetLikesProfileUseCaseImp: GetLikesProfileUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let profileDTO):
-				if let profile = Profile(from: profileDTO) {
+				if let profile = profileDTO.toDomain() {
 					self.profileRepository.profile.value = profile
 					completion(.success(.init(nfts: profile.likes)))
 				} else {

@@ -12,18 +12,3 @@ struct Collection {
 		nfts.count
 	}
 }
-
-extension Collection {
-	init?(from dto: CollectionDTO) {
-		guard
-			let id = dto.id,
-			let name = dto.name
-		else { return nil }
-		self.id = id
-		self.name = name
-		self.description = dto.description ?? ""
-		self.cover = URL(string: dto.cover?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
-		self.nfts = dto.nfts ?? []
-		self.authorID = dto.author ?? ""
-	}
-}

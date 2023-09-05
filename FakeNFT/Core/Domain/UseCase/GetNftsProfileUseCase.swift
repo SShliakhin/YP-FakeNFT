@@ -40,7 +40,7 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let nftsDTO):
-				let nfts = nftsDTO.compactMap { Nft(from: $0) }
+				let nfts = nftsDTO.compactMap { $0.toDomain() }
 				if nfts.isEmpty {
 					completion(.failure(.noNfts))
 				} else {
@@ -67,7 +67,7 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let nftsDTO):
-				let nfts = nftsDTO.compactMap { Nft(from: $0) }
+				let nfts = nftsDTO.compactMap { $0.toDomain() }
 				if nfts.isEmpty {
 					completion(.failure(.noNftsByAuthorID(authorID)))
 				} else {
@@ -97,7 +97,7 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 			guard let self = self else { return }
 			switch result {
 			case .success(let nftDTO):
-				if let nft = Nft(from: nftDTO) {
+				if let nft = nftDTO.toDomain() {
 					self.profileRepository.addNft(nft)
 					completion(.success(nft))
 				} else {

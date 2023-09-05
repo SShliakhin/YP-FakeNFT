@@ -887,13 +887,13 @@
 		5AAB676F2A8130FF00E95CB2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5A0D32102A8DF60F00EF98F5 /* Profile.swift */,
 				5AAB67712A81314E00E95CB2 /* Collection.swift */,
 				5AAB67732A8132AF00E95CB2 /* Nft.swift */,
 				5AAB67752A81435700E95CB2 /* Author.swift */,
 				5AAB67772A81462200E95CB2 /* NftIDs.swift */,
 				5A51DA052A85C3CA00235E7D /* SortCollectionsBy.swift */,
 				5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */,
-				5A0D32102A8DF60F00EF98F5 /* Profile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
