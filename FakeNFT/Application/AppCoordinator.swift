@@ -37,6 +37,8 @@ final class AppCoordinator: BaseCoordinator {
 		self.router = router
 		self.appContext = appContext
 		self.container = container
+
+		appContext.reset()
 	}
 
 	override func start() {

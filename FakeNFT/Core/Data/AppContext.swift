@@ -8,6 +8,7 @@ protocol AppContextOut {
 protocol AppContextIn {
 	func setFirstStart()
 	func setAuthDate()
+	func reset()
 }
 
 final class AppContextImp: AppContextOut {
@@ -15,8 +16,7 @@ final class AppContextImp: AppContextOut {
 	var isFirstStart = true
 
 	@UserDefaultsBacked(key: "auth-date")
-	// swiftlint:disable:next force_unwrapping
-	var authDate: Date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+	var authDate: Date = Appearance.initDate
 }
 
 // MARK: - ContextIn
@@ -28,6 +28,18 @@ extension AppContextImp: AppContextIn {
 	func setAuthDate() {
 		authDate = Date()
 	}
+
+	func reset() {
+		isFirstStart = true
+		authDate = Appearance.initDate
+	}
 }
 
 typealias AppContext = AppContextIn & AppContextOut
+
+private extension AppContextImp {
+	enum Appearance {
+		// swiftlint:disable:next force_unwrapping
+		static let initDate: Date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+	}
+}
