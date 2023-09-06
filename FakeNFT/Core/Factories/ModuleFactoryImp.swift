@@ -12,8 +12,17 @@ final class ModuleFactoryImp: CommonModuleFactory,
 	func makeSplashViewController() -> Presentable {
 		SplashViewController()
 	}
-	func makeWebViewController(viewModel: WebViewModel) -> Presentable {
-		WebViewController(viewModel: viewModel)
+	func makeWebViewController(url: URL, completion: @escaping (() -> Void)) -> Presentable {
+		let dep = DefaultWebViewModel.Dependencies(url: url)
+		let viewModel = DefaultWebViewModel(dep: dep)
+		viewModel.didSendEventClosure = { event in
+			switch event {
+			case .close:
+				completion()
+			}
+		}
+
+		return WebViewController(viewModel: viewModel)
 	}
 	func makeErrorAlertVC(
 		message: String,

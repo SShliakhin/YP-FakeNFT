@@ -89,16 +89,10 @@ private extension CatalogCoordinator {
 	}
 
 	func pushWebViewVC(url: URL) {
-		let dep = DefaultWebViewModel.Dependencies(url: url)
-		let viewModel = DefaultWebViewModel(dep: dep)
-		let module = factory.makeWebViewController(viewModel: viewModel)
-		viewModel.didSendEventClosure = { [weak self] event in
-			switch event {
-			case .close:
+		let module = factory
+			.makeWebViewController(url: url) { [weak self] in
 				self?.router.popModule()
 			}
-		}
-
 		router.push(module)
 	}
 }

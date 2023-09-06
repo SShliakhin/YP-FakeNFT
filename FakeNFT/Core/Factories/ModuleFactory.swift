@@ -1,6 +1,8 @@
+import Foundation
+
 protocol CommonModuleFactory {
 	func makeSplashViewController() -> Presentable
-	func makeWebViewController(viewModel: WebViewModel) -> Presentable
+	func makeWebViewController(url: URL, completion: @escaping (() -> Void)) -> Presentable
 	func makeErrorAlertVC(message: String, completion: (() -> Void)?) -> Presentable
 	func makeSortAlertVC<T: CustomStringConvertible>(sortCases: [T], completion: @escaping (T) -> Void) -> Presentable
 }
@@ -19,7 +21,7 @@ protocol ProfileModuleFactory {
 	func makeMyNftsViewController(viewModel: MyNftsViewModel) -> Presentable
 	func makeFavoritesViewController(viewModel: FavoritesViewModel) -> Presentable
 
-	func makeWebViewController(viewModel: WebViewModel) -> Presentable
+	func makeWebViewController(url: URL, completion: @escaping (() -> Void)) -> Presentable
 	func makeErrorAlertVC(message: String, completion: (() -> Void)?) -> Presentable
 	func makeSortAlertVC<T: CustomStringConvertible>(sortCases: [T], completion: @escaping (T) -> Void) -> Presentable
 }
@@ -28,7 +30,7 @@ protocol CatalogModuleFactory {
 	func makeCatalogViewController(viewModel: CatalogViewModel) -> Presentable
 	func makeCollectionViewController(viewModel: CollectionViewModel) -> Presentable
 
-	func makeWebViewController(viewModel: WebViewModel) -> Presentable
+	func makeWebViewController(url: URL, completion: @escaping (() -> Void)) -> Presentable
 	func makeErrorAlertVC(message: String, completion: (() -> Void)?) -> Presentable
 	func makeSortAlertVC<T: CustomStringConvertible>(sortCases: [T], completion: @escaping (T) -> Void) -> Presentable
 }
