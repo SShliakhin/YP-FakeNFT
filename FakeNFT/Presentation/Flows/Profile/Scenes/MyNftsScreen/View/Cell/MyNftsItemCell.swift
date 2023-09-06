@@ -32,12 +32,28 @@ final class MyNftsItemCell: UITableViewCell {
 
 	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
 	private lazy var likeButton: UIButton = makeLikeButton()
-	private lazy var titleLabel: UILabel = makeTitleLabel()
 	private lazy var ratingView = RatingView()
-	private lazy var authorPrefixLabel: UILabel = makeAuthorPrefixLabel()
-	private lazy var authorLabel: UILabel = makeAuthorLabel()
-	private lazy var priceTitleLabel: UILabel = makePriceTitleLabel()
-	private lazy var priceLabel: UILabel = makePriceLabel()
+
+	private lazy var titleLabel: UILabel = makeLabelWith(
+		textColor: Theme.color(usage: .main),
+		font: Theme.font(style: .headline)
+	)
+	fileprivate lazy var authorPrefixLabel: UILabel = makeLabelWith(
+		textColor: Theme.color(usage: .main),
+		font: Theme.font(style: .subhead)
+	)
+	private lazy var authorLabel: UILabel = makeLabelWith(
+		textColor: Theme.color(usage: .main),
+		font: Theme.font(style: .footnote)
+	)
+	fileprivate lazy var priceTitleLabel: UILabel = makeLabelWith(
+		textColor: Theme.color(usage: .main),
+		font: Theme.font(style: .footnote)
+	)
+	private lazy var priceLabel: UILabel = makeLabelWith(
+		textColor: Theme.color(usage: .main),
+		font: Theme.font(style: .headline)
+	)
 
 	// MARK: - Inits
 
@@ -78,6 +94,9 @@ struct MyNftsItemCellModel {
 	let author: String
 	let price: String
 	let onTapFavorite: (() -> Void)?
+
+	var someTextBy: String = L10n.Profile.someTextBy
+	var someTextPrice: String = L10n.Profile.someTextPrice
 }
 
 // MARK: - ICellViewModel
@@ -91,6 +110,9 @@ extension MyNftsItemCellModel: ICellViewModel {
 		cell.rating = rating
 		cell.author = author
 		cell.price = price
+
+		cell.authorPrefixLabel.text = someTextBy
+		cell.priceTitleLabel.text = someTextPrice
 	}
 }
 
@@ -215,44 +237,10 @@ private extension MyNftsItemCell {
 		return button
 	}
 
-	func makeTitleLabel() -> UILabel {
+	func makeLabelWith(textColor: UIColor, font: UIFont) -> UILabel {
 		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .headline)
-
-		return label
-	}
-
-	func makeAuthorPrefixLabel() -> UILabel {
-		let label = UILabel()
-		label.text = L10n.Profile.someTextBy
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .subhead)
-
-		return label
-	}
-
-	func makeAuthorLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .footnote)
-
-		return label
-	}
-
-	func makePriceTitleLabel() -> UILabel {
-		let label = UILabel()
-		label.text = L10n.Profile.someTextPrice
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .footnote)
-
-		return label
-	}
-
-	func makePriceLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .headline)
+		label.textColor = textColor
+		label.font = font
 
 		return label
 	}

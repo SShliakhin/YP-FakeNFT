@@ -56,6 +56,10 @@ protocol ProfileViewModelOutput: AnyObject {
 	var numberOfItems: Int { get }
 	var cellModels: [ICellViewAnyModel.Type] { get }
 
+	var editTitleName: String { get }
+	var editTitleDescription: String { get }
+	var editTitleWebsite: String { get }
+
 	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel
 }
 
@@ -86,6 +90,10 @@ final class DefaultProfileViewModel: ProfileViewModel {
 		items.value.count
 	}
 	var cellModels: [ICellViewAnyModel.Type] = [ProfileItemCellModel.self]
+
+	let editTitleName: String = L10n.Profile.editTitleName
+	let editTitleDescription: String = L10n.Profile.editTitleDescription
+	let editTitleWebsite: String = L10n.Profile.editTitleWebsite
 
 	// MARK: - Inits
 

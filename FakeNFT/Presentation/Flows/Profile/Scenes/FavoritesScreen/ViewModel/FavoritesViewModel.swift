@@ -22,6 +22,9 @@ protocol FavoritesViewModelOutput: AnyObject {
 	var isEmpty: Bool { get }
 	var cellModels: [ICellViewAnyModel.Type] { get }
 
+	var emptyVCMessage: String { get }
+	var titleVC: String { get }
+
 	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel
 }
 
@@ -49,6 +52,9 @@ final class DefaultFavoritesViewModel: FavoritesViewModel {
 	var numberOfItems: Int { items.value.count }
 	var isEmpty: Bool { items.value.isEmpty }
 	var cellModels: [ICellViewAnyModel.Type] = [FavoritesItemCellModel.self]
+
+	var emptyVCMessage: String = L10n.Profile.emptyVCFavorites
+	var titleVC: String = L10n.Profile.titleVCFavorites
 
 	// MARK: - Inits
 

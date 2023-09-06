@@ -41,6 +41,9 @@ struct AvatarViewModel {
 	let url: URL?
 	let isUploadButtonHidden: Bool
 	let onTapUploadImage: (() -> Void)?
+
+	var buttonChangePhotoTitle: String = L10n.Profile.buttonTitleChangePhoto
+	var buttonUploadPhotoTitle: String = L10n.Profile.buttonTitleUploadImage
 }
 
 // MARK: - Update
@@ -50,6 +53,9 @@ extension AvatarView {
 		profileAvatarUrl = model.url
 		uploadImageButtonContainer.isHidden = model.isUploadButtonHidden
 		uploadImageButton.event = model.onTapUploadImage
+
+		avatarButton.setTitle(model.buttonChangePhotoTitle, for: .normal)
+		uploadImageButton.setTitle(model.buttonUploadPhotoTitle, for: .normal)
 
 		return self
 	}
@@ -103,10 +109,6 @@ private extension AvatarView {
 		let button = UIButton(type: .custom)
 		button.backgroundColor = Theme.color(usage: .allDayBlack).withAlphaComponent(0.6)
 		button.layer.cornerRadius = Appearance.avatarCornerRadius
-		button.setTitle(
-			L10n.Profile.buttonTitleChangePhoto,
-			for: .normal
-		)
 		button.titleLabel?.numberOfLines = 2
 		button.titleLabel?.textAlignment = .center
 		button.titleLabel?.font = Theme.font(style: .caption)
@@ -121,10 +123,6 @@ private extension AvatarView {
 	func makeUploadImageButton() -> UIButton {
 		let button = UIButton(type: .custom)
 		button.backgroundColor = .clear
-		button.setTitle(
-			L10n.Profile.buttonTitleUploadImage,
-			for: .normal
-		)
 		button.setTitleColor(Theme.color(usage: .main), for: .normal)
 		button.titleLabel?.font = Theme.font(style: .body)
 		button.event = nil

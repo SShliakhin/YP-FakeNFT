@@ -27,6 +27,9 @@ protocol MyNftsViewModelOutput: AnyObject {
 	var isEmpty: Bool { get }
 	var cellModels: [ICellViewAnyModel.Type] { get }
 
+	var emptyVCMessage: String { get }
+	var titleVC: String { get }
+
 	var isTimeToRequestReview: Bool { get }
 
 	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel
@@ -61,6 +64,9 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	var numberOfItems: Int { items.value.count }
 	var isEmpty: Bool { items.value.isEmpty }
 	var cellModels: [ICellViewAnyModel.Type] = [MyNftsItemCellModel.self]
+
+	var emptyVCMessage: String = L10n.Profile.emptyVCMyNFTs
+	var titleVC: String = L10n.Profile.titleVCMyNFTs
 
 	var isTimeToRequestReview: Bool {
 		if hasReview {

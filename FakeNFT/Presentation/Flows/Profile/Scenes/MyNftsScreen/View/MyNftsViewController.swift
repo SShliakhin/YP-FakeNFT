@@ -8,7 +8,7 @@ final class MyNftsViewController: UIViewController {
 	// MARK: - UI Elements
 	private lazy var navBarView = NavBarView()
 	private lazy var tableView: UITableView = makeTableView()
-	private lazy var emptyLabel: UILabel = makeStaticTextLabel(text: L10n.Profile.emptyVCMyNFTs)
+	private lazy var emptyLabel: UILabel = makeStaticTextLabel(text: viewModel.emptyVCMessage)
 
 	// MARK: - Inits
 
@@ -77,7 +77,7 @@ private extension MyNftsViewController {
 	func checkAppearance() {
 		emptyLabel.isHidden = !viewModel.isEmpty
 		navBarView.update(with: NavBarInputData(
-			title: viewModel.isEmpty ? "" : L10n.Profile.titleVCMyNFTs,
+			title: viewModel.isEmpty ? "" : viewModel.titleVC,
 			isGoBackButtonHidden: false,
 			isSortButtonHidden: viewModel.isEmpty,
 			onTapGoBackButton: { [weak self] in self?.viewModel.didUserDo(request: .goBack) },

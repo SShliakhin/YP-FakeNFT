@@ -36,13 +36,13 @@ final class EditProfileViewController: UIViewController {
 	private lazy var avatarView = AvatarView()
 
 	private lazy var titleLabel: UILabel = makeStaticTextLabel(
-		text: L10n.Profile.editTitleName
+		text: viewModel.editTitleName
 	)
 	private lazy var descriptionLabel: UILabel = makeStaticTextLabel(
-		text: L10n.Profile.editTitleDescription
+		text: viewModel.editTitleDescription
 	)
 	private lazy var urlLabel: UILabel = makeStaticTextLabel(
-		text: L10n.Profile.editTitleWebsite
+		text: viewModel.editTitleWebsite
 	)
 
 	private lazy var titleTextField: UITextField = makeTextField()
