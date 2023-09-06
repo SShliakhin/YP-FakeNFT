@@ -68,7 +68,7 @@ private extension CatalogCoordinator {
 				if let url = url {
 					self?.pushWebViewVC(url: url)
 				} else {
-					self?.presentErrorAlert(message: Theme.Author.incorrectURL)
+					self?.presentErrorAlert(message: L10n.Author.incorrectURL)
 				}
 			}
 		}

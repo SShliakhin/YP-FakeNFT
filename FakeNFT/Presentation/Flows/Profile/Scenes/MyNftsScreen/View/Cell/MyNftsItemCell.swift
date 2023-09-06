@@ -225,7 +225,7 @@ private extension MyNftsItemCell {
 
 	func makeAuthorPrefixLabel() -> UILabel {
 		let label = UILabel()
-		label.text = Theme.Profile.someTextBy
+		label.text = L10n.Profile.someTextBy
 		label.textColor = Theme.color(usage: .main)
 		label.font = Theme.font(style: .subhead)
 
@@ -242,7 +242,7 @@ private extension MyNftsItemCell {
 
 	func makePriceTitleLabel() -> UILabel {
 		let label = UILabel()
-		label.text = Theme.Profile.someTextPrice
+		label.text = L10n.Profile.someTextPrice
 		label.textColor = Theme.color(usage: .main)
 		label.font = Theme.font(style: .footnote)
 

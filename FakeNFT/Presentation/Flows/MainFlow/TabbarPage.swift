@@ -21,13 +21,13 @@ enum TabbarPage {
 	func pageTitleValue() -> String {
 		switch self {
 		case .profile:
-			return Theme.TabTitle.profile
+			return L10n.TabTitle.profile
 		case .catalog:
-			return Theme.TabTitle.catalog
+			return L10n.TabTitle.catalog
 		case .shoppingCart:
-			return Theme.TabTitle.cart
+			return L10n.TabTitle.cart
 		case .statistics:
-			return Theme.TabTitle.stats
+			return L10n.TabTitle.stats
 		}
 	}
 	func pageIconValue() -> UIImage {

@@ -1,6 +1,6 @@
 import Foundation
 
-extension Theme {
+enum L10n {
 	enum ActionsNames {
 		static var close: String {
 			NSLocalizedString(

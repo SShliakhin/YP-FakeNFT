@@ -48,7 +48,7 @@ private extension ProfileCoordinator {
 				if let url = url {
 					self?.pushWebViewVC(url: url)
 				} else {
-					self?.presentErrorAlert(message: Theme.Profile.incorrectURL)
+					self?.presentErrorAlert(message: L10n.Profile.incorrectURL)
 				}
 
 			case .close:

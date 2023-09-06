@@ -104,7 +104,7 @@ private extension AvatarView {
 		button.backgroundColor = Theme.color(usage: .allDayBlack).withAlphaComponent(0.6)
 		button.layer.cornerRadius = Appearance.avatarCornerRadius
 		button.setTitle(
-			Theme.Profile.buttonTitleChangePhoto,
+			L10n.Profile.buttonTitleChangePhoto,
 			for: .normal
 		)
 		button.titleLabel?.numberOfLines = 2
@@ -122,7 +122,7 @@ private extension AvatarView {
 		let button = UIButton(type: .custom)
 		button.backgroundColor = .clear
 		button.setTitle(
-			Theme.Profile.buttonTitleUploadImage,
+			L10n.Profile.buttonTitleUploadImage,
 			for: .normal
 		)
 		button.setTitleColor(Theme.color(usage: .main), for: .normal)

@@ -29,19 +29,19 @@ final class ModuleFactoryImp: CommonModuleFactory,
 		completion: (() -> Void)? = nil
 	) -> Presentable {
 		let alert = UIAlertController(
-			title: Theme.AlertTitles.errorTitle,
+			title: L10n.AlertTitles.errorTitle,
 			message: message,
 			preferredStyle: .alert
 		)
 		if let completion = completion {
 			alert.addAction(
-				UIAlertAction(title: Theme.ActionsNames.retry, style: .default) { _ in
+				UIAlertAction(title: L10n.ActionsNames.retry, style: .default) { _ in
 					completion()
 				}
 			)
 		} else {
 			alert.addAction(
-				UIAlertAction(title: Theme.ActionsNames.okey, style: .default)
+				UIAlertAction(title: L10n.ActionsNames.okey, style: .default)
 			)
 		}
 
@@ -52,7 +52,7 @@ final class ModuleFactoryImp: CommonModuleFactory,
 		completion: @escaping (T) -> Void
 	) -> Presentable {
 		let alert = UIAlertController(
-			title: Theme.AlertTitles.sortTitle,
+			title: L10n.AlertTitles.sortTitle,
 			message: nil,
 			preferredStyle: .actionSheet
 		)
@@ -64,7 +64,7 @@ final class ModuleFactoryImp: CommonModuleFactory,
 			)
 		}
 		alert.addAction(
-			UIAlertAction(title: Theme.ActionsNames.close, style: .cancel)
+			UIAlertAction(title: L10n.ActionsNames.close, style: .cancel)
 		)
 
 		return alert

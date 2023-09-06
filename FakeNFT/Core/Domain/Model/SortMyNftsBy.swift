@@ -8,11 +8,11 @@ extension SortMyNftsBy: CustomStringConvertible {
 	var description: String {
 		switch self {
 		case .name:
-			return Theme.SortByTitle.name
+			return L10n.SortByTitle.name
 		case .price:
-			return Theme.SortByTitle.price
+			return L10n.SortByTitle.price
 		case .rating:
-			return Theme.SortByTitle.rating
+			return L10n.SortByTitle.rating
 		}
 	}
 }

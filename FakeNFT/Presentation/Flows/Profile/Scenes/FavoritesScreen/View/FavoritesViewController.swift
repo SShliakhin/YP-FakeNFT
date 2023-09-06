@@ -7,7 +7,7 @@ final class FavoritesViewController: UIViewController {
 	// MARK: - UI Elements
 	private lazy var navBarView = NavBarView()
 	private lazy var collectionView: UICollectionView = makeCollectionView()
-	private lazy var emptyLabel: UILabel = makeStaticTextLabel(text: Theme.Profile.emptyVCFavorites)
+	private lazy var emptyLabel: UILabel = makeStaticTextLabel(text: L10n.Profile.emptyVCFavorites)
 
 	// MARK: - Inits
 
@@ -63,7 +63,7 @@ private extension FavoritesViewController {
 	func checkAppearance() {
 		emptyLabel.isHidden = !viewModel.isEmpty
 		navBarView.update(with: NavBarInputData(
-			title: viewModel.isEmpty ? "" : Theme.Profile.titleVCFavorites,
+			title: viewModel.isEmpty ? "" : L10n.Profile.titleVCFavorites,
 			isGoBackButtonHidden: false,
 			isSortButtonHidden: true,
 			onTapGoBackButton: { [weak self] in self?.viewModel.didUserDo(request: .goBack) },

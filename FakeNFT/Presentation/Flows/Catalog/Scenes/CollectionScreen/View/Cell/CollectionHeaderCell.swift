@@ -71,7 +71,7 @@ struct CollectionHeaderCellModel {
 	let onTapAuthor: (() -> Void)?
 
 	var authorText: String {
-		"\(Theme.Author.textPrefix) \(author)"
+		"\(L10n.Author.textPrefix) \(author)"
 	}
 }
 

@@ -15,11 +15,11 @@ enum ProfileSection: CustomStringConvertible {
 	var description: String {
 		switch self {
 		case .myNFTs(let count):
-			return String(format: Theme.Profile.myNftsCall, count ?? 0)
+			return String(format: L10n.Profile.myNftsCall, count ?? 0)
 		case .favoritesNFTS(let count):
-			return String(format: Theme.Profile.favoritesCall, count ?? 0)
+			return String(format: L10n.Profile.favoritesCall, count ?? 0)
 		case .about:
-			return Theme.Profile.aboutCall
+			return L10n.Profile.aboutCall
 		}
 	}
 }
