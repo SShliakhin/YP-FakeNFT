@@ -15,6 +15,7 @@ extension Theme {
 		case profileIcon
 
 		case imagePlaceholder
+		case logo
 	}
 
 	static func image(kind: ImageAsset) -> UIImage {

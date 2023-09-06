@@ -1,6 +1,8 @@
 import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+	private let appFactory = AppDIContainer()
+	private var appCoordinator: Coordinator?
 	var window: UIWindow?
 
 	func scene(
@@ -12,12 +14,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		AppAppearance.setupAppearance()
 
-		window = UIWindow(windowScene: windowScene)
-		window?.rootViewController = makeRootViewController()
-		window?.makeKeyAndVisible()
-	}
+		let (window, coordinator) = appFactory
+			.makeKeyWindowWithCoordinator(scene: windowScene)
 
-	func makeRootViewController() -> MainTabBarController {
-		MainTabBarController()
+		self.window = window
+		self.appCoordinator = coordinator
+
+		 coordinator.start()
 	}
 }

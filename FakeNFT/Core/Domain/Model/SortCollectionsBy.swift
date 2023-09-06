@@ -7,9 +7,9 @@ extension SortCollectionsBy: CustomStringConvertible {
 	var description: String {
 		switch self {
 		case .name:
-			return Theme.SortByTitle.name
+			return L10n.SortByTitle.name
 		case .nftsCount:
-			return Theme.SortByTitle.nftsCount
+			return L10n.SortByTitle.nftsCount
 		}
 	}
 }

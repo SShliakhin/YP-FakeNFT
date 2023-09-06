@@ -122,23 +122,23 @@ extension FakeNFTError: CustomStringConvertible {
 		case .apiError(let apiError):
 			return apiError.description
 		case .noCollections:
-			return Theme.NetworkError.noCollections
+			return L10n.NetworkError.noCollections
 		case .noNfts:
-			return Theme.NetworkError.noNfts
+			return L10n.NetworkError.noNfts
 		case .noNftsByAuthorID(let authorID):
-			return String(format: Theme.NetworkError.noNftsByAuthorID, authorID)
+			return String(format: L10n.NetworkError.noNftsByAuthorID, authorID)
 		case .noNftByID(let id):
-			return String(format: Theme.NetworkError.noNftByID, id)
+			return String(format: L10n.NetworkError.noNftByID, id)
 		case .noAuthorByID(let id):
-			return String(format: Theme.NetworkError.noAuthorByID, id)
+			return String(format: L10n.NetworkError.noAuthorByID, id)
 		case .brokenLikes:
-			return Theme.NetworkError.brokenLikes
+			return L10n.NetworkError.brokenLikes
 		case .brokenOrder:
-			return Theme.NetworkError.brokenOrder
+			return L10n.NetworkError.brokenOrder
 		case .noProfile:
-			return Theme.NetworkError.noProfile
+			return L10n.NetworkError.noProfile
 		case .noAuthors:
-			return Theme.NetworkError.noAuthors
+			return L10n.NetworkError.noAuthors
 		}
 	}
 
