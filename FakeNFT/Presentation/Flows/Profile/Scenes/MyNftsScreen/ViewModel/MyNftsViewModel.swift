@@ -69,10 +69,11 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	var titleVC: String = L10n.Profile.titleVCMyNFTs
 
 	var isTimeToRequestReview: Bool {
+		// FIXME: - срабатывает дважды
 		if hasReview {
 			return false
 		}
-		hasReview = likes.value.count % 5 == 0
+		hasReview = !likes.value.isEmpty && likes.value.count % 5 == 0
 		return hasReview
 	}
 
