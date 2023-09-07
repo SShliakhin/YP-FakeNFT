@@ -9,6 +9,7 @@ final class MyNftsViewController: UIViewController {
 	private lazy var navBarView = NavBarView()
 	private lazy var tableView: UITableView = makeTableView()
 	private lazy var emptyLabel: UILabel = makeStaticTextLabel(text: viewModel.emptyVCMessage)
+	private lazy var searchController: UISearchController = makeSearchController()
 
 	// MARK: - Inits
 
@@ -134,6 +135,10 @@ private extension MyNftsViewController {
 
 		tableView.dataSource = self
 
+		// возможно надо делать отдельную вью контейнер, простое присваивание добавляет проблем в общий дизайн
+		tableView.tableHeaderView = searchController.searchBar
+		tableView.bounces = false // из-за поиска испортился задний фон при пружине
+
 		tableView.tableFooterView = UIView()
 		tableView.separatorStyle = .none
 
@@ -149,6 +154,26 @@ private extension MyNftsViewController {
 		label.text = text
 
 		return label
+	}
+
+	func makeSearchController() -> UISearchController {
+		let search = UISearchController(searchResultsController: nil)
+		// search.searchResultsUpdater = self // TODO
+		search.obscuresBackgroundDuringPresentation = false
+		definesPresentationContext = true
+		search.hidesNavigationBarDuringPresentation = false
+
+		// TODO подобрать дизайн
+		search.searchBar.searchTextField.font = Theme.font(style: .body)
+		search.searchBar.searchTextField.textColor = Theme.color(usage: .main)
+
+		// решаем проблему с обрамлением и прозрачностью
+		search.searchBar.backgroundImage = UIImage()
+		search.searchBar.backgroundColor = Theme.color(usage: .white)
+
+		search.searchBar.searchTextField.placeholder = "Поиск по имени" // TODO заменить на ключ
+
+		return search
 	}
 }
 

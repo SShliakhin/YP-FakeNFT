@@ -38,7 +38,7 @@ final class AppCoordinator: BaseCoordinator {
 		self.appContext = appContext
 		self.container = container
 
-		appContext.reset()
+		// appContext.reset()
 	}
 
 	override func start() {
