@@ -9,6 +9,7 @@ enum MyNftsRequest {
 	case selectSortBy(SortMyNftsBy)
 	case retryAction
 	case goBack
+	case filterItemsBy(String)
 }
 
 protocol MyNftsViewModelInput: AnyObject {
@@ -28,6 +29,7 @@ protocol MyNftsViewModelOutput: AnyObject {
 	var cellModels: [ICellViewAnyModel.Type] { get }
 
 	var emptyVCMessage: String { get }
+	var placeholderSearchByTitle: String { get }
 	var titleVC: String { get }
 
 	var isTimeToRequestReview: Bool { get }
@@ -51,6 +53,9 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
 	private var hasReview = false
+	private var backendItems: [Nft] = [] {
+		didSet { items.value = backendItems }
+	}
 
 	// MARK: - INPUT
 	var didSendEventClosure: ((MyNftsEvents) -> Void)?
@@ -69,10 +74,12 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 		if backendItems.isEmpty {
 			return L10n.Profile.emptyVCMyNFTs
 		} else {
-			return "У вас нет NFT удовлетворяющих поиск" // локализовать
+			return L10n.SearchBar.noSearchResult
 		}
 	}
+
 	var titleVC: String = L10n.Profile.titleVCMyNFTs
+	var placeholderSearchByTitle: String = L10n.SearchBar.SearchByTitle
 
 	var isTimeToRequestReview: Bool {
 		// FIXME: - срабатывает дважды
@@ -145,11 +152,11 @@ extension DefaultMyNftsViewModel {
 
 			switch result {
 			case .success(let nfts):
-				self.items.value = nfts
-				self.sortMyNfts() // с repository предсортировка на сервере потеряла смысл(
+				self.backendItems = nfts
+				self.sortItems() // с repository предсортировка на сервере потеряла смысл(
 				self.fetchAuthors()
 			case .failure(let error):
-				self.items.value = []
+				self.backendItems = []
 				self.retryAction = { self.viewIsReady() }
 				self.didSendEventClosure?(
 					.showErrorAlert(error.description, withRetry: true)
@@ -167,11 +174,13 @@ extension DefaultMyNftsViewModel {
 			didSendEventClosure?(.showSortAlert)
 		case .selectSortBy(let sortBy):
 			dependencies.getSetSortOption.setOption(sortBy)
-			sortMyNfts()
+			sortItems()
 		case .retryAction:
 			retryAction?()
 		case .goBack:
 			didSendEventClosure?(.close)
+		case .filterItemsBy(let searchText):
+			filterItemsBy(searchText)
 		}
 	}
 }
@@ -224,7 +233,9 @@ private extension DefaultMyNftsViewModel {
 		}
 	}
 
-	func sortMyNfts() {
+	func sortItems() {
+		guard numberOfItems > 1 else { return }
+
 		let sortBy = dependencies.getSetSortOption.sortBy
 		switch sortBy {
 		case .name:
@@ -234,5 +245,17 @@ private extension DefaultMyNftsViewModel {
 		case .rating:
 			items.value = items.value.sorted { $0.rating > $1.rating }
 		}
+	}
+
+	func filterItemsBy(_ text: String) {
+		let text = text
+			.trimmingCharacters(in: .whitespaces)
+			.lowercased()
+		if text.isEmpty {
+			items.value = backendItems
+		} else {
+			items.value = backendItems.filter { $0.name.lowercased().contains(text) }
+		}
+		sortItems()
 	}
 }

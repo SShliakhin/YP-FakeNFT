@@ -229,6 +229,21 @@ enum L10n {
 		}
 	}
 
+	enum SearchBar {
+		static var noSearchResult: String {
+			NSLocalizedString(
+				"searchBar.emptyVC.noSearchResult",
+				comment: "Сообщение для не успешного поиска: Нет результатов поиска"
+			)
+		}
+		static var SearchByTitle: String {
+			NSLocalizedString(
+				"searchBar.placeholder.SearchByTitle",
+				comment: "Плейсхолдер для поиска по названию: Поиск по названию"
+			)
+		}
+	}
+
 	enum TabTitle {
 		static var cart: String {
 			NSLocalizedString(
