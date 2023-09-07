@@ -310,11 +310,7 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
-				5AB4D8772A7BDD7E00E1757D /* Readme.md */,
-				5A8775742A97074600413F4B /* ProfileFlowDecomposition_SAS_c4gr4.md */,
-				5A5B91F92A9BFBB800A4B7E3 /* CatalogFlowDecomposition_SAS_c4gr4.md */,
-				5A04693B2A7ABAEC0026D783 /* .gitignore */,
-				5A04693C2A7ABAEC0026D783 /* .swiftlint.yml */,
+				5ACBD8A52AAA1AF200E043F8 /* Docs */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
 				3F6806AC29CBBAF200B4F915 /* FakeNFTTests */,
 				3F6806B629CBBAF200B4F915 /* FakeNFTUITests */,
@@ -930,6 +926,18 @@
 				5ABCAE7D2A952D7E0023C5C2 /* MyNftsItemCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		5ACBD8A52AAA1AF200E043F8 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				5AB4D8772A7BDD7E00E1757D /* Readme.md */,
+				5A04693C2A7ABAEC0026D783 /* .swiftlint.yml */,
+				5A04693B2A7ABAEC0026D783 /* .gitignore */,
+				5A8775742A97074600413F4B /* ProfileFlowDecomposition_SAS_c4gr4.md */,
+				5A5B91F92A9BFBB800A4B7E3 /* CatalogFlowDecomposition_SAS_c4gr4.md */,
+			);
+			name = Docs;
 			sourceTree = "<group>";
 		};
 		5AE76DA12A91F21E00BAC6B2 /* ViewModel */ = {
