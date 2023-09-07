@@ -35,13 +35,16 @@ final class EditProfileViewController: UIViewController {
 	private lazy var closeButton: UIButton = makeCloseButton()
 	private lazy var avatarView = AvatarView()
 
-	private lazy var titleLabel: UILabel = makeStaticTextLabel(
+	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .title2),
 		text: viewModel.editTitleName
 	)
-	private lazy var descriptionLabel: UILabel = makeStaticTextLabel(
+	private lazy var descriptionLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .title2),
 		text: viewModel.editTitleDescription
 	)
-	private lazy var urlLabel: UILabel = makeStaticTextLabel(
+	private lazy var urlLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .title2),
 		text: viewModel.editTitleWebsite
 	)
 
@@ -268,15 +271,6 @@ private extension EditProfileViewController {
 		button.event = { [weak self] in self?.viewModel.didUserDo(request: .goBack) }
 
 		return button
-	}
-
-	func makeStaticTextLabel(text: String) -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .title2)
-		label.text = text
-
-		return label
 	}
 
 	func makeTextField() -> UITextField {

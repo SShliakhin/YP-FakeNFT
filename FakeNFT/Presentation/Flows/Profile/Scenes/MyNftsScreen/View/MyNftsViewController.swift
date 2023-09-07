@@ -8,7 +8,9 @@ final class MyNftsViewController: UIViewController {
 	// MARK: - UI Elements
 	private lazy var navBarView = NavBarView()
 	private lazy var tableView: UITableView = makeTableView()
-	private lazy var emptyLabel: UILabel = makeStaticTextLabel(text: viewModel.emptyVCMessage)
+	private lazy var emptyLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .headline)
+	)
 	private lazy var searchController: UISearchController = makeSearchController()
 
 	// MARK: - Inits
@@ -57,7 +59,7 @@ private extension MyNftsViewController {
 		}
 		viewModel.likes.observe(on: self) { [weak self] _ in
 			self?.updateItems()
-			self?.checkTimeToReview()
+			self?.askForReview()
 		}
 		viewModel.isLoading.observe(on: self) { isLoading in
 			isLoading ? ProgressHUD.show() : ProgressHUD.dismiss()
@@ -69,7 +71,7 @@ private extension MyNftsViewController {
 		checkAppearance()
 	}
 
-	func checkTimeToReview() {
+	func askForReview() {
 		if viewModel.isTimeToRequestReview {
 			SKStoreReviewController.requestReview()
 		}
@@ -77,6 +79,8 @@ private extension MyNftsViewController {
 
 	func checkAppearance() {
 		emptyLabel.isHidden = !viewModel.isEmpty
+		emptyLabel.text = viewModel.emptyVCMessage
+
 		navBarView.update(with: NavBarInputData(
 			title: viewModel.isEmpty ? "" : viewModel.titleVC,
 			isGoBackButtonHidden: false,
@@ -87,7 +91,7 @@ private extension MyNftsViewController {
 	}
 }
 
-// MARK: UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension MyNftsViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -145,15 +149,6 @@ private extension MyNftsViewController {
 		tableView.backgroundColor = .clear
 
 		return tableView
-	}
-
-	func makeStaticTextLabel(text: String) -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .headline)
-		label.text = text
-
-		return label
 	}
 
 	func makeSearchController() -> UISearchController {

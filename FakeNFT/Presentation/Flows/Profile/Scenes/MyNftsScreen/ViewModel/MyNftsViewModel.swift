@@ -65,7 +65,13 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	var isEmpty: Bool { items.value.isEmpty }
 	var cellModels: [ICellViewAnyModel.Type] = [MyNftsItemCellModel.self]
 
-	var emptyVCMessage: String = L10n.Profile.emptyVCMyNFTs
+	var emptyVCMessage: String {
+		if backendItems.isEmpty {
+			return L10n.Profile.emptyVCMyNFTs
+		} else {
+			return "У вас нет NFT удовлетворяющих поиск" // локализовать
+		}
+	}
 	var titleVC: String = L10n.Profile.titleVCMyNFTs
 
 	var isTimeToRequestReview: Bool {

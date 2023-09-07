@@ -23,9 +23,19 @@ final class CollectionHeaderCell: UICollectionViewCell {
 	// MARK: - UI Elements
 
 	private lazy var coverImageView: UIImageView = makeCoverImageView()
-	private lazy var titleLabel: UILabel = makeTitleLabel()
-	private lazy var authorLabel: UILabel = makeAuthorLabel()
-	private lazy var descriptionLabel: UILabel = makeDescriptionLabel()
+	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .title2)
+	)
+	private lazy var authorLabel: UILabel = LabelFactory.makeTapLabel(
+		tap: UITapGestureRecognizer(
+			target: self,
+			action: #selector(handleOnTapAuthor)
+		)
+	)
+	private lazy var descriptionLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .footnote),
+		numberOfLines: .zero
+	)
 
 	// MARK: - Inits
 
@@ -138,33 +148,6 @@ private extension CollectionHeaderCell {
 		imageView.kf.indicatorType = .activity
 
 		return imageView
-	}
-
-	func makeTitleLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .title2)
-
-		return label
-	}
-
-	func makeAuthorLabel() -> UILabel {
-		let label = UILabel()
-
-		let tap = UITapGestureRecognizer(target: self, action: #selector(handleOnTapAuthor))
-		label.addGestureRecognizer(tap)
-		label.isUserInteractionEnabled = true
-
-		return label
-	}
-
-	func makeDescriptionLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .footnote)
-		label.numberOfLines = .zero
-
-		return label
 	}
 }
 

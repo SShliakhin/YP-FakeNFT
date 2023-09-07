@@ -3,7 +3,9 @@ import UIKit
 final class ProfileItemCell: UITableViewCell {
 
 	// MARK: - UI Elements
-	fileprivate lazy var descriptionLabel: UILabel = makeDescriptionLabel()
+	fileprivate lazy var descriptionLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .headline)
+	)
 
 	// MARK: - Inits
 
@@ -56,17 +58,6 @@ private extension ProfileItemCell {
 
 		contentView.addSubview(hStack)
 		hStack.makeEqualToSuperview(insets: .init(all: Theme.spacing(usage: .standard2)))
-	}
-}
-
-// MARK: - UI make
-private extension ProfileItemCell {
-	func makeDescriptionLabel() -> UILabel {
-		let label = UILabel()
-		label.font = Theme.font(style: .headline)
-		label.textColor = Theme.color(usage: .main)
-
-		return label
 	}
 }
 

@@ -126,6 +126,7 @@
 		5ABCAE792A94977C0023C5C2 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABCAE782A94977C0023C5C2 /* AvatarView.swift */; };
 		5ABCAE7E2A952D7E0023C5C2 /* MyNftsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABCAE7D2A952D7E0023C5C2 /* MyNftsItemCell.swift */; };
 		5AC7EBE52AA3D6F20021D0BF /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC7EBE42AA3D6F20021D0BF /* SplashViewController.swift */; };
+		5ACBD8A92AAA6F7100E043F8 /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8A82AAA6F7100E043F8 /* LabelFactory.swift */; };
 		5AE76DA62A91F2CC00BAC6B2 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */; };
 		5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */; };
 /* End PBXBuildFile section */
@@ -276,6 +277,7 @@
 		5ABCAE782A94977C0023C5C2 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		5ABCAE7D2A952D7E0023C5C2 /* MyNftsItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNftsItemCell.swift; sourceTree = "<group>"; };
 		5AC7EBE42AA3D6F20021D0BF /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		5ACBD8A82AAA6F7100E043F8 /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
 		5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -787,6 +789,7 @@
 			children = (
 				5A0823AD2A83C2190047A8AC /* RatingView.swift */,
 				5A97DECF2A95FC31009EEB30 /* NavBarView.swift */,
+				5ACBD8A82AAA6F7100E043F8 /* LabelFactory.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1152,6 +1155,7 @@
 				5A484C742A9CE959007AC212 /* SortMyNftsBy.swift in Sources */,
 				5A04698E2A7ABE180026D783 /* CatalogViewController.swift in Sources */,
 				5A1B6DC12AA6BAB400A1BCB4 /* ShoppingCartCoordinator.swift in Sources */,
+				5ACBD8A92AAA6F7100E043F8 /* LabelFactory.swift in Sources */,
 				5A0469802A7ABCC50026D783 /* UICollectionView+Extensions.swift in Sources */,
 				5A51DA152A86C2F500235E7D /* CollectionViewController.swift in Sources */,
 				5A3ED4B42A8AE9DB003E367D /* GetSetSortCollectionsOptionUseCase.swift in Sources */,
