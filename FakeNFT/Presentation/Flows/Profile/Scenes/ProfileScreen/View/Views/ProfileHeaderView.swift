@@ -9,7 +9,8 @@ final class ProfileHeaderView: UIView {
 		font: Theme.font(style: .title2)
 	)
 	private lazy var descriptionLabel: UILabel = LabelFactory.makeLabel(
-		font: Theme.font(style: .footnote)
+		font: Theme.font(style: .footnote),
+		numberOfLines: .zero
 	)
 	private lazy var urlLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .subhead),
