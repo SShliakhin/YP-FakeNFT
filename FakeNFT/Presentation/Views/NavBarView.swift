@@ -13,8 +13,12 @@ final class NavBarView: UIView {
 	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .headline)
 	)
-	private lazy var goBackButton: UIButton = makeGoBackButton()
-	private lazy var sortButton: UIButton = makeSortButton()
+	private lazy var goBackButton: UIButton = ButtonFactory.makeButton(
+		image: Theme.image(kind: .goBack)
+	)
+	private lazy var sortButton: UIButton = ButtonFactory.makeButton(
+		image: Theme.image(kind: .sortIcon)
+	)
 
 	// MARK: - Inits
 	override init(frame: CGRect) {
@@ -69,30 +73,6 @@ private extension NavBarView {
 
 		addSubview(containerView)
 		containerView.makeEqualToSuperview(insets: Appearance.contentInsets)
-	}
-}
-
-// MARK: - UI make
-private extension NavBarView {
-	func makeGoBackButton() -> UIButton {
-		let button = UIButton(type: .custom)
-
-		let semibold = UIImage.SymbolConfiguration(weight: .semibold)
-		button.setImage(
-			Theme.image(kind: .goBack).withConfiguration(semibold),
-			for: .normal
-		)
-		button.tintColor = Theme.color(usage: .black)
-
-		return button
-	}
-
-	func makeSortButton() -> UIButton {
-		let button = UIButton(type: .custom)
-		button.setImage(Theme.image(kind: .sortIcon), for: .normal)
-		button.tintColor = Theme.color(usage: .black)
-
-		return button
 	}
 }
 

@@ -48,7 +48,10 @@ final class NftItemCell: UICollectionViewCell {
 	// MARK: - UI Elements
 
 	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
-	private lazy var likeButton: UIButton = makeLikeButton()
+	private lazy var likeButton: UIButton = ButtonFactory.makeButton(
+		image: Theme.image(kind: .heart),
+		tintColor: Theme.color(usage: .allDayWhite)
+	)
 	private lazy var ratingView = RatingView()
 	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .headline)
@@ -56,7 +59,9 @@ final class NftItemCell: UICollectionViewCell {
 	private lazy var priceLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .caption)
 	)
-	private lazy var cartButton: UIButton = makeCartButton()
+	private lazy var cartButton: UIButton = ButtonFactory.makeButton(
+		image: Theme.image(kind: .addToCartIcon)
+	)
 
 	// MARK: - Inits
 
@@ -187,22 +192,6 @@ private extension NftItemCell {
 		imageView.kf.indicatorType = .activity
 
 		return imageView
-	}
-
-	func makeLikeButton() -> UIButton {
-		let button = UIButton(type: .custom)
-		button.setBackgroundImage(Theme.image(kind: .heart), for: .normal)
-		button.tintColor = Theme.color(usage: .allDayWhite)
-
-		return button
-	}
-
-	func makeCartButton() -> UIButton {
-		let button = UIButton(type: .custom)
-		button.setBackgroundImage(Theme.image(kind: .addToCartIcon), for: .normal)
-		button.tintColor = Theme.color(usage: .black)
-
-		return button
 	}
 }
 

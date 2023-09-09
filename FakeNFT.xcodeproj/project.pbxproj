@@ -129,6 +129,7 @@
 		5ACBD8A92AAA6F7100E043F8 /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8A82AAA6F7100E043F8 /* LabelFactory.swift */; };
 		5ACBD8AB2AAAA74000E043F8 /* SearchNftsByNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8AA2AAAA74000E043F8 /* SearchNftsByNameUseCase.swift */; };
 		5ACBD8B02AAAAC0B00E043F8 /* SearchNftsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8AF2AAAAC0B00E043F8 /* SearchNftsViewModel.swift */; };
+		5ACBD8B42AAC5CD100E043F8 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8B32AAC5CD100E043F8 /* ButtonFactory.swift */; };
 		5AE76DA62A91F2CC00BAC6B2 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */; };
 		5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */; };
 /* End PBXBuildFile section */
@@ -282,6 +283,7 @@
 		5ACBD8A82AAA6F7100E043F8 /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
 		5ACBD8AA2AAAA74000E043F8 /* SearchNftsByNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNftsByNameUseCase.swift; sourceTree = "<group>"; };
 		5ACBD8AF2AAAAC0B00E043F8 /* SearchNftsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNftsViewModel.swift; sourceTree = "<group>"; };
+		5ACBD8B32AAC5CD100E043F8 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
 		5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -795,6 +797,7 @@
 				5A0823AD2A83C2190047A8AC /* RatingView.swift */,
 				5A97DECF2A95FC31009EEB30 /* NavBarView.swift */,
 				5ACBD8A82AAA6F7100E043F8 /* LabelFactory.swift */,
+				5ACBD8B32AAC5CD100E043F8 /* ButtonFactory.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1185,6 +1188,7 @@
 				5A04696B2A7ABCC50026D783 /* Model.swift in Sources */,
 				5A04696E2A7ABCC50026D783 /* NetworkTask.swift in Sources */,
 				5A0469482A7ABC990026D783 /* Theme+Sizes+Spacing.swift in Sources */,
+				5ACBD8B42AAC5CD100E043F8 /* ButtonFactory.swift in Sources */,
 				5A1B6DBB2AA6837300A1BCB4 /* AuthCoordinator.swift in Sources */,
 				5A7EA4592A8F38EE004C5402 /* GetNftsProfileUseCase.swift in Sources */,
 				5A1B6D7D2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift in Sources */,

@@ -32,7 +32,11 @@ final class EditProfileViewController: UIViewController {
 	}
 
 	// MARK: - UI Elements
-	private lazy var closeButton: UIButton = makeCloseButton()
+	private lazy var closeButton: UIButton = ButtonFactory.makeButton(
+		image: Theme.image(kind: .close)
+	) { [weak self] in
+		self?.viewModel.didUserDo(request: .goBack)
+	}
 	private lazy var avatarView = AvatarView()
 
 	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
@@ -260,19 +264,6 @@ private extension EditProfileViewController {
 
 // MARK: - UI make
 private extension EditProfileViewController {
-	func makeCloseButton() -> UIButton {
-		let headline = UIImage.SymbolConfiguration(textStyle: .headline)
-		let bold = UIImage.SymbolConfiguration(weight: .bold)
-		let combined = headline.applying(bold)
-
-		let button = UIButton(type: .custom)
-		button.setImage(Theme.image(kind: .close).withConfiguration(combined), for: .normal)
-		button.tintColor = Theme.color(usage: .black)
-		button.event = { [weak self] in self?.viewModel.didUserDo(request: .goBack) }
-
-		return button
-	}
-
 	func makeTextField() -> UITextField {
 		let textField = UITextField()
 

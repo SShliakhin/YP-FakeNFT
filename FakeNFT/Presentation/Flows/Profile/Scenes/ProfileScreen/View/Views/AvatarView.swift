@@ -18,7 +18,9 @@ final class AvatarView: UIView {
 	// MARK: - UI Elements
 	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
 	private lazy var avatarButton: UIButton = makeAvatarButton()
-	private lazy var uploadImageButton: UIButton = makeUploadImageButton()
+	private lazy var uploadImageButton: UIButton = ButtonFactory.makeTextButton(
+		textFont: Theme.font(style: .body)
+	)
 	private lazy var uploadImageButtonContainer = UIView()
 
 	// MARK: - Inits
@@ -112,20 +114,11 @@ private extension AvatarView {
 		button.titleLabel?.numberOfLines = 2
 		button.titleLabel?.textAlignment = .center
 		button.titleLabel?.font = Theme.font(style: .caption)
-		button.titleLabel?.textColor = Theme.color(usage: .allDayWhite)
+		button.setTitleColor(Theme.color(usage: .allDayWhite), for: .normal)
 		button.event = { [weak self] in
 			guard let self = self else { return }
 			self.uploadImageButtonContainer.isHidden = !self.uploadImageButtonContainer.isHidden
 		}
-
-		return button
-	}
-	func makeUploadImageButton() -> UIButton {
-		let button = UIButton(type: .custom)
-		button.backgroundColor = .clear
-		button.setTitleColor(Theme.color(usage: .main), for: .normal)
-		button.titleLabel?.font = Theme.font(style: .body)
-		button.event = nil
 
 		return button
 	}

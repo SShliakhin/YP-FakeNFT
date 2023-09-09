@@ -106,15 +106,6 @@ private extension WebViewController {
 
 // MARK: - UI make
 private extension WebViewController {
-	func makeGoBackButton() -> UIButton {
-		let button = UIButton(type: .custom)
-		button.setImage(Theme.image(kind: .goBack), for: .normal)
-		button.tintColor = Theme.color(usage: .black)
-		button.event = { [weak self] in self?.viewModel.didUserDo(request: .goBack) }
-
-		return button
-	}
-
 	func makeWebView() -> WKWebView {
 		let webView = WKWebView()
 		webView.backgroundColor = .clear

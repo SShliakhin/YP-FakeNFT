@@ -102,12 +102,8 @@ private extension ProfileViewController {
 // MARK: - UI make
 private extension ProfileViewController {
 	func makeEditProfileBarButtonItem() -> UIBarButtonItem {
-		let headline = UIImage.SymbolConfiguration(textStyle: .headline)
-		let bold = UIImage.SymbolConfiguration(weight: .bold)
-		let combined = headline.applying(bold)
-
 		let button = UIBarButtonItem(
-			image: Theme.image(kind: .editProfile).withConfiguration(combined),
+			image: Theme.image(kind: .editProfile),
 			style: .plain,
 			target: self,
 			action: #selector(didTapEditProfileButton)

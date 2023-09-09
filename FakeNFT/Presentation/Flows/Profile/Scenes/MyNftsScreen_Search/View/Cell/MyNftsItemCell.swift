@@ -31,7 +31,10 @@ final class MyNftsItemCell: UITableViewCell {
 	// MARK: - UI Elements
 
 	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
-	private lazy var likeButton: UIButton = makeLikeButton()
+	private lazy var likeButton: UIButton = ButtonFactory.makeButton(
+		image: Theme.image(kind: .heart),
+		tintColor: Theme.color(usage: .allDayWhite)
+	)
 	private lazy var ratingView = RatingView()
 
 	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
@@ -222,14 +225,6 @@ private extension MyNftsItemCell {
 		imageView.kf.indicatorType = .activity
 
 		return imageView
-	}
-
-	func makeLikeButton() -> UIButton {
-		let button = UIButton(type: .custom)
-		button.setBackgroundImage(Theme.image(kind: .heart), for: .normal)
-		button.tintColor = Theme.color(usage: .allDayWhite)
-
-		return button
 	}
 }
 

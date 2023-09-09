@@ -29,16 +29,31 @@ extension Theme {
 		case showDetail
 	}
 
+	static func getSymbolConfiguration(
+		textStyle: UIFont.TextStyle,
+		weight: UIImage.SymbolWeight
+	) -> UIImage.SymbolConfiguration {
+		let textStyle = UIImage.SymbolConfiguration(textStyle: textStyle)
+		let weight = UIImage.SymbolConfiguration(weight: weight)
+		return textStyle.applying(weight)
+	}
+
 	static func image(kind: ImageSF3) -> UIImage {
 		let customImage: UIImage
 
 		switch kind {
 		case .goBack:
-			customImage = UIImage(systemName: "chevron.backward") ?? .actions
+			let combined = getSymbolConfiguration(textStyle: .headline, weight: .semibold)
+			customImage = UIImage(systemName: "chevron.backward")?
+				.withConfiguration(combined) ?? .actions
 		case .editProfile:
-			customImage = UIImage(systemName: "square.and.pencil") ?? .actions
+			let combined = getSymbolConfiguration(textStyle: .headline, weight: .bold)
+			customImage = UIImage(systemName: "square.and.pencil")?
+				.withConfiguration(combined) ?? .actions
 		case .close:
-			customImage = UIImage(systemName: "xmark") ?? .actions
+			let combined = getSymbolConfiguration(textStyle: .headline, weight: .bold)
+			customImage = UIImage(systemName: "xmark")?
+				.withConfiguration(combined) ?? .actions
 		case .showDetail:
 			customImage = UIImage(systemName: "chevron.forward") ?? .actions
 		}
