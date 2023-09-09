@@ -10,7 +10,9 @@ struct NavBarInputData {
 
 final class NavBarView: UIView {
 
-	private lazy var titleLabel: UILabel = makeTitleLabel()
+	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .headline)
+	)
 	private lazy var goBackButton: UIButton = makeGoBackButton()
 	private lazy var sortButton: UIButton = makeSortButton()
 
@@ -72,15 +74,6 @@ private extension NavBarView {
 
 // MARK: - UI make
 private extension NavBarView {
-	func makeTitleLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .headline)
-		label.textAlignment = .center
-
-		return label
-	}
-
 	func makeGoBackButton() -> UIButton {
 		let button = UIButton(type: .custom)
 

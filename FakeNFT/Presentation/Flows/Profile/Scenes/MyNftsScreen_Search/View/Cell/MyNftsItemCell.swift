@@ -34,24 +34,19 @@ final class MyNftsItemCell: UITableViewCell {
 	private lazy var likeButton: UIButton = makeLikeButton()
 	private lazy var ratingView = RatingView()
 
-	private lazy var titleLabel: UILabel = makeLabelWith(
-		textColor: Theme.color(usage: .main),
+	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .headline)
 	)
-	fileprivate lazy var authorPrefixLabel: UILabel = makeLabelWith(
-		textColor: Theme.color(usage: .main),
+	fileprivate lazy var authorPrefixLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .subhead)
 	)
-	private lazy var authorLabel: UILabel = makeLabelWith(
-		textColor: Theme.color(usage: .main),
+	private lazy var authorLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .footnote)
 	)
-	fileprivate lazy var priceTitleLabel: UILabel = makeLabelWith(
-		textColor: Theme.color(usage: .main),
+	fileprivate lazy var priceTitleLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .footnote)
 	)
-	private lazy var priceLabel: UILabel = makeLabelWith(
-		textColor: Theme.color(usage: .main),
+	private lazy var priceLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .headline)
 	)
 
@@ -235,14 +230,6 @@ private extension MyNftsItemCell {
 		button.tintColor = Theme.color(usage: .allDayWhite)
 
 		return button
-	}
-
-	func makeLabelWith(textColor: UIColor, font: UIFont) -> UILabel {
-		let label = UILabel()
-		label.textColor = textColor
-		label.font = font
-
-		return label
 	}
 }
 

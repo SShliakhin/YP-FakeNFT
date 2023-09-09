@@ -7,7 +7,10 @@ final class FavoritesViewController: UIViewController {
 	// MARK: - UI Elements
 	private lazy var navBarView = NavBarView()
 	private lazy var collectionView: UICollectionView = makeCollectionView()
-	private lazy var emptyLabel: UILabel = makeStaticTextLabel(text: viewModel.emptyVCMessage)
+	private lazy var emptyLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .headline),
+		text: viewModel.emptyVCMessage
+	)
 
 	// MARK: - Inits
 
@@ -115,15 +118,6 @@ private extension FavoritesViewController {
 
 // MARK: - UI make
 private extension FavoritesViewController {
-	func makeStaticTextLabel(text: String) -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .headline)
-		label.text = text
-
-		return label
-	}
-
 	func makeCollectionView() -> UICollectionView {
 		let layout = createLayout()
 

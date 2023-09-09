@@ -5,9 +5,17 @@ final class ProfileHeaderView: UIView {
 
 	// MARK: - UI Elements
 	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
-	private lazy var titleLabel: UILabel = makeTitleLabel()
-	private lazy var descriptionLabel: UILabel = makeDescriptionLabel()
-	private lazy var urlLabel: UILabel = makeUrlLabel()
+	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .title2)
+	)
+	private lazy var descriptionLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .footnote),
+		numberOfLines: .zero
+	)
+	private lazy var urlLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .subhead),
+		textColor: Theme.color(usage: .blue)
+	)
 
 	// MARK: - Inits
 
@@ -107,28 +115,6 @@ private extension ProfileHeaderView {
 		imageView.kf.indicatorType = .activity
 
 		return imageView
-	}
-	func makeTitleLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .title2)
-
-		return label
-	}
-	func makeDescriptionLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .footnote)
-		label.numberOfLines = 0
-
-		return label
-	}
-	func makeUrlLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .blue)
-		label.font = Theme.font(style: .subhead)
-
-		return label
 	}
 }
 

@@ -29,9 +29,13 @@ final class FavoritesItemCell: UICollectionViewCell {
 
 	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
 	private lazy var likeButton: UIButton = makeLikeButton()
-	private lazy var titleLabel: UILabel = makeTitleLabel()
+	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .headline)
+	)
 	private lazy var ratingView = RatingView()
-	private lazy var priceLabel: UILabel = makePriceLabel()
+	private lazy var priceLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .subhead)
+	)
 
 	// MARK: - Inits
 
@@ -168,22 +172,6 @@ private extension FavoritesItemCell {
 		button.tintColor = Theme.color(usage: .allDayWhite)
 
 		return button
-	}
-
-	func makeTitleLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .headline)
-
-		return label
-	}
-
-	func makePriceLabel() -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .subhead)
-
-		return label
 	}
 }
 

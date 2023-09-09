@@ -1,48 +1,8 @@
-enum MyNftsEvents {
-	case showErrorAlert(String, withRetry: Bool)
-	case showSortAlert
-	case close
-}
+import Foundation
 
-enum MyNftsRequest {
-	case selectSort
-	case selectSortBy(SortMyNftsBy)
-	case retryAction
-	case goBack
-}
-
-protocol MyNftsViewModelInput: AnyObject {
-	var didSendEventClosure: ((MyNftsEvents) -> Void)? { get set }
-
-	func viewIsReady()
-	func didUserDo(request: MyNftsRequest)
-}
-
-protocol MyNftsViewModelOutput: AnyObject {
-	var items: Observable<[Nft]> { get }
-	var authors: Observable<[Author]> { get }
-	var likes: Observable<[String]> { get }
-	var isLoading: Observable<Bool> { get }
-	var numberOfItems: Int { get }
-	var isEmpty: Bool { get }
-	var cellModels: [ICellViewAnyModel.Type] { get }
-
-	var emptyVCMessage: String { get }
-	var titleVC: String { get }
-
-	var isTimeToRequestReview: Bool { get }
-
-	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel
-}
-
-typealias MyNftsViewModel = (
-	MyNftsViewModelInput &
-	MyNftsViewModelOutput
-)
-
-final class DefaultMyNftsViewModel: MyNftsViewModel {
+final class SearchNftsViewModel: NSObject, MyNftsViewModel {
 	struct Dependencies {
-		let getMyNfts: GetNftsProfileUseCase
+		let searchNftsByName: SearchNftsByNameUseCase
 		let getSetSortOption: SortMyNtfsOption
 		let putLikes: PutLikesProfileUseCase
 		let getAuthors: GetAuthorsUseCase
@@ -50,7 +10,8 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
-	private var hasReview = false
+	private var isSearchActive = false
+	private var likesForReview: Int
 
 	// MARK: - INPUT
 	var didSendEventClosure: ((MyNftsEvents) -> Void)?
@@ -65,42 +26,35 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	var isEmpty: Bool { items.value.isEmpty }
 	var cellModels: [ICellViewAnyModel.Type] = [MyNftsItemCellModel.self]
 
-	var emptyVCMessage: String = L10n.Profile.emptyVCMyNFTs
-	var titleVC: String = L10n.Profile.titleVCMyNFTs
+	var emptyVCMessage: String {
+		return isSearchActive ? L10n.SearchBar.noSearchResult : ""
+	}
+
+	var navBarData: NavBarInputData { getNavBarData() }
+
+	var placeholderSearchByTitle: String = L10n.SearchBar.SearchByTitle
 
 	var isTimeToRequestReview: Bool {
-		if hasReview {
-			return false
+		let currentLikes = likes.value.count
+		if currentLikes >= likesForReview {
+			likesForReview += Appearance.incrementToRequestReview
+			return true
 		}
-		hasReview = likes.value.count % 5 == 0
-		return hasReview
+		return false
 	}
 
 	// MARK: - Inits
 
 	init(dep: Dependencies) {
 		dependencies = dep
-
-		self.bind(to: dep.profileRepository)
-	}
-}
-
-// MARK: - Bind
-
-private extension DefaultMyNftsViewModel {
-	func bind(to repository: ProfileRepository) {
-		repository.myNfts.observe(on: self) { [weak self] myNfts in
-			self?.updateItemsByIDs(myNfts)
-		}
-		repository.likes.observe(on: self) { [weak self] likes in
-			self?.likes.value = likes
-		}
+		likes.value = dep.profileRepository.profileLikes
+		likesForReview = dep.profileRepository.profileLikes.count + Appearance.incrementToRequestReview
 	}
 }
 
 // MARK: - OUTPUT
 
-extension DefaultMyNftsViewModel {
+extension SearchNftsViewModel {
 	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel {
 		let nft = items.value[index]
 		let isFavorite = likes.value.contains(nft.id)
@@ -121,38 +75,8 @@ extension DefaultMyNftsViewModel {
 
 // MARK: - INPUT. View event methods
 
-extension DefaultMyNftsViewModel {
-	func viewIsReady() {
-		likes.value = dependencies.profileRepository.profileLikes
-		updateItemsByIDs(dependencies.profileRepository.profileMyNtfs)
-	}
-
-	private func updateItemsByIDs(_ myNfts: [String]) {
-		isLoading.value = true
-
-		dependencies.getMyNfts.invoke(
-			sortBy: dependencies.getSetSortOption.sortBy, // предсортировка на сервере
-			nftIDs: myNfts
-		) { [weak self] result in
-			guard let self = self else { return }
-
-			switch result {
-			case .success(let nfts):
-				self.items.value = nfts
-				self.sortMyNfts() // с repository предсортировка на сервере потеряла смысл(
-				self.fetchAuthors()
-			case .failure(let error):
-				self.items.value = []
-				self.retryAction = { self.viewIsReady() }
-				self.didSendEventClosure?(
-					.showErrorAlert(error.description, withRetry: true)
-				)
-			}
-
-			self.isLoading.value = false
-		}
-	}
-
+extension SearchNftsViewModel {
+	func viewIsReady() {}
 	func didUserDo(request: MyNftsRequest) {
 		switch request {
 		case .selectSort:
@@ -160,16 +84,55 @@ extension DefaultMyNftsViewModel {
 			didSendEventClosure?(.showSortAlert)
 		case .selectSortBy(let sortBy):
 			dependencies.getSetSortOption.setOption(sortBy)
-			sortMyNfts()
+			sortItems()
 		case .retryAction:
 			retryAction?()
 		case .goBack:
 			didSendEventClosure?(.close)
+		case .filterItemsBy(let term):
+			// debounce
+			NSObject.cancelPreviousPerformRequests(withTarget: self)
+			perform(#selector(searchNftsWith(_:)), with: term, afterDelay: TimeInterval(1.0))
 		}
 	}
 }
 
-private extension DefaultMyNftsViewModel {
+private extension SearchNftsViewModel {
+	@objc func searchNftsWith(_ text: String) {
+		let text = text
+			.trimmingCharacters(in: .whitespaces)
+			.lowercased()
+		if text.isEmpty {
+			isSearchActive = false
+			items.value = []
+			return
+		}
+
+		isSearchActive = true
+		isLoading.value = true
+
+		dependencies.searchNftsByName.invoke(
+			searchText: text
+		) { [weak self] result in
+			guard let self = self else { return }
+
+			switch result {
+			case .success(let nfts):
+				self.items.value = nfts
+				self.fetchAuthors()
+			case .failure(let error):
+				self.items.value = []
+				self.retryAction = nil
+				self.didSendEventClosure?(
+					.showErrorAlert(error.description, withRetry: false)
+				)
+			}
+
+			self.sortItems()
+			self.isLoading.value = false
+		}
+	}
+
 	func fetchAuthors() {
 		isLoading.value = true
 
@@ -217,7 +180,9 @@ private extension DefaultMyNftsViewModel {
 		}
 	}
 
-	func sortMyNfts() {
+	func sortItems() {
+		guard numberOfItems > 1 else { return }
+
 		let sortBy = dependencies.getSetSortOption.sortBy
 		switch sortBy {
 		case .name:
@@ -227,5 +192,35 @@ private extension DefaultMyNftsViewModel {
 		case .rating:
 			items.value = items.value.sorted { $0.rating > $1.rating }
 		}
+	}
+
+	func getNavBarData() -> NavBarInputData {
+		let title: String
+		switch(isEmpty, isSearchActive) {
+		case (true, true):
+			title = ""
+		case (false, _):
+			title = String(format: L10n.Profile.titleVCSearchResult, numberOfItems)
+		case (_, false):
+			title = L10n.Profile.titleVCSearchInvite
+		}
+
+		return NavBarInputData(
+			title: title,
+			isGoBackButtonHidden: false,
+			isSortButtonHidden: isEmpty,
+			onTapGoBackButton: { [weak self] in
+				self?.didUserDo(request: .goBack)
+			},
+			onTapSortButton: { [weak self] in
+				self?.didUserDo(request: .selectSort)
+			}
+		)
+	}
+}
+
+private extension SearchNftsViewModel {
+	enum Appearance {
+		static let incrementToRequestReview = 5
 	}
 }

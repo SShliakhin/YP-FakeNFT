@@ -44,6 +44,9 @@ private extension ProfileCoordinator {
 			case .selectFavorites:
 				self?.pushFavoritesVC()
 
+			case .selectSearchNfts:
+				self?.pushSearchNftsVC()
+
 			case .selectAbout(let url):
 				if let url = url {
 					self?.pushWebViewVC(url: url)
@@ -66,6 +69,33 @@ private extension ProfileCoordinator {
 
 	func pushMyNftsVC() {
 		let viewModel = container.makeMyNftsViewModel()
+		let module = factory.makeMyNftsViewController(viewModel: viewModel)
+
+		viewModel.didSendEventClosure = { [weak self, weak viewModel] event in
+			switch event {
+
+			case .showErrorAlert(let message, let withRetry):
+				self?.presentErrorAlert(message: message, withRetry: withRetry) {
+					viewModel?.didUserDo(request: .retryAction)
+				}
+
+			case .showSortAlert:
+				let alert = self?.factory
+					.makeSortAlertVC(sortCases: [.price, .rating, .name]) {
+						viewModel?.didUserDo(request: .selectSortBy($0))
+					}
+				self?.router.present(alert)
+
+			case .close:
+				self?.router.popModule()
+			}
+		}
+
+		router.push(module)
+	}
+
+	func pushSearchNftsVC() {
+		let viewModel = container.makeSearchNftsViewModel()
 		let module = factory.makeMyNftsViewController(viewModel: viewModel)
 
 		viewModel.didSendEventClosure = { [weak self, weak viewModel] event in

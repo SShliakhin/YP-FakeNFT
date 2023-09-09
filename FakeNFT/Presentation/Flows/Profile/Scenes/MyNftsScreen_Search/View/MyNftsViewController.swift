@@ -8,7 +8,10 @@ final class MyNftsViewController: UIViewController {
 	// MARK: - UI Elements
 	private lazy var navBarView = NavBarView()
 	private lazy var tableView: UITableView = makeTableView()
-	private lazy var emptyLabel: UILabel = makeStaticTextLabel(text: viewModel.emptyVCMessage)
+	private lazy var emptyLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .headline)
+	)
+	private lazy var searchController: UISearchController = makeSearchController()
 
 	// MARK: - Inits
 
@@ -56,7 +59,7 @@ private extension MyNftsViewController {
 		}
 		viewModel.likes.observe(on: self) { [weak self] _ in
 			self?.updateItems()
-			self?.checkTimeToReview()
+			self?.askForReview()
 		}
 		viewModel.isLoading.observe(on: self) { isLoading in
 			isLoading ? ProgressHUD.show() : ProgressHUD.dismiss()
@@ -68,7 +71,7 @@ private extension MyNftsViewController {
 		checkAppearance()
 	}
 
-	func checkTimeToReview() {
+	func askForReview() {
 		if viewModel.isTimeToRequestReview {
 			SKStoreReviewController.requestReview()
 		}
@@ -76,17 +79,13 @@ private extension MyNftsViewController {
 
 	func checkAppearance() {
 		emptyLabel.isHidden = !viewModel.isEmpty
-		navBarView.update(with: NavBarInputData(
-			title: viewModel.isEmpty ? "" : viewModel.titleVC,
-			isGoBackButtonHidden: false,
-			isSortButtonHidden: viewModel.isEmpty,
-			onTapGoBackButton: { [weak self] in self?.viewModel.didUserDo(request: .goBack) },
-			onTapSortButton: { [weak self] in self?.viewModel.didUserDo(request: .selectSort) }
-		))
+		emptyLabel.text = viewModel.emptyVCMessage
+
+		navBarView.update(with: viewModel.navBarData)
 	}
 }
 
-// MARK: UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension MyNftsViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -96,6 +95,15 @@ extension MyNftsViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let model = viewModel.cellModelAtIndex(indexPath.row)
 		return tableView.dequeueReusableCell(withModel: model, for: indexPath)
+	}
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension MyNftsViewController: UISearchResultsUpdating {
+	func updateSearchResults(for searchController: UISearchController) {
+		guard let query = searchController.searchBar.text else { return }
+		viewModel.didUserDo(request: .filterItemsBy(query))
 	}
 }
 
@@ -134,6 +142,9 @@ private extension MyNftsViewController {
 
 		tableView.dataSource = self
 
+		tableView.tableHeaderView = searchController.searchBar
+		tableView.bounces = false // из-за поиска испортился задний фон при пружине
+
 		tableView.tableFooterView = UIView()
 		tableView.separatorStyle = .none
 
@@ -142,20 +153,29 @@ private extension MyNftsViewController {
 		return tableView
 	}
 
-	func makeStaticTextLabel(text: String) -> UILabel {
-		let label = UILabel()
-		label.textColor = Theme.color(usage: .main)
-		label.font = Theme.font(style: .headline)
-		label.text = text
+	func makeSearchController() -> UISearchController {
+		let search = UISearchController(searchResultsController: nil)
+		search.searchResultsUpdater = self
+		search.obscuresBackgroundDuringPresentation = false
+		search.hidesNavigationBarDuringPresentation = false
+		definesPresentationContext = true
 
-		return label
+		// решаем проблему с обрамлением и прозрачностью
+		search.searchBar.backgroundImage = UIImage()
+		search.searchBar.backgroundColor = Theme.color(usage: .white)
+
+		search.searchBar.searchTextField.font = Theme.font(style: .body)
+		search.searchBar.searchTextField.textColor = Theme.color(usage: .main)
+		search.searchBar.searchTextField.placeholder = viewModel.placeholderSearchByTitle
+
+		return search
 	}
 }
 
 private extension MyNftsViewController {
 	enum Appearance {
 		static let navBarViewHeight = 42.0
-		static let tableViewInsets: UIEdgeInsets = .init(top: 62)
+		static let tableViewInsets: UIEdgeInsets = .init(top: 42)
 		static let cellHeight = 140.0
 	}
 }

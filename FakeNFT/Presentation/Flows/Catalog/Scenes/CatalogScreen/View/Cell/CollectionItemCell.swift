@@ -12,7 +12,9 @@ final class CollectionItemCell: UITableViewCell {
 
 	// MARK: - UI Elements
 	private lazy var coverImageView: UIImageView = makeCoverImageView()
-	private lazy var descriptionLabel: UILabel = makeDescriptionLabel()
+	private lazy var descriptionLabel: UILabel = LabelFactory.makeLabel(
+		font: Theme.font(style: .headline)
+	)
 
 	// MARK: - Inits
 
@@ -88,13 +90,6 @@ private extension CollectionItemCell {
 		imageView.kf.indicatorType = .activity
 
 		return imageView
-	}
-	func makeDescriptionLabel() -> UILabel {
-		let label = UILabel()
-		label.font = Theme.font(style: .headline)
-		label.textColor = Theme.color(usage: .main)
-
-		return label
 	}
 }
 

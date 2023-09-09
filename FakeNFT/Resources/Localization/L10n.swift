@@ -134,6 +134,12 @@ enum L10n {
 				comment: "Заголовок для вызова экрана: Мои NFT (%d)"
 			)
 		}
+		static var searchNftsCall: String {
+			NSLocalizedString(
+				"profile.titleCall.searchNtfs",
+				comment: "Заголовок для вызова экрана: Поиск NFTs по названию"
+			)
+		}
 		static var editTitleName: String {
 			NSLocalizedString(
 				"profile.editTitle.name",
@@ -200,6 +206,18 @@ enum L10n {
 				comment: "Заголовок экрана: Мои NFT"
 			)
 		}
+		static var titleVCSearchResult: String {
+			NSLocalizedString(
+				"profile.titleVC.searchVC.result",
+				comment: "Заголовок экрана Поиск NFT: Найдено: %d"
+			)
+		}
+		static var titleVCSearchInvite: String {
+			NSLocalizedString(
+				"profile.titleVC.searchVC.invite",
+				comment: "Заголовок экрана Поиск NFT: Что будем искать?"
+			)
+		}
 	}
 
 	enum SortByTitle {
@@ -225,6 +243,21 @@ enum L10n {
 			NSLocalizedString(
 				"sortBy.rating",
 				comment: "Заголовок опции сортировки по названию: По рейтингу"
+			)
+		}
+	}
+
+	enum SearchBar {
+		static var noSearchResult: String {
+			NSLocalizedString(
+				"searchBar.emptyVC.noSearchResult",
+				comment: "Сообщение для не успешного поиска: Нет результатов поиска"
+			)
+		}
+		static var SearchByTitle: String {
+			NSLocalizedString(
+				"searchBar.placeholder.SearchByTitle",
+				comment: "Плейсхолдер для поиска по названию: Поиск по названию"
 			)
 		}
 	}
