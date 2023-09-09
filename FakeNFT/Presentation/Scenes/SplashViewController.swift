@@ -2,7 +2,9 @@ import UIKit
 
 final class SplashViewController: UIViewController {
 	// MARK: - UI
-	private lazy var logoImageView: UIImageView = makeLogoImageView()
+	private lazy var logoImageView: UIImageView = ImageViewFactory.makeImageView(
+		image: Theme.image(kind: .logo)
+	)
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -22,16 +24,6 @@ private extension SplashViewController {
 		view.addSubview(logoImageView)
 		logoImageView.makeConstraints { $0.size(Appearance.logoSize) }
 		logoImageView.makeEqualToSuperviewCenterToSafeArea()
-	}
-}
-
-// MARK: - UI make
-private extension SplashViewController {
-	func makeLogoImageView() -> UIImageView {
-		let imageView = UIImageView(image: Theme.image(kind: .logo))
-		imageView.contentMode = .scaleAspectFit
-
-		return imageView
 	}
 }
 

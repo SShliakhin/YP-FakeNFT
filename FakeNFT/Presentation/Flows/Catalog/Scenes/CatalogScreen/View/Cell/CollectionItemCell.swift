@@ -11,7 +11,9 @@ final class CollectionItemCell: UITableViewCell {
 	}
 
 	// MARK: - UI Elements
-	private lazy var coverImageView: UIImageView = makeCoverImageView()
+	private lazy var coverImageView: UIImageView = ImageViewFactory.makeImageViewKF(
+		contentMode: .top
+	)
 	private lazy var descriptionLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .headline)
 	)
@@ -76,20 +78,6 @@ private extension CollectionItemCell {
 
 		contentView.addSubview(vStack)
 		vStack.makeEqualToSuperview(insets: Appearance.contentInsets)
-	}
-}
-
-// MARK: - UI make
-private extension CollectionItemCell {
-	func makeCoverImageView() -> UIImageView {
-		let imageView = UIImageView()
-		imageView.contentMode = .top
-		imageView.layer.cornerRadius = Theme.dimension(kind: .largeRadius)
-		imageView.layer.masksToBounds = true
-
-		imageView.kf.indicatorType = .activity
-
-		return imageView
 	}
 }
 

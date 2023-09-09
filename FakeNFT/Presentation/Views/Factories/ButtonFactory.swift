@@ -15,15 +15,24 @@ enum ButtonFactory {
 		return button
 	}
 
-	static func makeTextButton(
-		textFont: UIFont,
-		textColor: UIColor = Theme.color(usage: .main),
+	static func makeLabelButton(
+		label: UILabel,
+		backgroundColor: UIColor = .clear,
+		cornerRadius: CGFloat = .zero,
 		type: UIButton.ButtonType = .custom,
 		event: (() -> Void)? = nil
 	) -> UIButton {
 		let button = UIButton(type: type)
-		button.titleLabel?.font = textFont
-		button.setTitleColor(textColor, for: .normal)
+
+		button.setTitle(label.text, for: .normal)
+		button.setTitleColor(label.textColor, for: .normal)
+		button.titleLabel?.font = label.font
+		button.titleLabel?.numberOfLines = label.numberOfLines
+		button.titleLabel?.textAlignment = label.textAlignment
+
+		button.backgroundColor = backgroundColor
+		button.layer.cornerRadius = cornerRadius
+
 		button.event = event
 
 		return button

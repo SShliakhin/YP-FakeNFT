@@ -4,7 +4,9 @@ import Kingfisher
 final class ProfileHeaderView: UIView {
 
 	// MARK: - UI Elements
-	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
+	private lazy var avatarImageView: UIImageView = ImageViewFactory.makeImageViewKF(
+		cornerRadius: Appearance.avatarCornerRadius
+	)
 	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .title2)
 	)
@@ -101,20 +103,6 @@ private extension ProfileHeaderView {
 			bottom: Appearance.bottomInset,
 			right: Theme.spacing(usage: .standard2)
 		))
-	}
-}
-
-// MARK: - UI make
-private extension ProfileHeaderView {
-	func makeAvatarImageView() -> UIImageView {
-		let imageView = UIImageView()
-		imageView.contentMode = .scaleAspectFill
-		imageView.layer.cornerRadius = Appearance.avatarCornerRadius
-		imageView.layer.masksToBounds = true
-
-		imageView.kf.indicatorType = .activity
-
-		return imageView
 	}
 }
 

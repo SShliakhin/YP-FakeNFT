@@ -130,6 +130,7 @@
 		5ACBD8AB2AAAA74000E043F8 /* SearchNftsByNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8AA2AAAA74000E043F8 /* SearchNftsByNameUseCase.swift */; };
 		5ACBD8B02AAAAC0B00E043F8 /* SearchNftsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8AF2AAAAC0B00E043F8 /* SearchNftsViewModel.swift */; };
 		5ACBD8B42AAC5CD100E043F8 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8B32AAC5CD100E043F8 /* ButtonFactory.swift */; };
+		5ACBD8B62AACD03200E043F8 /* ImageViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8B52AACD03200E043F8 /* ImageViewFactory.swift */; };
 		5AE76DA62A91F2CC00BAC6B2 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */; };
 		5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */; };
 /* End PBXBuildFile section */
@@ -284,6 +285,7 @@
 		5ACBD8AA2AAAA74000E043F8 /* SearchNftsByNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNftsByNameUseCase.swift; sourceTree = "<group>"; };
 		5ACBD8AF2AAAAC0B00E043F8 /* SearchNftsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNftsViewModel.swift; sourceTree = "<group>"; };
 		5ACBD8B32AAC5CD100E043F8 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
+		5ACBD8B52AACD03200E043F8 /* ImageViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewFactory.swift; sourceTree = "<group>"; };
 		5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -794,10 +796,9 @@
 		5A51DA0E2A85CC8900235E7D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5ACBD8B72AACDDA100E043F8 /* Factories */,
 				5A0823AD2A83C2190047A8AC /* RatingView.swift */,
 				5A97DECF2A95FC31009EEB30 /* NavBarView.swift */,
-				5ACBD8A82AAA6F7100E043F8 /* LabelFactory.swift */,
-				5ACBD8B32AAC5CD100E043F8 /* ButtonFactory.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -950,6 +951,16 @@
 				5A5B91F92A9BFBB800A4B7E3 /* CatalogFlowDecomposition_SAS_c4gr4.md */,
 			);
 			name = Docs;
+			sourceTree = "<group>";
+		};
+		5ACBD8B72AACDDA100E043F8 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				5ACBD8A82AAA6F7100E043F8 /* LabelFactory.swift */,
+				5ACBD8B32AAC5CD100E043F8 /* ButtonFactory.swift */,
+				5ACBD8B52AACD03200E043F8 /* ImageViewFactory.swift */,
+			);
+			path = Factories;
 			sourceTree = "<group>";
 		};
 		5AE76DA12A91F21E00BAC6B2 /* ViewModel */ = {
@@ -1264,6 +1275,7 @@
 				5AC7EBE52AA3D6F20021D0BF /* SplashViewController.swift in Sources */,
 				5ABCAE7E2A952D7E0023C5C2 /* MyNftsItemCell.swift in Sources */,
 				5A7EA45D2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift in Sources */,
+				5ACBD8B62AACD03200E043F8 /* ImageViewFactory.swift in Sources */,
 				5A04697E2A7ABCC50026D783 /* UITableView+Extensions.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				5AA339812A956CD9002C2C8E /* FavoritesItemCell.swift in Sources */,

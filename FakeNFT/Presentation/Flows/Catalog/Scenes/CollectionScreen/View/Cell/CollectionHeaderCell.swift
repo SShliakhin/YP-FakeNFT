@@ -22,7 +22,7 @@ final class CollectionHeaderCell: UICollectionViewCell {
 
 	// MARK: - UI Elements
 
-	private lazy var coverImageView: UIImageView = makeCoverImageView()
+	private lazy var coverImageView: UIImageView = ImageViewFactory.makeImageViewKF()
 	private lazy var titleLabel: UILabel = LabelFactory.makeLabel(
 		font: Theme.font(style: .title2)
 	)
@@ -134,20 +134,6 @@ private extension CollectionHeaderCell {
 
 		contentView.addSubview(mainVStack)
 		mainVStack.makeEqualToSuperview()
-	}
-}
-
-// MARK: - UI make
-private extension CollectionHeaderCell {
-	func makeCoverImageView() -> UIImageView {
-		let imageView = UIImageView()
-		imageView.contentMode = .scaleAspectFit
-		imageView.layer.cornerRadius = Theme.dimension(kind: .largeRadius)
-		imageView.layer.masksToBounds = true
-
-		imageView.kf.indicatorType = .activity
-
-		return imageView
 	}
 }
 

@@ -47,7 +47,7 @@ final class NftItemCell: UICollectionViewCell {
 
 	// MARK: - UI Elements
 
-	private lazy var avatarImageView: UIImageView = makeAvatarImageView()
+	private lazy var avatarImageView: UIImageView = ImageViewFactory.makeImageViewKF()
 	private lazy var likeButton: UIButton = ButtonFactory.makeButton(
 		image: Theme.image(kind: .heart),
 		tintColor: Theme.color(usage: .allDayWhite)
@@ -178,20 +178,6 @@ private extension NftItemCell {
 		mainVStack.makeEqualToSuperview(
 			insets: .init(bottom: Theme.spacing(usage: .constant20))
 		)
-	}
-}
-
-// MARK: - UI make
-private extension NftItemCell {
-	func makeAvatarImageView() -> UIImageView {
-		let imageView = UIImageView()
-		imageView.contentMode = .scaleAspectFit
-		imageView.layer.cornerRadius = Theme.dimension(kind: .largeRadius)
-		imageView.layer.masksToBounds = true
-
-		imageView.kf.indicatorType = .activity
-
-		return imageView
 	}
 }
 
