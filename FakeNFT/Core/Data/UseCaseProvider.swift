@@ -10,6 +10,10 @@ final class UseCaseProvider {
 		self.dependencies = dependencies
 	}
 
+	lazy var searchNftsByName: SearchNftsByNameUseCase = {
+		SearchNftsByNameUseCaseImp(apiClient: dependencies.apiClient)
+	}()
+
 	lazy var getCollections: GetCollectionsUseCase = {
 		GetCollectionsUseCaseImp(apiClient: dependencies.apiClient)
 	}()

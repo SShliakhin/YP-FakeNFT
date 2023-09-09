@@ -2,6 +2,7 @@ protocol ProfileFlowDIContainer {
 	func makeProfileViewModel() -> ProfileViewModel
 	func makeMyNftsViewModel() -> MyNftsViewModel
 	func makeFavoritesViewModel() -> FavoritesViewModel
+	func makeSearchNftsViewModel() -> MyNftsViewModel
 }
 
 final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
@@ -13,6 +14,7 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 		let putLikes: PutLikesProfileUseCase
 		let getAuthors: GetAuthorsUseCase
 		let profileRepository: ProfileRepository
+		let searchNftsByName: SearchNftsByNameUseCase
 	}
 
 	private let dependencies: Dependencies
@@ -51,5 +53,17 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 		)
 
 		return DefaultFavoritesViewModel(dep: dep)
+	}
+
+	func makeSearchNftsViewModel() -> MyNftsViewModel {
+		let dep = SearchNftsViewModel.Dependencies(
+			searchNftsByName: dependencies.searchNftsByName,
+			getSetSortOption: dependencies.getSetSortOption,
+			putLikes: dependencies.putLikes,
+			getAuthors: dependencies.getAuthors,
+			profileRepository: dependencies.profileRepository
+		)
+
+		return SearchNftsViewModel(dep: dep)
 	}
 }

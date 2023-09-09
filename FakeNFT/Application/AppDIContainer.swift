@@ -70,7 +70,8 @@ extension AppDIContainer: MainFlowDIContainer {
 			getSetSortOption: useCases.getSetSortMyNtfsOption,
 			putLikes: useCases.putLikes,
 			getAuthors: useCases.getAuthors,
-			profileRepository: profileRepository
+			profileRepository: profileRepository,
+			searchNftsByName: useCases.searchNftsByName
 		)
 		return ProfileFlowDIContainerImp(dependencies: dep)
 	}

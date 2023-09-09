@@ -81,13 +81,7 @@ private extension MyNftsViewController {
 		emptyLabel.isHidden = !viewModel.isEmpty
 		emptyLabel.text = viewModel.emptyVCMessage
 
-		navBarView.update(with: NavBarInputData(
-			title: viewModel.isEmpty ? "" : viewModel.titleVC,
-			isGoBackButtonHidden: false,
-			isSortButtonHidden: viewModel.isEmpty,
-			onTapGoBackButton: { [weak self] in self?.viewModel.didUserDo(request: .goBack) },
-			onTapSortButton: { [weak self] in self?.viewModel.didUserDo(request: .selectSort) }
-		))
+		navBarView.update(with: viewModel.navBarData)
 	}
 }
 
@@ -181,7 +175,7 @@ private extension MyNftsViewController {
 private extension MyNftsViewController {
 	enum Appearance {
 		static let navBarViewHeight = 42.0
-		static let tableViewInsets: UIEdgeInsets = .init(top: 62)
+		static let tableViewInsets: UIEdgeInsets = .init(top: 42)
 		static let cellHeight = 140.0
 	}
 }

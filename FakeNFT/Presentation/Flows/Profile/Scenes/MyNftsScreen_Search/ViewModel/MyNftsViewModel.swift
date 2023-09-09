@@ -30,7 +30,7 @@ protocol MyNftsViewModelOutput: AnyObject {
 
 	var emptyVCMessage: String { get }
 	var placeholderSearchByTitle: String { get }
-	var titleVC: String { get }
+	var navBarData: NavBarInputData { get }
 
 	var isTimeToRequestReview: Bool { get }
 
@@ -52,10 +52,10 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
-	private var hasReview = false
 	private var backendItems: [Nft] = [] {
 		didSet { items.value = backendItems }
 	}
+	private var likesForReview: Int
 
 	// MARK: - INPUT
 	var didSendEventClosure: ((MyNftsEvents) -> Void)?
@@ -78,37 +78,37 @@ final class DefaultMyNftsViewModel: MyNftsViewModel {
 		}
 	}
 
-	var titleVC: String = L10n.Profile.titleVCMyNFTs
+	var navBarData: NavBarInputData {
+		NavBarInputData(
+			title: isEmpty ? "" : L10n.Profile.titleVCMyNFTs,
+			isGoBackButtonHidden: false,
+			isSortButtonHidden: isEmpty,
+			onTapGoBackButton: { [weak self] in
+				self?.didUserDo(request: .goBack)
+			},
+			onTapSortButton: { [weak self] in
+				self?.didUserDo(request: .selectSort)
+			}
+		)
+	}
+
 	var placeholderSearchByTitle: String = L10n.SearchBar.SearchByTitle
 
 	var isTimeToRequestReview: Bool {
-		// FIXME: - срабатывает дважды
-		if hasReview {
-			return false
+		let currentLikes = likes.value.count
+		if currentLikes >= likesForReview {
+			likesForReview += Appearance.incrementToRequestReview
+			return true
 		}
-		hasReview = !likes.value.isEmpty && likes.value.count % 5 == 0
-		return hasReview
+		return false
 	}
 
 	// MARK: - Inits
 
 	init(dep: Dependencies) {
 		dependencies = dep
-
-		self.bind(to: dep.profileRepository)
-	}
-}
-
-// MARK: - Bind
-
-private extension DefaultMyNftsViewModel {
-	func bind(to repository: ProfileRepository) {
-		repository.myNfts.observe(on: self) { [weak self] myNfts in
-			self?.updateItemsByIDs(myNfts)
-		}
-		repository.likes.observe(on: self) { [weak self] likes in
-			self?.likes.value = likes
-		}
+		likes.value = dep.profileRepository.profileLikes
+		likesForReview = dep.profileRepository.profileLikes.count + Appearance.incrementToRequestReview
 	}
 }
 
@@ -137,11 +137,29 @@ extension DefaultMyNftsViewModel {
 
 extension DefaultMyNftsViewModel {
 	func viewIsReady() {
-		likes.value = dependencies.profileRepository.profileLikes
-		updateItemsByIDs(dependencies.profileRepository.profileMyNtfs)
+		fetchNftsByIDs(dependencies.profileRepository.profileMyNtfs)
 	}
 
-	private func updateItemsByIDs(_ myNfts: [String]) {
+	func didUserDo(request: MyNftsRequest) {
+		switch request {
+		case .selectSort:
+			guard items.value.count > 1 else { return }
+			didSendEventClosure?(.showSortAlert)
+		case .selectSortBy(let sortBy):
+			dependencies.getSetSortOption.setOption(sortBy)
+			sortItems()
+		case .retryAction:
+			retryAction?()
+		case .goBack:
+			didSendEventClosure?(.close)
+		case .filterItemsBy(let searchText):
+			filterItemsBy(searchText)
+		}
+	}
+}
+
+private extension DefaultMyNftsViewModel {
+	func fetchNftsByIDs(_ myNfts: [String]) {
 		isLoading.value = true
 
 		dependencies.getMyNfts.invoke(
@@ -167,25 +185,6 @@ extension DefaultMyNftsViewModel {
 		}
 	}
 
-	func didUserDo(request: MyNftsRequest) {
-		switch request {
-		case .selectSort:
-			guard items.value.count > 1 else { return }
-			didSendEventClosure?(.showSortAlert)
-		case .selectSortBy(let sortBy):
-			dependencies.getSetSortOption.setOption(sortBy)
-			sortItems()
-		case .retryAction:
-			retryAction?()
-		case .goBack:
-			didSendEventClosure?(.close)
-		case .filterItemsBy(let searchText):
-			filterItemsBy(searchText)
-		}
-	}
-}
-
-private extension DefaultMyNftsViewModel {
 	func fetchAuthors() {
 		isLoading.value = true
 
@@ -257,5 +256,11 @@ private extension DefaultMyNftsViewModel {
 			items.value = backendItems.filter { $0.name.lowercased().contains(text) }
 		}
 		sortItems()
+	}
+}
+
+private extension DefaultMyNftsViewModel {
+	enum Appearance {
+		static let incrementToRequestReview = 5
 	}
 }

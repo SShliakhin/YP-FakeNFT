@@ -23,6 +23,7 @@ enum FakeNFTAPI {
 	case getCurrency(String)
 	case getPaymentCurrency(String)
 	case getUsers
+	case searchNFTsByTitle(String)
 }
 
 extension FakeNFTAPI: API {
@@ -40,7 +41,7 @@ extension FakeNFTAPI: API {
 			return "/api/v1/collections"
 		case let .getCollection(id):
 			return "/api/v1/collections/\(id)"
-		case .getNFTs:
+		case .getNFTs, .getNFTsByAuthor, .searchNFTsByTitle:
 			return "/api/v1/nft"
 		case let .getNFT(id):
 			return "/api/v1/nft/\(id)"
@@ -50,8 +51,6 @@ extension FakeNFTAPI: API {
 			return "/api/v1/profile/1"
 		case let .getUser(id):
 			return "/api/v1/users/\(id)"
-		case .getNFTsByAuthor:
-			return "/api/v1/nft"
 		case .getCurrencies:
 			return "/api/v1/currencies"
 		case let .getCurrency(id):
@@ -96,6 +95,11 @@ extension FakeNFTAPI: API {
 		case .getNFTsByAuthor(let id):
 			return [
 				URLQueryItem(name: "author", value: id)
+			]
+		case .searchNFTsByTitle(let text):
+			return [
+				URLQueryItem(name: "name", value: text),
+				URLQueryItem(name: "sortBy", value: "name")
 			]
 		default:
 			return nil

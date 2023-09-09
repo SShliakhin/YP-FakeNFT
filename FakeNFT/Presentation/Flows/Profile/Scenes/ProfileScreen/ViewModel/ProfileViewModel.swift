@@ -10,6 +10,7 @@ struct ProfileUpdate {
 enum ProfileSection: CustomStringConvertible {
 	case myNFTs(Int?)
 	case favoritesNFTS(Int?)
+	case search
 	case about
 
 	var description: String {
@@ -18,6 +19,8 @@ enum ProfileSection: CustomStringConvertible {
 			return String(format: L10n.Profile.myNftsCall, count ?? 0)
 		case .favoritesNFTS(let count):
 			return String(format: L10n.Profile.favoritesCall, count ?? 0)
+		case .search:
+			return L10n.Profile.searchNftsCall
 		case .about:
 			return L10n.Profile.aboutCall
 		}
@@ -29,6 +32,7 @@ enum ProfileEvents {
 	case selectEditProfile
 	case selectMyNfts
 	case selectFavorites
+	case selectSearchNfts
 	case selectAbout(URL?)
 	case close
 }
@@ -161,6 +165,8 @@ extension DefaultProfileViewModel {
 				didSendEventClosure?(.selectMyNfts)
 			case .favoritesNFTS:
 				didSendEventClosure?(.selectFavorites)
+			case .search:
+				didSendEventClosure?(.selectSearchNfts)
 			case .about:
 				didSendEventClosure?(.selectAbout(profile.value?.website))
 			}
@@ -182,6 +188,7 @@ private extension DefaultProfileViewModel {
 		items.value = [
 			ProfileSection.myNFTs(profile.value?.nftsCount),
 			ProfileSection.favoritesNFTS(profile.value?.likesCount),
+			ProfileSection.search,
 			ProfileSection.about
 		]
 	}
