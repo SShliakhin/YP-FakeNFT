@@ -1,6 +1,13 @@
 import UIKit
 
 final class CoordinatorFactoryImp: CoordinatorFactory {
+	func makeStartCoordinator(router: Router, container: StartFlowDIContainer) -> Coordinator & StartCoordinatorOutput {
+		StartCoordinator(
+			router: router,
+			factory: ModuleFactoryImp(),
+			container: container
+		)
+	}
 
 	func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput {
 		OnboardingCoordinator(router: router, factory: ModuleFactoryImp())

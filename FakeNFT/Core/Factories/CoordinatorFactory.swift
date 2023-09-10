@@ -1,7 +1,7 @@
 import UIKit
 
 protocol CoordinatorFactory {
-
+	func makeStartCoordinator(router: Router, container: StartFlowDIContainer) -> Coordinator & StartCoordinatorOutput
 	func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput
 	func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
 

@@ -131,6 +131,9 @@
 		5ACBD8B02AAAAC0B00E043F8 /* SearchNftsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8AF2AAAAC0B00E043F8 /* SearchNftsViewModel.swift */; };
 		5ACBD8B42AAC5CD100E043F8 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8B32AAC5CD100E043F8 /* ButtonFactory.swift */; };
 		5ACBD8B62AACD03200E043F8 /* ImageViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8B52AACD03200E043F8 /* ImageViewFactory.swift */; };
+		5AD004AC2AADFE9000D72651 /* StartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD004AB2AADFE9000D72651 /* StartCoordinator.swift */; };
+		5AD004B22AAE012400D72651 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD004B12AAE012400D72651 /* SplashViewModel.swift */; };
+		5AD004B42AAE01B600D72651 /* StartFlowDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD004B32AAE01B600D72651 /* StartFlowDIContainer.swift */; };
 		5AE76DA62A91F2CC00BAC6B2 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */; };
 		5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */; };
 /* End PBXBuildFile section */
@@ -286,6 +289,9 @@
 		5ACBD8AF2AAAAC0B00E043F8 /* SearchNftsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNftsViewModel.swift; sourceTree = "<group>"; };
 		5ACBD8B32AAC5CD100E043F8 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
 		5ACBD8B52AACD03200E043F8 /* ImageViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewFactory.swift; sourceTree = "<group>"; };
+		5AD004AB2AADFE9000D72651 /* StartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCoordinator.swift; sourceTree = "<group>"; };
+		5AD004B12AAE012400D72651 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		5AD004B32AAE01B600D72651 /* StartFlowDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartFlowDIContainer.swift; sourceTree = "<group>"; };
 		5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -462,6 +468,7 @@
 		5A0469842A7ABE180026D783 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				5AD004AA2AADFE5F00D72651 /* StartFlow */,
 				5A1B6D902AA639DF00A1BCB4 /* OnboardingFlow */,
 				5A1B6D8F2AA639D200A1BCB4 /* AuthFlow */,
 				5A1B6DCA2AA6E80300A1BCB4 /* MainFlow */,
@@ -546,7 +553,6 @@
 			isa = PBXGroup;
 			children = (
 				5AA5C8B82A88D0FA00510684 /* Web */,
-				5AC7EBE42AA3D6F20021D0BF /* SplashViewController.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -963,6 +969,49 @@
 			path = Factories;
 			sourceTree = "<group>";
 		};
+		5AD004AA2AADFE5F00D72651 /* StartFlow */ = {
+			isa = PBXGroup;
+			children = (
+				5AD004AB2AADFE9000D72651 /* StartCoordinator.swift */,
+				5AD004B32AAE01B600D72651 /* StartFlowDIContainer.swift */,
+				5AD004AD2AAE00C900D72651 /* Scenes */,
+			);
+			path = StartFlow;
+			sourceTree = "<group>";
+		};
+		5AD004AD2AAE00C900D72651 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				5AD004AE2AAE00D600D72651 /* SplashScene */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		5AD004AE2AAE00D600D72651 /* SplashScene */ = {
+			isa = PBXGroup;
+			children = (
+				5AD004AF2AAE00EB00D72651 /* ViewModel */,
+				5AD004B02AAE010300D72651 /* View */,
+			);
+			path = SplashScene;
+			sourceTree = "<group>";
+		};
+		5AD004AF2AAE00EB00D72651 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5AD004B12AAE012400D72651 /* SplashViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5AD004B02AAE010300D72651 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5AC7EBE42AA3D6F20021D0BF /* SplashViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		5AE76DA12A91F21E00BAC6B2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1187,6 +1236,7 @@
 				5A0469822A7ABCC50026D783 /* ILoadWithIndicator.swift in Sources */,
 				5AAB67632A8120C700E95CB2 /* CollectionDTO.swift in Sources */,
 				5A04698D2A7ABE180026D783 /* StatisticsViewController.swift in Sources */,
+				5AD004B22AAE012400D72651 /* SplashViewModel.swift in Sources */,
 				5AE76DA62A91F2CC00BAC6B2 /* ProfileHeaderView.swift in Sources */,
 				5A0469772A7ABCC50026D783 /* Observable.swift in Sources */,
 				5A0823AC2A82DD850047A8AC /* CollectionItemCell.swift in Sources */,
@@ -1226,6 +1276,7 @@
 				5AAB67862A81F1F400E95CB2 /* PutOrderUseCase.swift in Sources */,
 				5A0469752A7ABCC50026D783 /* UIView+Constraints.swift in Sources */,
 				5A1B6D782AA5644D00A1BCB4 /* AppDIContainer.swift in Sources */,
+				5AD004AC2AADFE9000D72651 /* StartCoordinator.swift in Sources */,
 				5A97DED72A9664BD009EEB30 /* Theme+NumberFormatter.swift in Sources */,
 				5A0469832A7ABCC50026D783 /* ICellViewModel.swift in Sources */,
 				5A1B6D8C2AA61CDB00A1BCB4 /* AppCoordinator.swift in Sources */,
@@ -1253,6 +1304,7 @@
 				5A1B6DBD2AA6A74000A1BCB4 /* CoordinatorFactoryImp.swift in Sources */,
 				5A0D32112A8DF60F00EF98F5 /* Profile.swift in Sources */,
 				5A5B91F82A9BB91600A4B7E3 /* ProfileRepository.swift in Sources */,
+				5AD004B42AAE01B600D72651 /* StartFlowDIContainer.swift in Sources */,
 				5A0469792A7ABCC50026D783 /* Array+Extensions.swift in Sources */,
 				5ABCAE792A94977C0023C5C2 /* AvatarView.swift in Sources */,
 				5A04696C2A7ABCC50026D783 /* APIClient.swift in Sources */,

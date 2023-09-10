@@ -5,6 +5,7 @@ protocol AppFactory {
 }
 
 protocol MainFlowDIContainer {
+	func makeStartFlowDIContainer() -> StartFlowDIContainer
 	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer
 	func makeCatalogFlowDIContainer() -> CatalogFlowDIContainer
 }
@@ -62,6 +63,10 @@ extension AppDIContainer: AppFactory {
 
 extension AppDIContainer: MainFlowDIContainer {
 	// MARK: - DIContainers of flows
+	func makeStartFlowDIContainer() -> StartFlowDIContainer {
+		StartFlowDIContainerImp(dependencies: StartFlowDIContainerImp.Dependencies())
+	}
+
 	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer {
 		let dep = ProfileFlowDIContainerImp.Dependencies(
 			getProfile: useCases.getProfile,

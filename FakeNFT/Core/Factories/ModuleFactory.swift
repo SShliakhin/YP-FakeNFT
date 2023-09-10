@@ -1,10 +1,22 @@
 import Foundation
 
 protocol CommonModuleFactory {
-	func makeSplashViewController() -> Presentable
-	func makeWebViewController(url: URL, completion: @escaping (() -> Void)) -> Presentable
-	func makeErrorAlertVC(message: String, completion: (() -> Void)?) -> Presentable
-	func makeSortAlertVC<T: CustomStringConvertible>(sortCases: [T], completion: @escaping (T) -> Void) -> Presentable
+	func makeWebViewController(
+		url: URL,
+		completion: @escaping (() -> Void)
+	) -> Presentable
+	func makeErrorAlertVC(
+		message: String,
+		completion: (() -> Void)?
+	) -> Presentable
+	func makeSortAlertVC<T: CustomStringConvertible>(
+		sortCases: [T],
+		completion: @escaping (T) -> Void
+	) -> Presentable
+}
+
+protocol StartModuleFactory {
+	func makeSplashViewController(viewModel: SplashViewModel) -> Presentable
 }
 
 protocol OnboardingModuleFactory {
@@ -21,18 +33,36 @@ protocol ProfileModuleFactory {
 	func makeMyNftsViewController(viewModel: MyNftsViewModel) -> Presentable
 	func makeFavoritesViewController(viewModel: FavoritesViewModel) -> Presentable
 
-	func makeWebViewController(url: URL, completion: @escaping (() -> Void)) -> Presentable
-	func makeErrorAlertVC(message: String, completion: (() -> Void)?) -> Presentable
-	func makeSortAlertVC<T: CustomStringConvertible>(sortCases: [T], completion: @escaping (T) -> Void) -> Presentable
+	func makeWebViewController(
+		url: URL,
+		completion: @escaping (() -> Void)
+	) -> Presentable
+	func makeErrorAlertVC(
+		message: String,
+		completion: (() -> Void)?
+	) -> Presentable
+	func makeSortAlertVC<T: CustomStringConvertible>(
+		sortCases: [T],
+		completion: @escaping (T) -> Void
+	) -> Presentable
 }
 
 protocol CatalogModuleFactory {
 	func makeCatalogViewController(viewModel: CatalogViewModel) -> Presentable
 	func makeCollectionViewController(viewModel: CollectionViewModel) -> Presentable
 
-	func makeWebViewController(url: URL, completion: @escaping (() -> Void)) -> Presentable
-	func makeErrorAlertVC(message: String, completion: (() -> Void)?) -> Presentable
-	func makeSortAlertVC<T: CustomStringConvertible>(sortCases: [T], completion: @escaping (T) -> Void) -> Presentable
+	func makeWebViewController(
+		url: URL,
+		completion: @escaping (() -> Void)
+	) -> Presentable
+	func makeErrorAlertVC(
+		message: String,
+		completion: (() -> Void)?
+	) -> Presentable
+	func makeSortAlertVC<T: CustomStringConvertible>(
+		sortCases: [T],
+		completion: @escaping (T) -> Void
+	) -> Presentable
 }
 
 protocol ShoppingCartModuleFactory {

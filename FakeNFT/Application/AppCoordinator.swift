@@ -23,6 +23,8 @@ final class AppCoordinator: BaseCoordinator {
 	private let appContext: AppContext
 	private let container: AppDIContainer
 
+	private var isDataLoaded = false
+
 	private var instructor: LaunchInstructor {
 		return LaunchInstructor.configureByContext(appContext)
 	}
@@ -42,6 +44,11 @@ final class AppCoordinator: BaseCoordinator {
 	}
 
 	override func start() {
+		if !isDataLoaded {
+			runStarFlow()
+			return
+		}
+
 		switch instructor {
 		case .onboarding:
 			runOnboardingFlow()
@@ -54,6 +61,21 @@ final class AppCoordinator: BaseCoordinator {
 }
 
 private extension AppCoordinator {
+	func runStarFlow() {
+		let coordinator = coordinatorFactory.makeStartCoordinator(
+			router: router,
+			container: container.makeStartFlowDIContainer()
+		)
+		coordinator.finishFlow = { [weak self, weak coordinator] in
+			guard let self = self else { return }
+			self.isDataLoaded = true
+			self.start()
+			self.removeDependency(coordinator)
+		}
+		addDependency(coordinator)
+		coordinator.start()
+	}
+
 	func runOnboardingFlow() {
 		let coordinator = coordinatorFactory.makeOnboardingCoordinator(router: router)
 		coordinator.finishFlow = { [weak self, weak coordinator] in
