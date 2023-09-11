@@ -30,6 +30,7 @@ private extension AuthCoordinator {
 		viewModel.didSendEventClosure = { [weak self] event in
 			switch event {
 			case .close:
+				self?.router.dismissModule()
 				self?.finishFlow?()
 			}
 		}

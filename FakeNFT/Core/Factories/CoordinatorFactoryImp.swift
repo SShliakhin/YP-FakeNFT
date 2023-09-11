@@ -1,6 +1,13 @@
 import UIKit
 
 final class CoordinatorFactoryImp: CoordinatorFactory {
+	func makeStartCoordinator(router: Router, container: StartFlowDIContainer) -> Coordinator & StartCoordinatorOutput {
+		StartCoordinator(
+			router: router,
+			factory: ModuleFactoryImp(),
+			container: container
+		)
+	}
 
 	func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput {
 		OnboardingCoordinator(router: router, factory: ModuleFactoryImp())
@@ -10,7 +17,7 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
 		AuthCoordinator(router: router, factory: ModuleFactoryImp())
 	}
 
-	func makeTabbarCoordinator(container: MainFlowDIContainer) -> (configurator: Coordinator, toPresent: Presentable?) {
+	func makeTabbarCoordinator(container: MainDIContainer) -> (configurator: Coordinator, toPresent: Presentable?) {
 		let pages: [TabbarPage] = {
 			[
 				.profile,

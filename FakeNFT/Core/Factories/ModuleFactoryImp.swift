@@ -1,6 +1,7 @@
 import UIKit
 
 final class ModuleFactoryImp: CommonModuleFactory,
+	StartModuleFactory,
 	OnboardingModuleFactory,
 	AuthModuleFactory,
 	ProfileModuleFactory,
@@ -9,9 +10,6 @@ final class ModuleFactoryImp: CommonModuleFactory,
 	StatisticsModuleFactory {
 
 	// MARK: - CommonModuleFactory
-	func makeSplashViewController() -> Presentable {
-		SplashViewController()
-	}
 	func makeWebViewController(url: URL, completion: @escaping (() -> Void)) -> Presentable {
 		let dep = DefaultWebViewModel.Dependencies(url: url)
 		let viewModel = DefaultWebViewModel(dep: dep)
@@ -68,6 +66,11 @@ final class ModuleFactoryImp: CommonModuleFactory,
 		)
 
 		return alert
+	}
+
+	// MARK: - StartModuleFactory
+	func makeSplashViewController(viewModel: SplashViewModel) -> Presentable {
+		SplashViewController(viewModel: viewModel)
 	}
 
 	// MARK: - OnboardingModuleFactory

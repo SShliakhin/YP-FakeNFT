@@ -4,7 +4,11 @@ protocol AppFactory {
 	func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, Coordinator)
 }
 
-protocol MainFlowDIContainer {
+protocol StartDIContainer {
+	func makeStartFlowDIContainer() -> StartFlowDIContainer
+}
+
+protocol MainDIContainer {
 	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer
 	func makeCatalogFlowDIContainer() -> CatalogFlowDIContainer
 }
@@ -21,12 +25,20 @@ final class AppDIContainer {
 	lazy var profileRepository: ProfileRepository = {
 		ProfileRepositoryImp()
 	}()
+	lazy var likesIDsRepository: NftsIDsRepository = {
+		LikesIDsRepository()
+	}()
+	lazy var myNftsIDsRepository: NftsIDsRepository = {
+		MyNftsIDsRepository()
+	}()
 
 	// MARK: - UseCases
 	lazy var useCases: UseCaseProvider = {
 		let dep = UseCaseProvider.Dependencies(
 			apiClient: apiClient,
-			profileRepository: profileRepository
+			profileRepository: profileRepository,
+			likesIDsRepository: likesIDsRepository,
+			myNftsIDsRepository: myNftsIDsRepository
 		)
 		return UseCaseProvider(dependencies: dep)
 	}()
@@ -58,21 +70,37 @@ extension AppDIContainer: AppFactory {
 	}
 }
 
+// MARK: - StartDIContainer
+
+extension AppDIContainer: StartDIContainer {
+	func makeStartFlowDIContainer() -> StartFlowDIContainer {
+		let dep = StartFlowDIContainerImp.Dependencies(
+			getProfile: useCases.getProfile,
+			likesIDsRepository: likesIDsRepository,
+			myNftsIDsRepository: myNftsIDsRepository
+		)
+
+		return StartFlowDIContainerImp(dependencies: dep)
+	}
+}
+
 // MARK: - MainDIContainer
 
-extension AppDIContainer: MainFlowDIContainer {
-	// MARK: - DIContainers of flows
+extension AppDIContainer: MainDIContainer {
 	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer {
 		let dep = ProfileFlowDIContainerImp.Dependencies(
 			getProfile: useCases.getProfile,
 			putProfile: useCases.putProfile,
 			getMyNfts: useCases.getNfts,
 			getSetSortOption: useCases.getSetSortMyNtfsOption,
-			putLikes: useCases.putLikes,
 			getAuthors: useCases.getAuthors,
+			putLike: useCases.putLikeByID,
 			profileRepository: profileRepository,
+			likesIDsRepository: likesIDsRepository,
+			myNftsIDsRepository: myNftsIDsRepository,
 			searchNftsByName: useCases.searchNftsByName
 		)
+
 		return ProfileFlowDIContainerImp(dependencies: dep)
 	}
 
@@ -82,11 +110,12 @@ extension AppDIContainer: MainFlowDIContainer {
 			getSetSortOption: useCases.getSetSortCollectionsOption,
 			getAuthor: useCases.getAuthors,
 			getNfts: useCases.getNfts,
-			getLikes: useCases.getLikes,
-			putLikes: useCases.putLikes,
+			putLike: useCases.putLikeByID,
 			getOrder: useCases.getOrder,
-			putOrder: useCases.putOrder
+			putOrder: useCases.putOrder,
+			likesIDsRepository: likesIDsRepository
 		)
+
 		return CatalogFlowDIContainerImp(dependencies: dep)
 	}
 }

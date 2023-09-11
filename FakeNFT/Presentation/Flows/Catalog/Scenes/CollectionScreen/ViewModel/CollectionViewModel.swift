@@ -40,13 +40,16 @@ protocol CollectionViewModelInput: AnyObject {
 
 protocol CollectionViewModelOutput: AnyObject {
 	var dataSource: Observable<[CollectionSection]> { get }
-	var likes: Observable<[String]> { get }
 	var order: Observable<[String]> { get }
+
 	var isLoading: Observable<Bool> { get }
+	var isTimeToCheckLikes: Observable<Bool> { get }
+	var isTimeToRequestReview: Bool { get }
+
+	var navBarData: NavBarInputData { get }
+
 	var numberOfSection: Int { get }
 	var cellModels: [ICellViewAnyModel.Type] { get }
-
-	var isTimeToRequestReview: Bool { get }
 
 	func numberOfItemInSection(_ index: Int) -> Int
 	func cellModelInSectionAtIndex(section: Int, index: Int) -> ICellViewAnyModel
@@ -62,39 +65,67 @@ final class DefaultCollectionViewModel: CollectionViewModel {
 		let collection: Collection
 		let getAuthor: GetAuthorsUseCase
 		let getNfts: GetNftsProfileUseCase
-		let getLikes: GetLikesProfileUseCase
-		let putLikes: PutLikesProfileUseCase
+		let putLike: PutLikeByIDUseCase
 		let getOrder: GetOrderUseCase
 		let putOrder: PutOrderUseCase
+		let likesIDsRepository: NftsIDsRepository
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
+
 	private var author: Author?
 	private var nfts: [Nft] = []
 	private var errors: [String] = []
+	private var likesForReview: Int
 
 	// MARK: - INPUT
 	var didSendEventClosure: ((CollectionEvents) -> Void)?
 
 	// MARK: - OUTPUT
 	var dataSource: Observable<[CollectionSection]> = Observable([])
-	var likes: Observable<[String]> = Observable([])
+
 	var order: Observable<[String]> = Observable([])
 	var isLoading: Observable<Bool> = Observable(false)
-	var numberOfSection: Int {
-		dataSource.value.count
+	var isTimeToCheckLikes: Observable<Bool> = Observable(false)
+	var isTimeToRequestReview: Bool {
+		let currentLikes = dependencies.likesIDsRepository.numberOfItems
+		if currentLikes >= likesForReview {
+			likesForReview += Appearance.incrementToRequestReview
+			return true
+		}
+		return false
 	}
+
+	var numberOfSection: Int { dataSource.value.count }
 	var cellModels: [ICellViewAnyModel.Type] = [NftItemCellModel.self, CollectionHeaderCellModel.self]
 
-	var isTimeToRequestReview: Bool {
-		guard !likes.value.isEmpty else { return false }
-		return likes.value.count % 5 == 0
+	var navBarData: NavBarInputData {
+		NavBarInputData(
+			title: "",
+			isGoBackButtonHidden: false,
+			isSortButtonHidden: true,
+			onTapGoBackButton: { [weak self] in self?.didUserDo(request: .goBack) },
+			onTapSortButton: nil
+		)
 	}
 
 	// MARK: - Inits
 
 	init(dep: Dependencies) {
 		dependencies = dep
+		likesForReview = dep.likesIDsRepository.numberOfItems + Appearance.incrementToRequestReview
+
+		self.bind(to: dep.likesIDsRepository)
+	}
+}
+
+// MARK: - Bind
+
+private extension DefaultCollectionViewModel {
+	func bind(to repository: NftsIDsRepository) {
+		repository.items.observe(on: self) { [weak self] _ in
+			self?.isTimeToCheckLikes.value = true
+		}
 	}
 }
 
@@ -121,7 +152,7 @@ extension DefaultCollectionViewModel {
 			let nft = list[index]
 			return NftItemCellModel(
 				avatarImageURL: nft.cover,
-				isFavorite: likes.value.contains(nft.id),
+				isFavorite: dependencies.likesIDsRepository.hasItemByID(nft.id),
 				rating: nft.rating,
 				title: nft.name,
 				price: nft.price,
@@ -146,7 +177,6 @@ extension DefaultCollectionViewModel {
 
 		fetchAuthor(group: group, authorID: authorID)
 		fetchNfts(group: group, authorID: authorID)
-		fetchLikes(group: group)
 		fetchOrder(group: group)
 
 		group.notify(queue: .main) {
@@ -180,21 +210,10 @@ private extension DefaultCollectionViewModel {
 	func likeItemWithID(_ nftID: String) {
 		isLoading.value = true
 
-		var likes = likes.value
-		if likes.contains(nftID) {
-			likes.removeAll { $0 == nftID }
-		} else {
-			likes.append(nftID)
-		}
-
-		dependencies.putLikes.invoke(likes: .init(nfts: likes)) { [weak self] result in
+		dependencies.putLike.invoke(nftID) { [weak self] result in
 			guard let self = self else { return }
-			switch result {
-			case .success(let likes):
-				self.likes.value = likes.nfts
-			case .failure(let error):
+			if case .failure(let error) = result {
 				self.retryAction = nil
-				self.likes.value = self.likes.value
 				self.didSendEventClosure?(
 					.showErrorAlert(error.description, withRetry: false)
 				)
@@ -275,20 +294,6 @@ private extension DefaultCollectionViewModel {
 		}
 	}
 
-	func fetchLikes(group: DispatchGroup) {
-		group.enter()
-		dependencies.getLikes.invoke { [weak self] result in
-			switch result {
-			case .success(let likes):
-				self?.likes.value = likes.nfts
-			case .failure(let error):
-				self?.errors.append(error.description)
-				print(error.localizedDescription)
-			}
-			group.leave()
-		}
-	}
-
 	func fetchOrder(group: DispatchGroup) {
 		group.enter()
 		dependencies.getOrder.invoke { [weak self] result in
@@ -301,5 +306,11 @@ private extension DefaultCollectionViewModel {
 			}
 			group.leave()
 		}
+	}
+}
+
+private extension DefaultCollectionViewModel {
+	enum Appearance {
+		static let incrementToRequestReview = 5
 	}
 }

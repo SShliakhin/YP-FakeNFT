@@ -4,9 +4,9 @@ final class SearchNftsViewModel: NSObject, MyNftsViewModel {
 	struct Dependencies {
 		let searchNftsByName: SearchNftsByNameUseCase
 		let getSetSortOption: SortMyNtfsOption
-		let putLikes: PutLikesProfileUseCase
+		let putLike: PutLikeByIDUseCase
 		let getAuthors: GetAuthorsUseCase
-		let profileRepository: ProfileRepository
+		let likesIDsRepository: NftsIDsRepository
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
@@ -19,8 +19,17 @@ final class SearchNftsViewModel: NSObject, MyNftsViewModel {
 	// MARK: - OUTPUT
 	var items: Observable<[Nft]> = Observable([])
 	var authors: Observable<[Author]> = Observable([])
-	var likes: Observable<[String]> = Observable([])
+
 	var isLoading: Observable<Bool> = Observable(false)
+	var isTimeToCheckLikes: Observable<Bool> = Observable(false)
+	var isTimeToRequestReview: Bool {
+		let currentLikes = dependencies.likesIDsRepository.numberOfItems
+		if currentLikes >= likesForReview {
+			likesForReview += Appearance.incrementToRequestReview
+			return true
+		}
+		return false
+	}
 
 	var numberOfItems: Int { items.value.count }
 	var isEmpty: Bool { items.value.isEmpty }
@@ -30,25 +39,27 @@ final class SearchNftsViewModel: NSObject, MyNftsViewModel {
 		return isSearchActive ? L10n.SearchBar.noSearchResult : ""
 	}
 
-	var navBarData: NavBarInputData { getNavBarData() }
-
 	var placeholderSearchByTitle: String = L10n.SearchBar.SearchByTitle
-
-	var isTimeToRequestReview: Bool {
-		let currentLikes = likes.value.count
-		if currentLikes >= likesForReview {
-			likesForReview += Appearance.incrementToRequestReview
-			return true
-		}
-		return false
-	}
+	var navBarData: NavBarInputData { getNavBarData() }
 
 	// MARK: - Inits
 
 	init(dep: Dependencies) {
 		dependencies = dep
-		likes.value = dep.profileRepository.profileLikes
-		likesForReview = dep.profileRepository.profileLikes.count + Appearance.incrementToRequestReview
+		likesForReview = dep.likesIDsRepository.numberOfItems + Appearance.incrementToRequestReview
+
+		super.init()
+		bind(to: dep.likesIDsRepository)
+	}
+}
+
+// MARK: - Bind
+
+private extension SearchNftsViewModel {
+	func bind(to repository: NftsIDsRepository) {
+		repository.items.observe(on: self) { [weak self] _ in
+			self?.didUserDo(request: .like)
+		}
 	}
 }
 
@@ -57,7 +68,7 @@ final class SearchNftsViewModel: NSObject, MyNftsViewModel {
 extension SearchNftsViewModel {
 	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel {
 		let nft = items.value[index]
-		let isFavorite = likes.value.contains(nft.id)
+		let isFavorite = dependencies.likesIDsRepository.hasItemByID(nft.id)
 		let author = authors.value.first { $0.id == nft.authorID }?.name ?? ""
 		let price = Theme.getPriceStringFromDouble(nft.price)
 
@@ -93,6 +104,10 @@ extension SearchNftsViewModel {
 			// debounce
 			NSObject.cancelPreviousPerformRequests(withTarget: self)
 			perform(#selector(searchNftsWith(_:)), with: term, afterDelay: TimeInterval(1.0))
+		case .list:
+			break
+		case .like:
+			isTimeToCheckLikes.value = true
 		}
 	}
 }
@@ -157,25 +172,14 @@ private extension SearchNftsViewModel {
 	func likeItemWithID(_ nftID: String) {
 		isLoading.value = true
 
-		var likes = likes.value
-		if likes.contains(nftID) {
-			likes.removeAll { $0 == nftID }
-		} else {
-			likes.append(nftID)
-		}
-
-		dependencies.putLikes.invoke(likes: .init(nfts: likes)) { [weak self] result in
+		dependencies.putLike.invoke(nftID) { [weak self] result in
 			guard let self = self else { return }
-			switch result {
-			case .success(let likes):
-				self.likes.value = likes.nfts
-			case .failure(let error):
+			if case .failure(let error) = result {
 				self.retryAction = nil
 				self.didSendEventClosure?(
 					.showErrorAlert(error.description, withRetry: false)
 				)
 			}
-
 			self.isLoading.value = false
 		}
 	}
