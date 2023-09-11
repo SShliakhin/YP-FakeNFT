@@ -30,15 +30,29 @@ private extension StartCoordinator {
 		let viewModel = container.makeSplashViewModel()
 		let module = factory.makeSplashViewController(viewModel: viewModel)
 
-		viewModel.didSendEventClouser = { [weak self] event in
+		viewModel.didSendEventClouser = { [weak self, weak viewModel] event in
 			switch event {
+			case .showErrorAlert(let message, let withRetry):
+				self?.presentErrorAlert(message: message, withRetry: withRetry) {
+					viewModel?.didUserDo(request: .retryAction)
+				}
 			case .loadData:
 				self?.router.dismissModule()
 				self?.finishFlow?()
-			case .error:
-				break
 			}
 		}
 		router.setRootModule(module, hideBar: true)
+	}
+
+	func presentErrorAlert(
+		message: String,
+		withRetry: Bool = false,
+		completion: (() -> Void)? = nil
+	) {
+		let module = factory.makeErrorAlertVC(
+			message: message,
+			completion: withRetry ? completion : nil
+		)
+		router.present(module)
 	}
 }

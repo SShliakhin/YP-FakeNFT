@@ -4,8 +4,11 @@ protocol AppFactory {
 	func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, Coordinator)
 }
 
-protocol MainFlowDIContainer {
+protocol StartDIContainer {
 	func makeStartFlowDIContainer() -> StartFlowDIContainer
+}
+
+protocol MainDIContainer {
 	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer
 	func makeCatalogFlowDIContainer() -> CatalogFlowDIContainer
 }
@@ -21,6 +24,12 @@ final class AppDIContainer {
 	// MARK: - Repository
 	lazy var profileRepository: ProfileRepository = {
 		ProfileRepositoryImp()
+	}()
+	lazy var likesRepository: NftsIDsRepository = {
+		LikesIDsRepository()
+	}()
+	lazy var myNftsRepository: NftsIDsRepository = {
+		MyNftsIDsRepository()
 	}()
 
 	// MARK: - UseCases
@@ -59,14 +68,23 @@ extension AppDIContainer: AppFactory {
 	}
 }
 
+// MARK: - StartDIContainer
+
+extension AppDIContainer: StartDIContainer {
+	func makeStartFlowDIContainer() -> StartFlowDIContainer {
+		let dep = StartFlowDIContainerImp.Dependencies(
+			getProfile: useCases.getProfile,
+			likesRepository: likesRepository,
+			myNftsRepository: myNftsRepository
+		)
+
+		return StartFlowDIContainerImp(dependencies: dep)
+	}
+}
+
 // MARK: - MainDIContainer
 
-extension AppDIContainer: MainFlowDIContainer {
-	// MARK: - DIContainers of flows
-	func makeStartFlowDIContainer() -> StartFlowDIContainer {
-		StartFlowDIContainerImp(dependencies: StartFlowDIContainerImp.Dependencies())
-	}
-
+extension AppDIContainer: MainDIContainer {
 	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer {
 		let dep = ProfileFlowDIContainerImp.Dependencies(
 			getProfile: useCases.getProfile,
@@ -78,6 +96,7 @@ extension AppDIContainer: MainFlowDIContainer {
 			profileRepository: profileRepository,
 			searchNftsByName: useCases.searchNftsByName
 		)
+
 		return ProfileFlowDIContainerImp(dependencies: dep)
 	}
 
@@ -92,6 +111,7 @@ extension AppDIContainer: MainFlowDIContainer {
 			getOrder: useCases.getOrder,
 			putOrder: useCases.putOrder
 		)
+
 		return CatalogFlowDIContainerImp(dependencies: dep)
 	}
 }

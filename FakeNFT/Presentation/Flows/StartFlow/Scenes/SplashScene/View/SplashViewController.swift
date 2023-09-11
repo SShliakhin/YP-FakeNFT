@@ -27,7 +27,18 @@ final class SplashViewController: UIViewController {
 		applyStyle()
 		setConstraints()
 
+		bind(to: viewModel)
 		viewModel.viewIsReady()
+	}
+}
+
+// MARK: - Bind
+
+private extension SplashViewController {
+	func bind(to viewModel: SplashViewModel) {
+		viewModel.isLoading.observe(on: self) { isLoading in
+			isLoading ? ProgressHUD.show() : ProgressHUD.dismiss()
+		}
 	}
 }
 

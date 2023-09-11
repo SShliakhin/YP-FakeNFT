@@ -17,6 +17,11 @@ protocol CommonModuleFactory {
 
 protocol StartModuleFactory {
 	func makeSplashViewController(viewModel: SplashViewModel) -> Presentable
+
+	func makeErrorAlertVC(
+		message: String,
+		completion: (() -> Void)?
+	) -> Presentable
 }
 
 protocol OnboardingModuleFactory {
