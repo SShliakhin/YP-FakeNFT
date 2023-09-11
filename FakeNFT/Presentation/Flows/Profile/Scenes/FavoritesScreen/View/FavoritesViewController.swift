@@ -65,13 +65,7 @@ private extension FavoritesViewController {
 
 	func checkAppearance() {
 		emptyLabel.isHidden = !viewModel.isEmpty
-		navBarView.update(with: NavBarInputData(
-			title: viewModel.isEmpty ? "" : viewModel.titleVC,
-			isGoBackButtonHidden: false,
-			isSortButtonHidden: true,
-			onTapGoBackButton: { [weak self] in self?.viewModel.didUserDo(request: .goBack) },
-			onTapSortButton: nil
-		))
+		navBarView.update(with: viewModel.navBarData)
 	}
 }
 

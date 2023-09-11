@@ -2,6 +2,8 @@ final class UseCaseProvider {
 	struct Dependencies {
 		let apiClient: APIClient
 		let profileRepository: ProfileRepository
+		let likesIDsRepository: NftsIDsRepository
+		let myNftsIDsRepository: NftsIDsRepository
 	}
 
 	private let dependencies: Dependencies
@@ -9,6 +11,13 @@ final class UseCaseProvider {
 	init(dependencies: Dependencies) {
 		self.dependencies = dependencies
 	}
+
+	lazy var putLikeByID: PutLikeByIDUseCase = {
+		PutLikeByIDUseCaseImp(
+			apiClient: dependencies.apiClient,
+			likesIDsRepository: dependencies.likesIDsRepository
+		)
+	}()
 
 	lazy var searchNftsByName: SearchNftsByNameUseCase = {
 		SearchNftsByNameUseCaseImp(apiClient: dependencies.apiClient)
@@ -34,20 +43,6 @@ final class UseCaseProvider {
 
 	lazy var getNfts: GetNftsProfileUseCase = {
 		GetNftsProfileUseCaseImp(
-			apiClient: dependencies.apiClient,
-			profileRepository: dependencies.profileRepository
-		)
-	}()
-
-	lazy var getLikes: GetLikesProfileUseCase = {
-		GetLikesProfileUseCaseImp(
-			apiClient: dependencies.apiClient,
-			profileRepository: dependencies.profileRepository
-		)
-	}()
-
-	lazy var putLikes: PutLikesProfileUseCase = {
-		PutLikesProfileUseCaseImp(
 			apiClient: dependencies.apiClient,
 			profileRepository: dependencies.profileRepository
 		)

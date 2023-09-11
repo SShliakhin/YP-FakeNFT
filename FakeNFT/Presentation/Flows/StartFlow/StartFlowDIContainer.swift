@@ -5,8 +5,8 @@ protocol StartFlowDIContainer {
 final class StartFlowDIContainerImp: StartFlowDIContainer {
 	struct Dependencies {
 		let getProfile: GetProfileUseCase
-		let likesRepository: NftsIDsRepository
-		let myNftsRepository: NftsIDsRepository
+		let likesIDsRepository: NftsIDsRepository
+		let myNftsIDsRepository: NftsIDsRepository
 	}
 
 	private let dependencies: Dependencies
@@ -18,8 +18,8 @@ final class StartFlowDIContainerImp: StartFlowDIContainer {
 	func makeSplashViewModel() -> SplashViewModel {
 		let dep = DefaultSplashViewModel.Dependencies(
 			getProfile: dependencies.getProfile,
-			likesRepository: dependencies.likesRepository,
-			myNftsRepository: dependencies.myNftsRepository
+			likesRepository: dependencies.likesIDsRepository,
+			myNftsRepository: dependencies.myNftsIDsRepository
 		)
 
 		return DefaultSplashViewModel(dep: dep)

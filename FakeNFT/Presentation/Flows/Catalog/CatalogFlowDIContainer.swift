@@ -9,10 +9,10 @@ final class CatalogFlowDIContainerImp: CatalogFlowDIContainer {
 		let getSetSortOption: SortCollectionsOption
 		let getAuthor: GetAuthorsUseCase
 		let getNfts: GetNftsProfileUseCase
-		let getLikes: GetLikesProfileUseCase
-		let putLikes: PutLikesProfileUseCase
+		let putLike: PutLikeByIDUseCase
 		let getOrder: GetOrderUseCase
 		let putOrder: PutOrderUseCase
+		let likesIDsRepository: NftsIDsRepository
 	}
 
 	private let dependencies: Dependencies
@@ -35,10 +35,10 @@ final class CatalogFlowDIContainerImp: CatalogFlowDIContainer {
 			collection: collection,
 			getAuthor: dependencies.getAuthor,
 			getNfts: dependencies.getNfts,
-			getLikes: dependencies.getLikes,
-			putLikes: dependencies.putLikes,
+			putLike: dependencies.putLike,
 			getOrder: dependencies.getOrder,
-			putOrder: dependencies.putOrder
+			putOrder: dependencies.putOrder,
+			likesIDsRepository: dependencies.likesIDsRepository
 		)
 
 		return DefaultCollectionViewModel(dep: dep)

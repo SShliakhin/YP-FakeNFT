@@ -50,12 +50,12 @@ private extension CollectionViewController {
 		viewModel.dataSource.observe(on: self) { [weak self] _ in
 			self?.updateSections()
 		}
-		viewModel.likes.observe(on: self) { [weak self] _ in
-			self?.updateItems()
-			self?.checkTimeToReview()
-		}
 		viewModel.order.observe(on: self) { [weak self] _ in
 			self?.updateItems()
+		}
+		viewModel.isTimeToCheckLikes.observe(on: self) { [weak self] _ in
+			self?.updateItems()
+			self?.askForReview()
 		}
 		viewModel.isLoading.observe(on: self) { isLoading in
 			isLoading ? ProgressHUD.show() : ProgressHUD.dismiss()
@@ -71,20 +71,14 @@ private extension CollectionViewController {
 		collectionView.reloadSections([1])
 	}
 
-	func checkTimeToReview() {
+	func askForReview() {
 		if viewModel.isTimeToRequestReview {
 			SKStoreReviewController.requestReview()
 		}
 	}
 
 	func checkAppearance() {
-		navBarView.update(with: NavBarInputData(
-			title: "",
-			isGoBackButtonHidden: false,
-			isSortButtonHidden: true,
-			onTapGoBackButton: { [weak self] in self?.viewModel.didUserDo(request: .goBack) },
-			onTapSortButton: nil
-		))
+		navBarView.update(with: viewModel.navBarData)
 	}
 }
 

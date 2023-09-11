@@ -55,8 +55,6 @@
 		5A0D32162A8E796000EF98F5 /* UseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32152A8E796000EF98F5 /* UseCaseProvider.swift */; };
 		5A0D321A2A8E7B6A00EF98F5 /* GetProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32192A8E7B6A00EF98F5 /* GetProfileUseCase.swift */; };
 		5A0D321D2A8E854800EF98F5 /* PutProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D321C2A8E854800EF98F5 /* PutProfileUseCase.swift */; };
-		5A0D321F2A8E871100EF98F5 /* GetLikesProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D321E2A8E871100EF98F5 /* GetLikesProfileUseCase.swift */; };
-		5A0D32212A8E879000EF98F5 /* PutLikesProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D32202A8E879000EF98F5 /* PutLikesProfileUseCase.swift */; };
 		5A1B6D742AA4D9F000A1BCB4 /* ModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D732AA4D9F000A1BCB4 /* ModuleFactory.swift */; };
 		5A1B6D762AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */; };
 		5A1B6D782AA5644D00A1BCB4 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D772AA5644D00A1BCB4 /* AppDIContainer.swift */; };
@@ -93,6 +91,7 @@
 		5A51DA172A87215600235E7D /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA162A87215600235E7D /* UIImage+.swift */; };
 		5A51DA1B2A872C8400235E7D /* CollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA1A2A872C8400235E7D /* CollectionViewModel.swift */; };
 		5A5636112AAEEDE70097A719 /* NftsIDsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5636102AAEEDE70097A719 /* NftsIDsRepository.swift */; };
+		5A5636132AAF15640097A719 /* PutLikeByIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5636122AAF15640097A719 /* PutLikeByIDUseCase.swift */; };
 		5A5B91F82A9BB91600A4B7E3 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5B91F72A9BB91600A4B7E3 /* ProfileRepository.swift */; };
 		5A5B91FB2A9C170500A4B7E3 /* UIResponder+findFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5B91FA2A9C170500A4B7E3 /* UIResponder+findFirst.swift */; };
 		5A7EA4592A8F38EE004C5402 /* GetNftsProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA4582A8F38EE004C5402 /* GetNftsProfileUseCase.swift */; };
@@ -211,8 +210,6 @@
 		5A0D32152A8E796000EF98F5 /* UseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseProvider.swift; sourceTree = "<group>"; };
 		5A0D32192A8E7B6A00EF98F5 /* GetProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileUseCase.swift; sourceTree = "<group>"; };
 		5A0D321C2A8E854800EF98F5 /* PutProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutProfileUseCase.swift; sourceTree = "<group>"; };
-		5A0D321E2A8E871100EF98F5 /* GetLikesProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesProfileUseCase.swift; sourceTree = "<group>"; };
-		5A0D32202A8E879000EF98F5 /* PutLikesProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutLikesProfileUseCase.swift; sourceTree = "<group>"; };
 		5A1B6D732AA4D9F000A1BCB4 /* ModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
 		5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactoryImp.swift; sourceTree = "<group>"; };
 		5A1B6D772AA5644D00A1BCB4 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
@@ -248,6 +245,7 @@
 		5A51DA162A87215600235E7D /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		5A51DA1A2A872C8400235E7D /* CollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewModel.swift; sourceTree = "<group>"; };
 		5A5636102AAEEDE70097A719 /* NftsIDsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftsIDsRepository.swift; sourceTree = "<group>"; };
+		5A5636122AAF15640097A719 /* PutLikeByIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutLikeByIDUseCase.swift; sourceTree = "<group>"; };
 		5A5B91F72A9BB91600A4B7E3 /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
 		5A5B91F92A9BFBB800A4B7E3 /* CatalogFlowDecomposition_SAS_c4gr4.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CatalogFlowDecomposition_SAS_c4gr4.md; sourceTree = "<group>"; };
 		5A5B91FA2A9C170500A4B7E3 /* UIResponder+findFirst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+findFirst.swift"; sourceTree = "<group>"; };
@@ -577,8 +575,7 @@
 				5AAB67602A8113CD00E95CB2 /* GetCollectionsUseCase.swift */,
 				5A0D32192A8E7B6A00EF98F5 /* GetProfileUseCase.swift */,
 				5A0D321C2A8E854800EF98F5 /* PutProfileUseCase.swift */,
-				5A0D321E2A8E871100EF98F5 /* GetLikesProfileUseCase.swift */,
-				5A0D32202A8E879000EF98F5 /* PutLikesProfileUseCase.swift */,
+				5A5636122AAF15640097A719 /* PutLikeByIDUseCase.swift */,
 				5A7EA4582A8F38EE004C5402 /* GetNftsProfileUseCase.swift */,
 				5A97DED42A964AC2009EEB30 /* GetAuthorsUseCase.swift */,
 				5AAB67812A81D45B00E95CB2 /* GetOrderUseCase.swift */,
@@ -1238,6 +1235,7 @@
 				5A1B6D982AA63AC200A1BCB4 /* OnboardingViewController.swift in Sources */,
 				5A0469822A7ABCC50026D783 /* ILoadWithIndicator.swift in Sources */,
 				5AAB67632A8120C700E95CB2 /* CollectionDTO.swift in Sources */,
+				5A5636132AAF15640097A719 /* PutLikeByIDUseCase.swift in Sources */,
 				5A04698D2A7ABE180026D783 /* StatisticsViewController.swift in Sources */,
 				5AD004B22AAE012400D72651 /* SplashViewModel.swift in Sources */,
 				5AE76DA62A91F2CC00BAC6B2 /* ProfileHeaderView.swift in Sources */,
@@ -1302,7 +1300,6 @@
 				5A0D321D2A8E854800EF98F5 /* PutProfileUseCase.swift in Sources */,
 				5AAB67672A812A6700E95CB2 /* UserDTO.swift in Sources */,
 				5A0823AE2A83C2190047A8AC /* RatingView.swift in Sources */,
-				5A0D32212A8E879000EF98F5 /* PutLikesProfileUseCase.swift in Sources */,
 				5A51DA062A85C3CA00235E7D /* SortCollectionsBy.swift in Sources */,
 				5A1B6DBD2AA6A74000A1BCB4 /* CoordinatorFactoryImp.swift in Sources */,
 				5A0D32112A8DF60F00EF98F5 /* Profile.swift in Sources */,
@@ -1323,7 +1320,6 @@
 				5A51DA1B2A872C8400235E7D /* CollectionViewModel.swift in Sources */,
 				5A1B6D742AA4D9F000A1BCB4 /* ModuleFactory.swift in Sources */,
 				5A0469902A7ABE180026D783 /* ShoppingCartViewController.swift in Sources */,
-				5A0D321F2A8E871100EF98F5 /* GetLikesProfileUseCase.swift in Sources */,
 				5A97DED02A95FC31009EEB30 /* NavBarView.swift in Sources */,
 				5A51DA172A87215600235E7D /* UIImage+.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,

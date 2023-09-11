@@ -11,9 +11,11 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 		let putProfile: PutProfileUseCase
 		let getMyNfts: GetNftsProfileUseCase
 		let getSetSortOption: SortMyNtfsOption
-		let putLikes: PutLikesProfileUseCase
 		let getAuthors: GetAuthorsUseCase
+		let putLike: PutLikeByIDUseCase
 		let profileRepository: ProfileRepository
+		let likesIDsRepository: NftsIDsRepository
+		let myNftsIDsRepository: NftsIDsRepository
 		let searchNftsByName: SearchNftsByNameUseCase
 	}
 
@@ -27,7 +29,9 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 		let dep = DefaultProfileViewModel.Dependencies(
 			getProfile: dependencies.getProfile,
 			putProfile: dependencies.putProfile,
-			profileRepository: dependencies.profileRepository
+			profileRepository: dependencies.profileRepository,
+			likesIDRepository: dependencies.likesIDsRepository,
+			myNftsIDsRepository: dependencies.myNftsIDsRepository
 		)
 
 		return DefaultProfileViewModel(dep: dep)
@@ -37,9 +41,10 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 		let dep = DefaultMyNftsViewModel.Dependencies(
 			getMyNfts: dependencies.getMyNfts,
 			getSetSortOption: dependencies.getSetSortOption,
-			putLikes: dependencies.putLikes,
+			putLike: dependencies.putLike,
 			getAuthors: dependencies.getAuthors,
-			profileRepository: dependencies.profileRepository
+			likesIDsRepository: dependencies.likesIDsRepository,
+			myNftsIDsRepository: dependencies.myNftsIDsRepository
 		)
 
 		return DefaultMyNftsViewModel(dep: dep)
@@ -48,8 +53,8 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 	func makeFavoritesViewModel() -> FavoritesViewModel {
 		let dep = DefaultFavoritesViewModel.Dependencies(
 			getNfts: dependencies.getMyNfts,
-			putLikes: dependencies.putLikes,
-			profileRepository: dependencies.profileRepository
+			putLike: dependencies.putLike,
+			likesIDsRepository: dependencies.likesIDsRepository
 		)
 
 		return DefaultFavoritesViewModel(dep: dep)
@@ -59,9 +64,9 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 		let dep = SearchNftsViewModel.Dependencies(
 			searchNftsByName: dependencies.searchNftsByName,
 			getSetSortOption: dependencies.getSetSortOption,
-			putLikes: dependencies.putLikes,
+			putLike: dependencies.putLike,
 			getAuthors: dependencies.getAuthors,
-			profileRepository: dependencies.profileRepository
+			likesIDsRepository: dependencies.likesIDsRepository
 		)
 
 		return SearchNftsViewModel(dep: dep)

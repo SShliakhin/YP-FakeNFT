@@ -25,10 +25,10 @@ final class AppDIContainer {
 	lazy var profileRepository: ProfileRepository = {
 		ProfileRepositoryImp()
 	}()
-	lazy var likesRepository: NftsIDsRepository = {
+	lazy var likesIDsRepository: NftsIDsRepository = {
 		LikesIDsRepository()
 	}()
-	lazy var myNftsRepository: NftsIDsRepository = {
+	lazy var myNftsIDsRepository: NftsIDsRepository = {
 		MyNftsIDsRepository()
 	}()
 
@@ -36,7 +36,9 @@ final class AppDIContainer {
 	lazy var useCases: UseCaseProvider = {
 		let dep = UseCaseProvider.Dependencies(
 			apiClient: apiClient,
-			profileRepository: profileRepository
+			profileRepository: profileRepository,
+			likesIDsRepository: likesIDsRepository,
+			myNftsIDsRepository: myNftsIDsRepository
 		)
 		return UseCaseProvider(dependencies: dep)
 	}()
@@ -74,8 +76,8 @@ extension AppDIContainer: StartDIContainer {
 	func makeStartFlowDIContainer() -> StartFlowDIContainer {
 		let dep = StartFlowDIContainerImp.Dependencies(
 			getProfile: useCases.getProfile,
-			likesRepository: likesRepository,
-			myNftsRepository: myNftsRepository
+			likesIDsRepository: likesIDsRepository,
+			myNftsIDsRepository: myNftsIDsRepository
 		)
 
 		return StartFlowDIContainerImp(dependencies: dep)
@@ -91,9 +93,11 @@ extension AppDIContainer: MainDIContainer {
 			putProfile: useCases.putProfile,
 			getMyNfts: useCases.getNfts,
 			getSetSortOption: useCases.getSetSortMyNtfsOption,
-			putLikes: useCases.putLikes,
 			getAuthors: useCases.getAuthors,
+			putLike: useCases.putLikeByID,
 			profileRepository: profileRepository,
+			likesIDsRepository: likesIDsRepository,
+			myNftsIDsRepository: myNftsIDsRepository,
 			searchNftsByName: useCases.searchNftsByName
 		)
 
@@ -106,10 +110,10 @@ extension AppDIContainer: MainDIContainer {
 			getSetSortOption: useCases.getSetSortCollectionsOption,
 			getAuthor: useCases.getAuthors,
 			getNfts: useCases.getNfts,
-			getLikes: useCases.getLikes,
-			putLikes: useCases.putLikes,
+			putLike: useCases.putLikeByID,
 			getOrder: useCases.getOrder,
-			putOrder: useCases.putOrder
+			putOrder: useCases.putOrder,
+			likesIDsRepository: likesIDsRepository
 		)
 
 		return CatalogFlowDIContainerImp(dependencies: dep)

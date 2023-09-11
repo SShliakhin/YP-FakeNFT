@@ -1,30 +1,37 @@
 import Foundation
 
-protocol PutLikesProfileUseCase {
-	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, FakeNFTError>) -> Void)
+protocol PutLikeByIDUseCase {
+	func invoke(_ id: String, completion: @escaping (Result<Bool, FakeNFTError>) -> Void)
 }
 
-final class PutLikesProfileUseCaseImp: PutLikesProfileUseCase {
+final class PutLikeByIDUseCaseImp: PutLikeByIDUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
-	private var profileRepository: ProfileRepository
+	private var likesIDsRepository: NftsIDsRepository
 
 	init(
 		apiClient: APIClient,
-		profileRepository: ProfileRepository
+		likesIDsRepository: NftsIDsRepository
 	) {
 		self.network = apiClient
-		self.profileRepository = profileRepository
+		self.likesIDsRepository = likesIDsRepository
 	}
 
-	func invoke(likes: NftIDs, completion: @escaping (Result<NftIDs, FakeNFTError>) -> Void) {
+	func invoke(_ id: String, completion: @escaping (Result<Bool, FakeNFTError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
+
+		var likes = likesIDsRepository.items.value
+		if likes.contains(id) {
+			likes.removeAll { $0 == id }
+		} else {
+			likes.append(id)
+		}
 
 		let resource = FakeNFTAPI.putProfile
 		let request = PostRequest(
 			endpoint: resource.url,
-			body: LikesDTO(likes: likes.nfts),
+			body: LikesDTO(likes: likes),
 			method: .put
 		)
 
@@ -33,10 +40,9 @@ final class PutLikesProfileUseCaseImp: PutLikesProfileUseCase {
 			switch result {
 			case .success(let profileDTO):
 				if let profile = profileDTO.toDomain() {
-					self.profileRepository.profile.value = profile
-					if profile.likes == likes.nfts {
-						self.profileRepository.likes.value = profile.likes
-						completion(.success(.init(nfts: profile.likes)))
+					if profile.likes == likes {
+						self.likesIDsRepository.putItems(nftIDs: profile.likes)
+						completion(.success(true))
 					} else {
 						completion(.failure(.brokenLikes))
 					}

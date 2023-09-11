@@ -57,7 +57,7 @@ private extension MyNftsViewController {
 		viewModel.authors.observe(on: self) { [weak self] _ in
 			self?.updateItems()
 		}
-		viewModel.likes.observe(on: self) { [weak self] _ in
+		viewModel.isTimeToCheckLikes.observe(on: self) { [weak self] _ in
 			self?.updateItems()
 			self?.askForReview()
 		}

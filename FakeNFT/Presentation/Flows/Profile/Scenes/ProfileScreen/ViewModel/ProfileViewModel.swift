@@ -77,6 +77,8 @@ final class DefaultProfileViewModel: ProfileViewModel {
 		let getProfile: GetProfileUseCase
 		let putProfile: PutProfileUseCase
 		let profileRepository: ProfileRepository
+		let likesIDRepository: NftsIDsRepository
+		let myNftsIDsRepository: NftsIDsRepository
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
@@ -105,6 +107,8 @@ final class DefaultProfileViewModel: ProfileViewModel {
 		dependencies = dep
 
 		self.bind(to: dep.profileRepository)
+		self.bind(to: dep.likesIDRepository)
+		self.bind(to: dep.myNftsIDsRepository)
 	}
 }
 
@@ -116,6 +120,11 @@ private extension DefaultProfileViewModel {
 			guard let self = self else { return }
 			self.profile.value = profile
 			self.makeItems()
+		}
+	}
+	func bind(to repository: NftsIDsRepository) {
+		repository.items.observe(on: self) { [weak self] _ in
+			self?.makeItems()
 		}
 	}
 }
@@ -186,8 +195,8 @@ extension DefaultProfileViewModel {
 private extension DefaultProfileViewModel {
 	func makeItems() {
 		items.value = [
-			ProfileSection.myNFTs(profile.value?.nftsCount),
-			ProfileSection.favoritesNFTS(profile.value?.likesCount),
+			ProfileSection.myNFTs(dependencies.myNftsIDsRepository.numberOfItems),
+			ProfileSection.favoritesNFTS(dependencies.likesIDRepository.numberOfItems),
 			ProfileSection.search,
 			ProfileSection.about
 		]
