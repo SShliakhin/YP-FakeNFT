@@ -44,7 +44,7 @@ struct ProfileHeaderViewModel {
 // MARK: - Update
 extension ProfileHeaderView {
 	@discardableResult
-	func update(with profile: Profile) -> Self {
+	func update(with profile: ProfileUpdate) -> Self {
 		avatarImageView.kf.setImage(
 			with: profile.avatar,
 			placeholder: Appearance.imagePlaceholder,

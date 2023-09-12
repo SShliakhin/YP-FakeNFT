@@ -30,7 +30,7 @@ private extension StartCoordinator {
 		let viewModel = container.makeSplashViewModel()
 		let module = factory.makeSplashViewController(viewModel: viewModel)
 
-		viewModel.didSendEventClouser = { [weak self, weak viewModel] event in
+		viewModel.didSendEventClosuer = { [weak self, weak viewModel] event in
 			switch event {
 			case .showErrorAlert(let message, let withRetry):
 				self?.presentErrorAlert(message: message, withRetry: withRetry) {

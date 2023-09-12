@@ -24,6 +24,10 @@ final class MyNftsViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	deinit {
+		print("MyNftsViewController deinit")
+	}
+
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -52,9 +56,6 @@ final class MyNftsViewController: UIViewController {
 private extension MyNftsViewController {
 	func bind(to viewModel: MyNftsViewModel) {
 		viewModel.items.observe(on: self) { [weak self] _ in
-			self?.updateItems()
-		}
-		viewModel.authors.observe(on: self) { [weak self] _ in
 			self?.updateItems()
 		}
 		viewModel.isTimeToCheckLikes.observe(on: self) { [weak self] _ in

@@ -5,7 +5,7 @@ final class SearchNftsViewModel: NSObject, MyNftsViewModel {
 		let searchNftsByName: SearchNftsByNameUseCase
 		let getSetSortOption: SortMyNtfsOption
 		let putLike: PutLikeByIDUseCase
-		let getAuthors: GetAuthorsUseCase
+		let authorsRepository: AuthorsRepository
 		let likesIDsRepository: NftsIDsRepository
 	}
 	private let dependencies: Dependencies
@@ -18,7 +18,6 @@ final class SearchNftsViewModel: NSObject, MyNftsViewModel {
 
 	// MARK: - OUTPUT
 	var items: Observable<[Nft]> = Observable([])
-	var authors: Observable<[Author]> = Observable([])
 
 	var isLoading: Observable<Bool> = Observable(false)
 	var isTimeToCheckLikes: Observable<Bool> = Observable(false)
@@ -69,7 +68,7 @@ extension SearchNftsViewModel {
 	func cellModelAtIndex(_ index: Int) -> ICellViewAnyModel {
 		let nft = items.value[index]
 		let isFavorite = dependencies.likesIDsRepository.hasItemByID(nft.id)
-		let author = authors.value.first { $0.id == nft.authorID }?.name ?? ""
+		let author = dependencies.authorsRepository.getItemByID(nft.authorID)?.name ?? ""
 		let price = Theme.getPriceStringFromDouble(nft.price)
 
 		return MyNftsItemCellModel(
@@ -134,7 +133,6 @@ private extension SearchNftsViewModel {
 			switch result {
 			case .success(let nfts):
 				self.items.value = nfts
-				self.fetchAuthors()
 			case .failure(let error):
 				self.items.value = []
 				self.retryAction = nil
@@ -144,27 +142,6 @@ private extension SearchNftsViewModel {
 			}
 
 			self.sortItems()
-			self.isLoading.value = false
-		}
-	}
-
-	func fetchAuthors() {
-		isLoading.value = true
-
-		let authorsID = Array(Set(items.value.map { $0.authorID }))
-		dependencies.getAuthors.invoke(authorIDs: authorsID) { [weak self] result in
-			guard let self = self else { return }
-
-			switch result {
-			case .success(let authors):
-				self.authors.value = authors
-			case .failure(let error):
-				self.retryAction = nil
-				self.didSendEventClosure?(
-					.showErrorAlert(error.description, withRetry: false)
-				)
-			}
-
 			self.isLoading.value = false
 		}
 	}

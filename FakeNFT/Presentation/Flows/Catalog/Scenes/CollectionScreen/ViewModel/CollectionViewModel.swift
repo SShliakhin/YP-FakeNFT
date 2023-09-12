@@ -29,6 +29,8 @@ enum CollectionEvents {
 enum CollectionRequest {
 	case goBack
 	case retryAction
+	case like
+	case order
 }
 
 protocol CollectionViewModelInput: AnyObject {
@@ -40,10 +42,10 @@ protocol CollectionViewModelInput: AnyObject {
 
 protocol CollectionViewModelOutput: AnyObject {
 	var dataSource: Observable<[CollectionSection]> { get }
-	var order: Observable<[String]> { get }
 
 	var isLoading: Observable<Bool> { get }
 	var isTimeToCheckLikes: Observable<Bool> { get }
+	var isTimeToCheckOrder: Observable<Bool> { get }
 	var isTimeToRequestReview: Bool { get }
 
 	var navBarData: NavBarInputData { get }
@@ -63,19 +65,21 @@ typealias CollectionViewModel = (
 final class DefaultCollectionViewModel: CollectionViewModel {
 	struct Dependencies {
 		let collection: Collection
-		let getAuthor: GetAuthorsUseCase
+
 		let getNfts: GetNftsProfileUseCase
 		let putLike: PutLikeByIDUseCase
-		let getOrder: GetOrderUseCase
-		let putOrder: PutOrderUseCase
+		let putNftToOrder: PutNftToOrderByIDUseCase
+
+		let collectionsRepository: CollectionsRepository
+		let authorsRepository: AuthorsRepository
 		let likesIDsRepository: NftsIDsRepository
+		let orderIDsRepository: NftsIDsRepository
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
 
 	private var author: Author?
 	private var nfts: [Nft] = []
-	private var errors: [String] = []
 	private var likesForReview: Int
 
 	// MARK: - INPUT
@@ -84,9 +88,9 @@ final class DefaultCollectionViewModel: CollectionViewModel {
 	// MARK: - OUTPUT
 	var dataSource: Observable<[CollectionSection]> = Observable([])
 
-	var order: Observable<[String]> = Observable([])
 	var isLoading: Observable<Bool> = Observable(false)
 	var isTimeToCheckLikes: Observable<Bool> = Observable(false)
+	var isTimeToCheckOrder: Observable<Bool> = Observable(false)
 	var isTimeToRequestReview: Bool {
 		let currentLikes = dependencies.likesIDsRepository.numberOfItems
 		if currentLikes >= likesForReview {
@@ -115,16 +119,18 @@ final class DefaultCollectionViewModel: CollectionViewModel {
 		dependencies = dep
 		likesForReview = dep.likesIDsRepository.numberOfItems + Appearance.incrementToRequestReview
 
-		self.bind(to: dep.likesIDsRepository)
+		self.bind(to: dep.likesIDsRepository, request: .like)
+		self.bind(to: dep.orderIDsRepository, request: .order)
 	}
 }
 
 // MARK: - Bind
 
 private extension DefaultCollectionViewModel {
-	func bind(to repository: NftsIDsRepository) {
+	func bind(to repository: NftsIDsRepository, request: CollectionRequest) {
 		repository.items.observe(on: self) { [weak self] _ in
-			self?.isTimeToCheckLikes.value = true
+			if case .like = request { self?.didUserDo(request: .like) }
+			if case .order = request { self?.didUserDo(request: .order) }
 		}
 	}
 }
@@ -156,7 +162,7 @@ extension DefaultCollectionViewModel {
 				rating: nft.rating,
 				title: nft.name,
 				price: nft.price,
-				isInCart: order.value.contains(nft.id),
+				isInCart: dependencies.orderIDsRepository.hasItemByID(nft.id),
 				onTapFavorite: { [weak self] in self?.likeItemWithID(nft.id) },
 				onTapInCart: { [weak self] in self?.addToCartItemWithID(nft.id) }
 			)
@@ -168,28 +174,21 @@ extension DefaultCollectionViewModel {
 
 extension DefaultCollectionViewModel {
 	func viewIsReady() {
+		let authorID = dependencies.collection.authorID
+		author = dependencies.authorsRepository.getItemByID(authorID)
+
 		isLoading.value = true
 
-		let authorID = dependencies.collection.authorID
-		errors = []
+		dependencies.getNfts.invoke(authorID: authorID) { [weak self] result in
+			guard let self = self else { return }
 
-		let group = DispatchGroup()
-
-		fetchAuthor(group: group, authorID: authorID)
-		fetchNfts(group: group, authorID: authorID)
-		fetchOrder(group: group)
-
-		group.notify(queue: .main) {
-			self.makeDataSource()
-			if self.dataSource.value.isEmpty {
-				self.dataSource.value = []
-			}
-			if !self.errors.isEmpty {
+			switch result {
+			case .success(let nfts):
+				self.nfts = nfts
+				self.makeDataSource()
+			case .failure(let error):
 				self.retryAction = { self.viewIsReady() }
-				let message = self.errors.joined(separator: "\n")
-				self.didSendEventClosure?(
-					.showErrorAlert(message, withRetry: true)
-				)
+				self.didSendEventClosure?(.showErrorAlert(error.description, withRetry: true))
 			}
 
 			self.isLoading.value = false
@@ -202,51 +201,10 @@ extension DefaultCollectionViewModel {
 			didSendEventClosure?(.close)
 		case .retryAction:
 			retryAction?()
-		}
-	}
-}
-
-private extension DefaultCollectionViewModel {
-	func likeItemWithID(_ nftID: String) {
-		isLoading.value = true
-
-		dependencies.putLike.invoke(nftID) { [weak self] result in
-			guard let self = self else { return }
-			if case .failure(let error) = result {
-				self.retryAction = nil
-				self.didSendEventClosure?(
-					.showErrorAlert(error.description, withRetry: false)
-				)
-			}
-
-			self.isLoading.value = false
-		}
-	}
-
-	func addToCartItemWithID(_ nftID: String) {
-		isLoading.value = true
-
-		var order = order.value
-		if order.contains(nftID) {
-			order.removeAll { $0 == nftID }
-		} else {
-			order.append(nftID)
-		}
-
-		dependencies.putOrder.invoke(order: .init(nfts: order)) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let order):
-				self.order.value = order.nfts
-			case .failure(let error):
-				self.retryAction = nil
-				self.order.value = self.order.value
-				self.didSendEventClosure?(
-					.showErrorAlert(error.description, withRetry: false)
-				)
-			}
-
-			self.isLoading.value = false
+		case .like:
+			isTimeToCheckLikes.value = true
+		case .order:
+			isTimeToCheckOrder.value = true
 		}
 	}
 }
@@ -266,45 +224,35 @@ private extension DefaultCollectionViewModel {
 		]
 	}
 
-	func fetchAuthor(group: DispatchGroup, authorID: String) {
-		group.enter()
-		dependencies.getAuthor.invoke(authorID: authorID) { [weak self] result in
-			switch result {
-			case .success(let author):
-				self?.author = author
-			case .failure(let error):
-				self?.errors.append(error.description)
-				print(error.localizedDescription)
+	func likeItemWithID(_ nftID: String) {
+		isLoading.value = true
+
+		dependencies.putLike.invoke(nftID) { [weak self] result in
+			guard let self = self else { return }
+			if case .failure(let error) = result {
+				self.retryAction = nil
+				self.didSendEventClosure?(
+					.showErrorAlert(error.description, withRetry: false)
+				)
 			}
-			group.leave()
+
+			self.isLoading.value = false
 		}
 	}
 
-	func fetchNfts(group: DispatchGroup, authorID: String) {
-		group.enter()
-		dependencies.getNfts.invoke(authorID: authorID) { [weak self] result in
-			switch result {
-			case .success(let nfts):
-				self?.nfts = nfts
-			case .failure(let error):
-				self?.errors.append(error.description)
-				print(error.localizedDescription)
-			}
-			group.leave()
-		}
-	}
+	func addToCartItemWithID(_ nftID: String) {
+		isLoading.value = true
 
-	func fetchOrder(group: DispatchGroup) {
-		group.enter()
-		dependencies.getOrder.invoke { [weak self] result in
-			switch result {
-			case .success(let order):
-				self?.order.value = order.nfts
-			case .failure(let error):
-				self?.errors.append(error.description)
-				print(error.localizedDescription)
+		dependencies.putNftToOrder.invoke(nftID) { [weak self] result in
+			guard let self = self else { return }
+			if case .failure(let error) = result {
+				self.retryAction = nil
+				self.didSendEventClosure?(
+					.showErrorAlert(error.description, withRetry: false)
+				)
 			}
-			group.leave()
+
+			self.isLoading.value = false
 		}
 	}
 }

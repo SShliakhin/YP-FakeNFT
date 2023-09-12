@@ -1,12 +1,5 @@
 import Foundation
 
-struct ProfileUpdate {
-	let name: String
-	let avatar: URL?
-	let description: String
-	let website: URL?
-}
-
 enum ProfileSection: CustomStringConvertible {
 	case myNFTs(Int?)
 	case favoritesNFTS(Int?)
@@ -54,7 +47,7 @@ protocol ProfileViewModelInput: AnyObject {
 }
 
 protocol ProfileViewModelOutput: AnyObject {
-	var profile: Observable<Profile?> { get }
+	var profile: Observable<ProfileUpdate> { get }
 	var items: Observable<[ProfileSection]> { get }
 	var isLoading: Observable<Bool> { get }
 	var numberOfItems: Int { get }
@@ -77,7 +70,7 @@ final class DefaultProfileViewModel: ProfileViewModel {
 		let getProfile: GetProfileUseCase
 		let putProfile: PutProfileUseCase
 		let profileRepository: ProfileRepository
-		let likesIDRepository: NftsIDsRepository
+		let likesIDsRepository: NftsIDsRepository
 		let myNftsIDsRepository: NftsIDsRepository
 	}
 	private let dependencies: Dependencies
@@ -88,7 +81,9 @@ final class DefaultProfileViewModel: ProfileViewModel {
 	var didSendEventClosure: ((ProfileEvents) -> Void)?
 
 	// MARK: - OUTPUT
-	var profile: Observable<Profile?> = Observable(nil)
+	var profile: Observable<ProfileUpdate> = Observable(
+		ProfileUpdate(name: "", avatar: nil, description: "", website: nil)
+	)
 	var items: Observable<[ProfileSection]> = Observable([])
 	var isLoading: Observable<Bool> = Observable(false)
 
@@ -107,7 +102,7 @@ final class DefaultProfileViewModel: ProfileViewModel {
 		dependencies = dep
 
 		self.bind(to: dep.profileRepository)
-		self.bind(to: dep.likesIDRepository)
+		self.bind(to: dep.likesIDsRepository)
 		self.bind(to: dep.myNftsIDsRepository)
 	}
 }
@@ -117,9 +112,7 @@ final class DefaultProfileViewModel: ProfileViewModel {
 private extension DefaultProfileViewModel {
 	func bind(to repository: ProfileRepository) {
 		repository.profile.observe(on: self) { [weak self] profile in
-			guard let self = self else { return }
-			self.profile.value = profile
-			self.makeItems()
+			self?.profile.value = profile
 		}
 	}
 	func bind(to repository: NftsIDsRepository) {
@@ -145,22 +138,7 @@ extension DefaultProfileViewModel {
 
 extension DefaultProfileViewModel {
 	func viewIsReady() {
-		isLoading.value = true
-
-		dependencies.getProfile.invoke { [weak self] result in
-			guard let self = self else { return }
-
-			switch result {
-			case .success(let profile):
-				self.profile.value = profile
-				self.makeItems()
-			case .failure(let error):
-				self.retryAction = { self.viewIsReady() }
-				self.didSendEventClosure?(.showErrorAlert(error.description, true))
-			}
-
-			self.isLoading.value = false
-		}
+		profile.value = dependencies.profileRepository.profile.value
 	}
 
 	func didUserDo(request: ProfileRequest) {
@@ -177,15 +155,14 @@ extension DefaultProfileViewModel {
 			case .search:
 				didSendEventClosure?(.selectSearchNfts)
 			case .about:
-				didSendEventClosure?(.selectAbout(profile.value?.website))
+				didSendEventClosure?(.selectAbout(profile.value.website))
 			}
 		case .editProfile:
 			didSendEventClosure?(.selectEditProfile)
 		case .goBack:
 			didSendEventClosure?(.close)
 		case .updateProfile(let updateProfile):
-			guard let profile = profile.value else { return }
-			self.updateProfile(profile, with: updateProfile)
+			self.updateProfile(profile.value, with: updateProfile)
 		case .updateAvatar:
 			self.updateAvatar()
 		}
@@ -196,33 +173,23 @@ private extension DefaultProfileViewModel {
 	func makeItems() {
 		items.value = [
 			ProfileSection.myNFTs(dependencies.myNftsIDsRepository.numberOfItems),
-			ProfileSection.favoritesNFTS(dependencies.likesIDRepository.numberOfItems),
+			ProfileSection.favoritesNFTS(dependencies.likesIDsRepository.numberOfItems),
 			ProfileSection.search,
 			ProfileSection.about
 		]
 	}
 
-	func updateProfile(_ oldProfile: Profile, with newProfile: ProfileUpdate) {
-		guard
-			oldProfile.name != newProfile.name ||
-				oldProfile.avatar != newProfile.avatar ||
-				oldProfile.description != newProfile.description ||
-				oldProfile.website != newProfile.website
-		else { return }
+	func updateProfile(_ oldProfile: ProfileUpdate, with newProfile: ProfileUpdate) {
+		guard oldProfile != newProfile else { return }
 
 		self.isLoading.value = true
-		let profile = Profile(
-			name: newProfile.name,
-			avatar: newProfile.avatar,
-			description: newProfile.description,
-			website: newProfile.website,
-			nfts: oldProfile.nfts,
-			likes: oldProfile.likes
-		)
-		dependencies.putProfile.invoke(profile: profile) { result in
+
+		dependencies.putProfile.invoke(body: newProfile) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
-			case .success(let profile):
-				self.profile.value = profile
+			case .success:
+				self.dependencies.profileRepository.profile.value = newProfile
 			case .failure(let error):
 				self.retryAction = { self.didUserDo(request: .updateProfile(newProfile)) }
 				self.didSendEventClosure?(.showErrorAlert(error.description, true))
@@ -233,8 +200,7 @@ private extension DefaultProfileViewModel {
 	}
 
 	func updateAvatar() {
-		guard let profile = profile.value else { return }
-		let currentAvatar = profile.avatar
+		let currentAvatar = profile.value.avatar
 		let newAvatar = mockAvatarUrls.filter { $0 != currentAvatar }
 			.compactMap { $0 }
 			.randomElement()
@@ -242,12 +208,12 @@ private extension DefaultProfileViewModel {
 			mockAvatarUrls.append(currentAvatar)
 		}
 		let newProfile = ProfileUpdate(
-			name: profile.name,
+			name: profile.value.name,
 			avatar: newAvatar,
-			description: profile.description,
-			website: profile.website
+			description: profile.value.description,
+			website: profile.value.website
 		)
-		updateProfile(profile, with: newProfile)
+		updateProfile(profile.value, with: newProfile)
 	}
 }
 

@@ -22,23 +22,21 @@ final class AppDIContainer {
 	}()
 
 	// MARK: - Repository
-	lazy var profileRepository: ProfileRepository = {
-		ProfileRepositoryImp()
-	}()
-	lazy var likesIDsRepository: NftsIDsRepository = {
-		LikesIDsRepository()
-	}()
-	lazy var myNftsIDsRepository: NftsIDsRepository = {
-		MyNftsIDsRepository()
-	}()
+	let profileRepository: ProfileRepository = ProfileRepositoryImp()
+	let nftRepository: NftRepository = NftRepositoryImp()
+	let likesIDsRepository: NftsIDsRepository = LikesIDsRepository()
+	let myNftsIDsRepository: NftsIDsRepository = MyNftsIDsRepository()
+	let orderIDsRepository: NftsIDsRepository = OrderIDsRepository()
+	let collectionsRepository: CollectionsRepository = CollectionsRepositoryImp()
+	let authorsRepository: AuthorsRepository = AuthorsRepositoryImp()
 
 	// MARK: - UseCases
 	lazy var useCases: UseCaseProvider = {
 		let dep = UseCaseProvider.Dependencies(
 			apiClient: apiClient,
-			profileRepository: profileRepository,
+			nftRepository: nftRepository,
 			likesIDsRepository: likesIDsRepository,
-			myNftsIDsRepository: myNftsIDsRepository
+			orderIDsRepository: orderIDsRepository
 		)
 		return UseCaseProvider(dependencies: dep)
 	}()
@@ -76,8 +74,16 @@ extension AppDIContainer: StartDIContainer {
 	func makeStartFlowDIContainer() -> StartFlowDIContainer {
 		let dep = StartFlowDIContainerImp.Dependencies(
 			getProfile: useCases.getProfile,
+			getOrder: useCases.getOrder,
+			getCollections: useCases.getCollections,
+			getAuthors: useCases.getAuthors,
+
+			profileRepository: profileRepository,
 			likesIDsRepository: likesIDsRepository,
-			myNftsIDsRepository: myNftsIDsRepository
+			myNftsIDsRepository: myNftsIDsRepository,
+			orderIDsRepository: orderIDsRepository,
+			collectionsRepository: collectionsRepository,
+			authorsRepository: authorsRepository
 		)
 
 		return StartFlowDIContainerImp(dependencies: dep)
@@ -93,12 +99,13 @@ extension AppDIContainer: MainDIContainer {
 			putProfile: useCases.putProfile,
 			getMyNfts: useCases.getNfts,
 			getSetSortOption: useCases.getSetSortMyNtfsOption,
-			getAuthors: useCases.getAuthors,
 			putLike: useCases.putLikeByID,
+			searchNftsByName: useCases.searchNftsByName,
+
 			profileRepository: profileRepository,
+			authorsRepository: authorsRepository,
 			likesIDsRepository: likesIDsRepository,
-			myNftsIDsRepository: myNftsIDsRepository,
-			searchNftsByName: useCases.searchNftsByName
+			myNftsIDsRepository: myNftsIDsRepository
 		)
 
 		return ProfileFlowDIContainerImp(dependencies: dep)
@@ -106,14 +113,15 @@ extension AppDIContainer: MainDIContainer {
 
 	func makeCatalogFlowDIContainer() -> CatalogFlowDIContainer {
 		let dep = CatalogFlowDIContainerImp.Dependencies(
-			getCollections: useCases.getCollections,
 			getSetSortOption: useCases.getSetSortCollectionsOption,
-			getAuthor: useCases.getAuthors,
 			getNfts: useCases.getNfts,
 			putLike: useCases.putLikeByID,
-			getOrder: useCases.getOrder,
-			putOrder: useCases.putOrder,
-			likesIDsRepository: likesIDsRepository
+			putNftToOrder: useCases.putNftToOrderByID,
+
+			collectionsRepository: collectionsRepository,
+			authorsRepository: authorsRepository,
+			likesIDsRepository: likesIDsRepository,
+			orderIDsRepository: orderIDsRepository
 		)
 
 		return CatalogFlowDIContainerImp(dependencies: dep)

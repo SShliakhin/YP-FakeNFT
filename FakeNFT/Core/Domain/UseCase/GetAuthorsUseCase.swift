@@ -8,22 +8,12 @@ protocol GetAuthorsUseCase {
 final class GetAuthorsUseCaseImp: GetAuthorsUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
-	private var profileRepository: ProfileRepository
 
-	init(
-		apiClient: APIClient,
-		profileRepository: ProfileRepository
-	) {
+	init( apiClient: APIClient) {
 		self.network = apiClient
-		self.profileRepository = profileRepository
 	}
 
 	func invoke(authorID: String, completion: @escaping (Result<Author, FakeNFTError>) -> Void) {
-		if let author = profileRepository.getAuthorByID(authorID) {
-			completion(.success(author))
-			return
-		}
-
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -35,7 +25,6 @@ final class GetAuthorsUseCaseImp: GetAuthorsUseCase {
 			switch result {
 			case .success(let userDTO):
 				if let author = userDTO.toDomainAuthor() {
-					self.profileRepository.addAuthor(author)
 					completion(.success(author))
 				} else {
 					completion(.failure(.noAuthorByID(authorID)))
@@ -49,11 +38,6 @@ final class GetAuthorsUseCaseImp: GetAuthorsUseCase {
 	}
 
 	func invoke(authorIDs: [String], completion: @escaping (Result<[Author], FakeNFTError>) -> Void) {
-		if let authors = profileRepository.getAuthorsByIDs(authorIDs) {
-			completion(.success(authors))
-			return
-		}
-
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -69,7 +53,6 @@ final class GetAuthorsUseCaseImp: GetAuthorsUseCase {
 					completion(.failure(.noAuthors))
 				} else {
 					let authors = users.filter { authorIDs.contains($0.id) }
-					self.profileRepository.addAuthors(authors)
 					completion(.success(authors))
 				}
 				self.task = nil

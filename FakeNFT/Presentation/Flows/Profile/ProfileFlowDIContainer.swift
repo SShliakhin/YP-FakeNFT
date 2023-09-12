@@ -11,12 +11,13 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 		let putProfile: PutProfileUseCase
 		let getMyNfts: GetNftsProfileUseCase
 		let getSetSortOption: SortMyNtfsOption
-		let getAuthors: GetAuthorsUseCase
 		let putLike: PutLikeByIDUseCase
+		let searchNftsByName: SearchNftsByNameUseCase
+
 		let profileRepository: ProfileRepository
+		let authorsRepository: AuthorsRepository
 		let likesIDsRepository: NftsIDsRepository
 		let myNftsIDsRepository: NftsIDsRepository
-		let searchNftsByName: SearchNftsByNameUseCase
 	}
 
 	private let dependencies: Dependencies
@@ -30,7 +31,7 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 			getProfile: dependencies.getProfile,
 			putProfile: dependencies.putProfile,
 			profileRepository: dependencies.profileRepository,
-			likesIDRepository: dependencies.likesIDsRepository,
+			likesIDsRepository: dependencies.likesIDsRepository,
 			myNftsIDsRepository: dependencies.myNftsIDsRepository
 		)
 
@@ -42,7 +43,7 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 			getMyNfts: dependencies.getMyNfts,
 			getSetSortOption: dependencies.getSetSortOption,
 			putLike: dependencies.putLike,
-			getAuthors: dependencies.getAuthors,
+			authorsRepository: dependencies.authorsRepository,
 			likesIDsRepository: dependencies.likesIDsRepository,
 			myNftsIDsRepository: dependencies.myNftsIDsRepository
 		)
@@ -65,7 +66,7 @@ final class ProfileFlowDIContainerImp: ProfileFlowDIContainer {
 			searchNftsByName: dependencies.searchNftsByName,
 			getSetSortOption: dependencies.getSetSortOption,
 			putLike: dependencies.putLike,
-			getAuthors: dependencies.getAuthors,
+			authorsRepository: dependencies.authorsRepository,
 			likesIDsRepository: dependencies.likesIDsRepository
 		)
 

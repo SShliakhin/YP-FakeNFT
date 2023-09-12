@@ -5,14 +5,15 @@ protocol CatalogFlowDIContainer {
 
 final class CatalogFlowDIContainerImp: CatalogFlowDIContainer {
 	struct Dependencies {
-		let getCollections: GetCollectionsUseCase
 		let getSetSortOption: SortCollectionsOption
-		let getAuthor: GetAuthorsUseCase
 		let getNfts: GetNftsProfileUseCase
 		let putLike: PutLikeByIDUseCase
-		let getOrder: GetOrderUseCase
-		let putOrder: PutOrderUseCase
+		let putNftToOrder: PutNftToOrderByIDUseCase
+
+		let collectionsRepository: CollectionsRepository
+		let authorsRepository: AuthorsRepository
 		let likesIDsRepository: NftsIDsRepository
+		let orderIDsRepository: NftsIDsRepository
 	}
 
 	private let dependencies: Dependencies
@@ -23,8 +24,8 @@ final class CatalogFlowDIContainerImp: CatalogFlowDIContainer {
 
 	func makeCatalogViewModel() -> CatalogViewModel {
 		let dep = DefaultCatalogViewModel.Dependencies(
-			getCollections: dependencies.getCollections,
-			getSetSortOption: dependencies.getSetSortOption
+			getSetSortOption: dependencies.getSetSortOption,
+			collectionsRepository: dependencies.collectionsRepository
 		)
 
 		return DefaultCatalogViewModel(dep: dep)
@@ -33,12 +34,14 @@ final class CatalogFlowDIContainerImp: CatalogFlowDIContainer {
 	func makeCollectionViewModel(collection: Collection) -> CollectionViewModel {
 		let dep = DefaultCollectionViewModel.Dependencies(
 			collection: collection,
-			getAuthor: dependencies.getAuthor,
 			getNfts: dependencies.getNfts,
 			putLike: dependencies.putLike,
-			getOrder: dependencies.getOrder,
-			putOrder: dependencies.putOrder,
-			likesIDsRepository: dependencies.likesIDsRepository
+			putNftToOrder: dependencies.putNftToOrder,
+
+			collectionsRepository: dependencies.collectionsRepository,
+			authorsRepository: dependencies.authorsRepository,
+			likesIDsRepository: dependencies.likesIDsRepository,
+			orderIDsRepository: dependencies.orderIDsRepository
 		)
 
 		return DefaultCollectionViewModel(dep: dep)

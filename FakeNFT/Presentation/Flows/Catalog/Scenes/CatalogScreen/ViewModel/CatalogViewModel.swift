@@ -35,8 +35,8 @@ typealias CatalogViewModel = (
 
 final class DefaultCatalogViewModel: CatalogViewModel {
 	struct Dependencies {
-		let getCollections: GetCollectionsUseCase
 		let getSetSortOption: SortCollectionsOption
+		let collectionsRepository: CollectionsRepository
 	}
 	private let dependencies: Dependencies
 	private var retryAction: (() -> Void)?
@@ -75,27 +75,7 @@ extension DefaultCatalogViewModel {
 
 extension DefaultCatalogViewModel {
 	func viewIsReady() {
-		isLoading.value = true
-
-		let sortBy = dependencies.getSetSortOption.sortBy
-		dependencies.getCollections.invoke(sortBy: sortBy) { [weak self] result in
-			guard let self = self else { return }
-
-			switch result {
-			case .success(let collections):
-				self.items.value = collections
-				if sortBy != .name {
-					// сортировка на сервере возможна только по имени
-					self.sortCollections()
-				}
-			case .failure(let error):
-				self.items.value = []
-				self.retryAction = { self.viewIsReady() }
-				self.didSendEventClosure?(.showErrorAlert(error.description))
-			}
-
-			self.isLoading.value = false
-		}
+		items.value = dependencies.collectionsRepository.items
 	}
 
 	func didUserDo(request: CatalogRequest) {
