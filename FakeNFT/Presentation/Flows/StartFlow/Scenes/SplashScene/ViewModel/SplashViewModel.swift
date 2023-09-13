@@ -135,7 +135,7 @@ private extension DefaultSplashViewModel {
 
 			switch result {
 			case .success(let profile):
-				self.dependencies.profileRepository.profile.value = ProfileUpdate(
+				self.dependencies.profileRepository.profile.value = ProfileBody(
 					name: profile.name,
 					avatar: profile.avatar,
 					description: profile.description,

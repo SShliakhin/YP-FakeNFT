@@ -1,13 +1,13 @@
 import Foundation
 
-protocol GetNftsProfileUseCase {
+protocol GetNftsUseCase {
 	func invoke(nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
 	func invoke(sortBy: SortMyNftsBy, nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
 	func invoke(authorID: String, completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
 	func invoke(nftID: String, completion: @escaping (Result<Nft, FakeNFTError>) -> Void)
 }
 
-final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
+final class GetNftsUseCaseImp: GetNftsUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
 	private var nftRepository: NftRepository

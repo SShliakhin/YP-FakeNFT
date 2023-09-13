@@ -1,7 +1,7 @@
 import Foundation
 
 protocol PutProfileUseCase {
-	func invoke(body: ProfileUpdate, completion: @escaping (Result<Bool, FakeNFTError>) -> Void)
+	func invoke(body: ProfileBody, completion: @escaping (Result<Bool, FakeNFTError>) -> Void)
 }
 
 final class PutProfileUseCaseImp: PutProfileUseCase {
@@ -12,7 +12,7 @@ final class PutProfileUseCaseImp: PutProfileUseCase {
 		self.network = apiClient
 	}
 
-	func invoke(body: ProfileUpdate, completion: @escaping (Result<Bool, FakeNFTError>) -> Void) {
+	func invoke(body: ProfileBody, completion: @escaping (Result<Bool, FakeNFTError>) -> Void) {
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 

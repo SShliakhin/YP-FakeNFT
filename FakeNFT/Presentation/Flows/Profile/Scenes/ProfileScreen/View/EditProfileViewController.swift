@@ -96,7 +96,7 @@ private extension EditProfileViewController {
 		}
 	}
 
-	func updateItems(with profile: ProfileUpdate) {
+	func updateItems(with profile: ProfileBody) {
 		avatarView.update(with: AvatarViewModel(
 			url: profile.avatar,
 			isUploadButtonHidden: true,
@@ -147,7 +147,7 @@ extension EditProfileViewController: UITextViewDelegate {
 private extension EditProfileViewController {
 	func updateProfile() {
 		viewModel.didUserDo(request: .updateProfile(
-			ProfileUpdate(
+			ProfileBody(
 				name: profileName,
 				avatar: profileAvatarUrl,
 				description: profileDescription,
@@ -328,7 +328,7 @@ struct EditProfileViewControllerProvider: PreviewProvider {
 	static var previews: some View {
 		let viewModel = AppDIContainer().makeProfileViewModel()
 		let editProfileViewController = EditProfileViewController(viewModel: viewModel)
-		editProfileViewController.updateItems(with: ProfileUpdate(
+		editProfileViewController.updateItems(with: ProfileBody(
 			name: "Joaquin Phoenix", // Студентус Практикумус
 			avatar: URL(string: "https://code.s3.yandex.net/landings-v2-ios-developer/space.PNG"),
 			// swiftlint:disable:next line_length

@@ -35,7 +35,7 @@ enum ProfileRequest {
 	case retryAction
 	case editProfile
 	case goBack
-	case updateProfile(ProfileUpdate)
+	case updateProfile(ProfileBody)
 	case updateAvatar
 }
 
@@ -47,7 +47,7 @@ protocol ProfileViewModelInput: AnyObject {
 }
 
 protocol ProfileViewModelOutput: AnyObject {
-	var profile: Observable<ProfileUpdate> { get }
+	var profile: Observable<ProfileBody> { get }
 	var items: Observable<[ProfileSection]> { get }
 	var isLoading: Observable<Bool> { get }
 	var numberOfItems: Int { get }
@@ -81,8 +81,8 @@ final class DefaultProfileViewModel: ProfileViewModel {
 	var didSendEventClosure: ((ProfileEvents) -> Void)?
 
 	// MARK: - OUTPUT
-	var profile: Observable<ProfileUpdate> = Observable(
-		ProfileUpdate(name: "", avatar: nil, description: "", website: nil)
+	var profile: Observable<ProfileBody> = Observable(
+		ProfileBody(name: "", avatar: nil, description: "", website: nil)
 	)
 	var items: Observable<[ProfileSection]> = Observable([])
 	var isLoading: Observable<Bool> = Observable(false)
@@ -179,7 +179,7 @@ private extension DefaultProfileViewModel {
 		]
 	}
 
-	func updateProfile(_ oldProfile: ProfileUpdate, with newProfile: ProfileUpdate) {
+	func updateProfile(_ oldProfile: ProfileBody, with newProfile: ProfileBody) {
 		guard oldProfile != newProfile else { return }
 
 		self.isLoading.value = true
@@ -207,7 +207,7 @@ private extension DefaultProfileViewModel {
 		if !mockAvatarUrls.contains(currentAvatar) {
 			mockAvatarUrls.append(currentAvatar)
 		}
-		let newProfile = ProfileUpdate(
+		let newProfile = ProfileBody(
 			name: profile.value.name,
 			avatar: newAvatar,
 			description: profile.value.description,

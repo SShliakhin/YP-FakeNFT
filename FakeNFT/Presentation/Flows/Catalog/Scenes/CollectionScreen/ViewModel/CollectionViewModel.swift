@@ -66,7 +66,7 @@ final class DefaultCollectionViewModel: CollectionViewModel {
 	struct Dependencies {
 		let collection: Collection
 
-		let getNfts: GetNftsProfileUseCase
+		let getNfts: GetNftsUseCase
 		let putLike: PutLikeByIDUseCase
 		let putNftToOrder: PutNftToOrderByIDUseCase
 

@@ -35,8 +35,8 @@ final class UseCaseProvider {
 		PutProfileUseCaseImp(apiClient: dependencies.apiClient)
 	}()
 
-	lazy var getNfts: GetNftsProfileUseCase = {
-		GetNftsProfileUseCaseImp(
+	lazy var getNfts: GetNftsUseCase = {
+		GetNftsUseCaseImp(
 			apiClient: dependencies.apiClient,
 			nftRepository: dependencies.nftRepository
 		)

@@ -46,7 +46,7 @@ typealias MyNftsViewModel = (
 
 final class DefaultMyNftsViewModel: MyNftsViewModel {
 	struct Dependencies {
-		let getMyNfts: GetNftsProfileUseCase
+		let getMyNfts: GetNftsUseCase
 		let getSetSortOption: SortMyNtfsOption
 		let putLike: PutLikeByIDUseCase
 		let authorsRepository: AuthorsRepository
