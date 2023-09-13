@@ -47,6 +47,7 @@ final class MyNftsViewController: UIViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+		searchController.isActive = false
 		showNavTabBars(animated)
 	}
 }
