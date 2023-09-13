@@ -326,7 +326,7 @@ private extension EditProfileViewController {
 import SwiftUI
 struct EditProfileViewControllerProvider: PreviewProvider {
 	static var previews: some View {
-		let viewModel = AppDIContainer().makeProfileFlowDIContainer().makeProfileViewModel()
+		let viewModel = AppDIContainer().makeProfileViewModel()
 		let editProfileViewController = EditProfileViewController(viewModel: viewModel)
 		editProfileViewController.updateItems(with: ProfileUpdate(
 			name: "Joaquin Phoenix", // Студентус Практикумус

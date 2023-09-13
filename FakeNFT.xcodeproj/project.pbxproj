@@ -58,8 +58,6 @@
 		5A1B6D742AA4D9F000A1BCB4 /* ModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D732AA4D9F000A1BCB4 /* ModuleFactory.swift */; };
 		5A1B6D762AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */; };
 		5A1B6D782AA5644D00A1BCB4 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D772AA5644D00A1BCB4 /* AppDIContainer.swift */; };
-		5A1B6D7A2AA582A300A1BCB4 /* CatalogFlowDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D792AA582A300A1BCB4 /* CatalogFlowDIContainer.swift */; };
-		5A1B6D7D2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D7C2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift */; };
 		5A1B6D822AA5B15900A1BCB4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D7F2AA5B15900A1BCB4 /* Router.swift */; };
 		5A1B6D832AA5B15900A1BCB4 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D802AA5B15900A1BCB4 /* Coordinator.swift */; };
 		5A1B6D842AA5B15900A1BCB4 /* RouterImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B6D812AA5B15900A1BCB4 /* RouterImp.swift */; };
@@ -134,7 +132,6 @@
 		5ACBD8B62AACD03200E043F8 /* ImageViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBD8B52AACD03200E043F8 /* ImageViewFactory.swift */; };
 		5AD004AC2AADFE9000D72651 /* StartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD004AB2AADFE9000D72651 /* StartCoordinator.swift */; };
 		5AD004B22AAE012400D72651 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD004B12AAE012400D72651 /* SplashViewModel.swift */; };
-		5AD004B42AAE01B600D72651 /* StartFlowDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD004B32AAE01B600D72651 /* StartFlowDIContainer.swift */; };
 		5AE76DA62A91F2CC00BAC6B2 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */; };
 		5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */; };
 		5AEAAF422AAF83F800DA3D88 /* CollectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEAAF412AAF83F800DA3D88 /* CollectionsRepository.swift */; };
@@ -216,8 +213,6 @@
 		5A1B6D732AA4D9F000A1BCB4 /* ModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
 		5A1B6D752AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactoryImp.swift; sourceTree = "<group>"; };
 		5A1B6D772AA5644D00A1BCB4 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
-		5A1B6D792AA582A300A1BCB4 /* CatalogFlowDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogFlowDIContainer.swift; sourceTree = "<group>"; };
-		5A1B6D7C2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowDIContainer.swift; sourceTree = "<group>"; };
 		5A1B6D7F2AA5B15900A1BCB4 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		5A1B6D802AA5B15900A1BCB4 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		5A1B6D812AA5B15900A1BCB4 /* RouterImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterImp.swift; sourceTree = "<group>"; };
@@ -295,7 +290,6 @@
 		5ACBD8B52AACD03200E043F8 /* ImageViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewFactory.swift; sourceTree = "<group>"; };
 		5AD004AB2AADFE9000D72651 /* StartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCoordinator.swift; sourceTree = "<group>"; };
 		5AD004B12AAE012400D72651 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
-		5AD004B32AAE01B600D72651 /* StartFlowDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartFlowDIContainer.swift; sourceTree = "<group>"; };
 		5AE76DA52A91F2CC00BAC6B2 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		5AEAAF412AAF83F800DA3D88 /* CollectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsRepository.swift; sourceTree = "<group>"; };
@@ -499,7 +493,6 @@
 			isa = PBXGroup;
 			children = (
 				5A1B6DC82AA6E1F900A1BCB4 /* CatalogCoordinator.swift */,
-				5A1B6D792AA582A300A1BCB4 /* CatalogFlowDIContainer.swift */,
 				5A51DA072A85CA2600235E7D /* Scenes */,
 			);
 			path = Catalog;
@@ -509,7 +502,6 @@
 			isa = PBXGroup;
 			children = (
 				5A1B6DC62AA6D61200A1BCB4 /* ProfileCoordinator.swift */,
-				5A1B6D7C2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift */,
 				5A0D32182A8E7A8100EF98F5 /* Scenes */,
 			);
 			path = Profile;
@@ -982,7 +974,6 @@
 			isa = PBXGroup;
 			children = (
 				5AD004AB2AADFE9000D72651 /* StartCoordinator.swift */,
-				5AD004B32AAE01B600D72651 /* StartFlowDIContainer.swift */,
 				5AD004AD2AAE00C900D72651 /* Scenes */,
 			);
 			path = StartFlow;
@@ -1262,7 +1253,6 @@
 				5ACBD8B42AAC5CD100E043F8 /* ButtonFactory.swift in Sources */,
 				5A1B6DBB2AA6837300A1BCB4 /* AuthCoordinator.swift in Sources */,
 				5A7EA4592A8F38EE004C5402 /* GetNftsProfileUseCase.swift in Sources */,
-				5A1B6D7D2AA5867F00A1BCB4 /* ProfileFlowDIContainer.swift in Sources */,
 				5A5B91FB2A9C170500A4B7E3 /* UIResponder+findFirst.swift in Sources */,
 				5A1B6D952AA63A7500A1BCB4 /* OnboardingViewModel.swift in Sources */,
 				5A7EA4612A8FEA99004C5402 /* ProfileItemCell.swift in Sources */,
@@ -1296,7 +1286,6 @@
 				5A0469972A7ACCAB0026D783 /* AppAppearance.swift in Sources */,
 				5ACBD8AB2AAAA74000E043F8 /* SearchNftsByNameUseCase.swift in Sources */,
 				5AAB67762A81435700E95CB2 /* Author.swift in Sources */,
-				5A1B6D7A2AA582A300A1BCB4 /* CatalogFlowDIContainer.swift in Sources */,
 				5A1B6D762AA4DD6F00A1BCB4 /* ModuleFactoryImp.swift in Sources */,
 				5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */,
 				5A7EA45F2A8FE83B004C5402 /* ProfileViewModel.swift in Sources */,
@@ -1314,7 +1303,6 @@
 				5A0D32112A8DF60F00EF98F5 /* Profile.swift in Sources */,
 				5A5B91F82A9BB91600A4B7E3 /* ProfileRepository.swift in Sources */,
 				5AEAAF442AAFB4B000DA3D88 /* AuthorsRepository.swift in Sources */,
-				5AD004B42AAE01B600D72651 /* StartFlowDIContainer.swift in Sources */,
 				5A0469792A7ABCC50026D783 /* Array+Extensions.swift in Sources */,
 				5ABCAE792A94977C0023C5C2 /* AvatarView.swift in Sources */,
 				5A5636112AAEEDE70097A719 /* NftsIDsRepository.swift in Sources */,

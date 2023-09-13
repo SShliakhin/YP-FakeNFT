@@ -24,15 +24,5 @@ private extension StatisticsCoordinator {
 	}
 }
 
-protocol StatisticsFlowDIContainer {
-	func makeStatisticsViewModel() -> StatisticsViewModel
-}
-
-final class StatisticsFlowDIContainerImp: StatisticsFlowDIContainer {
-	func makeStatisticsViewModel() -> StatisticsViewModel {
-		DefaultStatisticsViewModel()
-	}
-}
-
 protocol StatisticsViewModel {}
 final class DefaultStatisticsViewModel: StatisticsViewModel {}

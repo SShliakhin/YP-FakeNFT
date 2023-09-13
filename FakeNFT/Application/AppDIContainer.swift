@@ -4,14 +4,31 @@ protocol AppFactory {
 	func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, Coordinator)
 }
 
-protocol StartDIContainer {
-	func makeStartFlowDIContainer() -> StartFlowDIContainer
+protocol StartFlowDIContainer {
+	func makeSplashViewModel() -> SplashViewModel
 }
 
-protocol MainDIContainer {
-	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer
-	func makeCatalogFlowDIContainer() -> CatalogFlowDIContainer
+protocol ProfileFlowDIContainer {
+	func makeProfileViewModel() -> ProfileViewModel
+	func makeMyNftsViewModel() -> MyNftsViewModel
+	func makeFavoritesViewModel() -> FavoritesViewModel
+	func makeSearchNftsViewModel() -> MyNftsViewModel
 }
+
+protocol CatalogFlowDIContainer {
+	func makeCatalogViewModel() -> CatalogViewModel
+	func makeCollectionViewModel(collection: Collection) -> CollectionViewModel
+}
+
+protocol SpoppingCartFlowDIContainer {}
+protocol StatisticsFlowDIContainer {}
+
+typealias MainDIContainer = (
+	ProfileFlowDIContainer &
+	CatalogFlowDIContainer &
+	SpoppingCartFlowDIContainer &
+	StatisticsFlowDIContainer
+)
 
 final class AppDIContainer {
 	private let session = URLSession(configuration: .default)
@@ -68,11 +85,11 @@ extension AppDIContainer: AppFactory {
 	}
 }
 
-// MARK: - StartDIContainer
+// MARK: - StartFlowDIContainer
 
-extension AppDIContainer: StartDIContainer {
-	func makeStartFlowDIContainer() -> StartFlowDIContainer {
-		let dep = StartFlowDIContainerImp.Dependencies(
+extension AppDIContainer: StartFlowDIContainer {
+	func makeSplashViewModel() -> SplashViewModel {
+		let dep = DefaultSplashViewModel.Dependencies(
 			getProfile: useCases.getProfile,
 			getOrder: useCases.getOrder,
 			getCollections: useCases.getCollections,
@@ -86,34 +103,76 @@ extension AppDIContainer: StartDIContainer {
 			authorsRepository: authorsRepository
 		)
 
-		return StartFlowDIContainerImp(dependencies: dep)
+		return DefaultSplashViewModel(dep: dep)
 	}
 }
 
-// MARK: - MainDIContainer
+// MARK: - ProfileFlowDIContainer
 
-extension AppDIContainer: MainDIContainer {
-	func makeProfileFlowDIContainer() -> ProfileFlowDIContainer {
-		let dep = ProfileFlowDIContainerImp.Dependencies(
+extension AppDIContainer: ProfileFlowDIContainer {
+	func makeProfileViewModel() -> ProfileViewModel {
+		let dep = DefaultProfileViewModel.Dependencies(
 			getProfile: useCases.getProfile,
 			putProfile: useCases.putProfile,
+			profileRepository: profileRepository,
+			likesIDsRepository: likesIDsRepository,
+			myNftsIDsRepository: myNftsIDsRepository
+		)
+
+		return DefaultProfileViewModel(dep: dep)
+	}
+
+	func makeMyNftsViewModel() -> MyNftsViewModel {
+		let dep = DefaultMyNftsViewModel.Dependencies(
 			getMyNfts: useCases.getNfts,
 			getSetSortOption: useCases.getSetSortMyNtfsOption,
 			putLike: useCases.putLikeByID,
-			searchNftsByName: useCases.searchNftsByName,
-
-			profileRepository: profileRepository,
 			authorsRepository: authorsRepository,
 			likesIDsRepository: likesIDsRepository,
 			myNftsIDsRepository: myNftsIDsRepository
 		)
 
-		return ProfileFlowDIContainerImp(dependencies: dep)
+		return DefaultMyNftsViewModel(dep: dep)
 	}
 
-	func makeCatalogFlowDIContainer() -> CatalogFlowDIContainer {
-		let dep = CatalogFlowDIContainerImp.Dependencies(
+	func makeFavoritesViewModel() -> FavoritesViewModel {
+		let dep = DefaultFavoritesViewModel.Dependencies(
+			getNfts: useCases.getNfts,
+			putLike: useCases.putLikeByID,
+			likesIDsRepository: likesIDsRepository
+		)
+
+		return DefaultFavoritesViewModel(dep: dep)
+	}
+
+	func makeSearchNftsViewModel() -> MyNftsViewModel {
+		let dep = SearchNftsViewModel.Dependencies(
+			searchNftsByName: useCases.searchNftsByName,
+			getSetSortOption: useCases.getSetSortMyNtfsOption,
+			putLike: useCases.putLikeByID,
+			authorsRepository: authorsRepository,
+			likesIDsRepository: likesIDsRepository
+		)
+
+		return SearchNftsViewModel(dep: dep)
+	}
+}
+
+// MARK: - CatalogFlowDIContainer
+
+extension AppDIContainer: CatalogFlowDIContainer {
+	func makeCatalogViewModel() -> CatalogViewModel {
+		let dep = DefaultCatalogViewModel.Dependencies(
 			getSetSortOption: useCases.getSetSortCollectionsOption,
+			collectionsRepository: collectionsRepository
+		)
+
+		return DefaultCatalogViewModel(dep: dep)
+	}
+
+	func makeCollectionViewModel(collection: Collection) -> CollectionViewModel {
+		let dep = DefaultCollectionViewModel.Dependencies(
+			collection: collection,
 			getNfts: useCases.getNfts,
 			putLike: useCases.putLikeByID,
 			putNftToOrder: useCases.putNftToOrderByID,
@@ -124,6 +183,14 @@ extension AppDIContainer: MainDIContainer {
 			orderIDsRepository: orderIDsRepository
 		)
 
-		return CatalogFlowDIContainerImp(dependencies: dep)
+		return DefaultCollectionViewModel(dep: dep)
 	}
 }
+
+// MARK: - SpoppingCartFlowDIContainer
+
+extension AppDIContainer: SpoppingCartFlowDIContainer {}
+
+// MARK: - StatisticsFlowDIContainer
+
+extension AppDIContainer: StatisticsFlowDIContainer {}
