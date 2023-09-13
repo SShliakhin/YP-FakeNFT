@@ -64,7 +64,7 @@ private extension AppCoordinator {
 	func runStarFlow() {
 		let coordinator = coordinatorFactory.makeStartCoordinator(
 			router: router,
-			container: container.makeStartFlowDIContainer()
+			container: container // container.makeStartFlowDIContainer()
 		)
 		coordinator.finishFlow = { [weak self, weak coordinator] in
 			guard let self = self else { return }

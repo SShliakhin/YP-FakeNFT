@@ -67,6 +67,10 @@ final class EditProfileViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	deinit {
+		print("EditProfileViewController deinit")
+	}
+
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -76,13 +80,7 @@ final class EditProfileViewController: UIViewController {
 		setConstraints()
 
 		bind(to: viewModel)
-		if let profile = viewModel.profile.value {
-			// viewModel должна быть готова с прошлого экрана
-			// странно повторно будет делать запрос profile
-			updateItems(with: profile)
-		} else {
-			viewModel.viewIsReady()
-		}
+		updateItems(with: viewModel.profile.value)
 	}
 }
 
@@ -91,7 +89,6 @@ final class EditProfileViewController: UIViewController {
 private extension EditProfileViewController {
 	func bind(to viewModel: ProfileViewModel) {
 		viewModel.profile.observe(on: self) { [weak self] profile in
-			guard let profile = profile else { return }
 			self?.updateItems(with: profile)
 		}
 		viewModel.isLoading.observe(on: self) { isLoading in
@@ -99,7 +96,7 @@ private extension EditProfileViewController {
 		}
 	}
 
-	func updateItems(with profile: Profile) {
+	func updateItems(with profile: ProfileBody) {
 		avatarView.update(with: AvatarViewModel(
 			url: profile.avatar,
 			isUploadButtonHidden: true,
@@ -150,7 +147,7 @@ extension EditProfileViewController: UITextViewDelegate {
 private extension EditProfileViewController {
 	func updateProfile() {
 		viewModel.didUserDo(request: .updateProfile(
-			ProfileUpdate(
+			ProfileBody(
 				name: profileName,
 				avatar: profileAvatarUrl,
 				description: profileDescription,
@@ -329,16 +326,14 @@ private extension EditProfileViewController {
 import SwiftUI
 struct EditProfileViewControllerProvider: PreviewProvider {
 	static var previews: some View {
-		let viewModel = AppDIContainer().makeProfileFlowDIContainer().makeProfileViewModel()
+		let viewModel = AppDIContainer().makeProfileViewModel()
 		let editProfileViewController = EditProfileViewController(viewModel: viewModel)
-		editProfileViewController.updateItems(with: Profile(
+		editProfileViewController.updateItems(with: ProfileBody(
 			name: "Joaquin Phoenix", // Студентус Практикумус
 			avatar: URL(string: "https://code.s3.yandex.net/landings-v2-ios-developer/space.PNG"),
 			// swiftlint:disable:next line_length
 			description: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям.",
-			website: URL(string: "Joaquin_Phoenix.com"),
-			nfts: [],
-			likes: []
+			website: URL(string: "Joaquin_Phoenix.com")
 		))
 
 		return editProfileViewController.preview()

@@ -1,6 +1,7 @@
 import Foundation
 
 protocol GetCollectionsUseCase {
+	func invoke(completion: @escaping (Result<[Collection], FakeNFTError>) -> Void)
 	func invoke(sortBy: SortCollectionsBy, completion: @escaping (Result<[Collection], FakeNFTError>) -> Void)
 }
 
@@ -10,6 +11,10 @@ final class GetCollectionsUseCaseImp: GetCollectionsUseCase {
 
 	init(apiClient: APIClient) {
 		self.network = apiClient
+	}
+
+	func invoke(completion: @escaping (Result<[Collection], FakeNFTError>) -> Void) {
+		invoke(sortBy: .name, completion: completion)
 	}
 
 	func invoke(sortBy: SortCollectionsBy, completion: @escaping (Result<[Collection], FakeNFTError>) -> Void) {

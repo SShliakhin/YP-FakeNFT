@@ -20,6 +20,10 @@ final class CollectionViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	deinit {
+		print("CollectionViewController deinit")
+	}
+
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -50,7 +54,7 @@ private extension CollectionViewController {
 		viewModel.dataSource.observe(on: self) { [weak self] _ in
 			self?.updateSections()
 		}
-		viewModel.order.observe(on: self) { [weak self] _ in
+		viewModel.isTimeToCheckOrder.observe(on: self) { [weak self] _ in
 			self?.updateItems()
 		}
 		viewModel.isTimeToCheckLikes.observe(on: self) { [weak self] _ in

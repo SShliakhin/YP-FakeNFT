@@ -1,23 +1,23 @@
 import Foundation
 
-protocol GetNftsProfileUseCase {
+protocol GetNftsUseCase {
 	func invoke(nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
 	func invoke(sortBy: SortMyNftsBy, nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
 	func invoke(authorID: String, completion: @escaping (Result<[Nft], FakeNFTError>) -> Void)
 	func invoke(nftID: String, completion: @escaping (Result<Nft, FakeNFTError>) -> Void)
 }
 
-final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
+final class GetNftsUseCaseImp: GetNftsUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
-	private var profileRepository: ProfileRepository
+	private var nftRepository: NftRepository
 
 	init(
 		apiClient: APIClient,
-		profileRepository: ProfileRepository
+		nftRepository: NftRepository
 	) {
 		self.network = apiClient
-		self.profileRepository = profileRepository
+		self.nftRepository = nftRepository
 	}
 
 	func invoke(nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void) {
@@ -25,7 +25,7 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 	}
 
 	func invoke(sortBy: SortMyNftsBy, nftIDs: [String], completion: @escaping (Result<[Nft], FakeNFTError>) -> Void) {
-		if let nfts = profileRepository.getNftByIDs(nftIDs) {
+		if let nfts = nftRepository.getNftByIDs(nftIDs) {
 			completion(.success(nfts))
 			return
 		}
@@ -45,7 +45,7 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 					completion(.failure(.noNfts))
 				} else {
 					let newNfts = nfts.filter { nftIDs.contains($0.id) }
-					self.profileRepository.addNfts(newNfts)
+					self.nftRepository.addNfts(newNfts)
 					completion(.success(newNfts))
 				}
 				self.task = nil
@@ -57,6 +57,11 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 	}
 
 	func invoke(authorID: String, completion: @escaping (Result<[Nft], FakeNFTError>) -> Void) {
+		if let nfts = nftRepository.getNftByAuthorID(authorID) {
+			completion(.success(nfts))
+			return
+		}
+
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -71,6 +76,7 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 				if nfts.isEmpty {
 					completion(.failure(.noNftsByAuthorID(authorID)))
 				} else {
+					self.nftRepository.addNftsWithAuthorID(nfts, authorID: authorID)
 					completion(.success(nfts))
 				}
 				self.task = nil
@@ -82,7 +88,7 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 	}
 
 	func invoke(nftID: String, completion: @escaping (Result<Nft, FakeNFTError>) -> Void) {
-		if let nft = profileRepository.getNftByID(nftID) {
+		if let nft = nftRepository.getNftByID(nftID) {
 			completion(.success(nft))
 			return
 		}
@@ -98,7 +104,7 @@ final class GetNftsProfileUseCaseImp: GetNftsProfileUseCase {
 			switch result {
 			case .success(let nftDTO):
 				if let nft = nftDTO.toDomain() {
-					self.profileRepository.addNft(nft)
+					self.nftRepository.addNft(nft)
 					completion(.success(nft))
 				} else {
 					completion(.failure(.noNftByID(nftID)))

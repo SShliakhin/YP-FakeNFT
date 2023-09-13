@@ -26,3 +26,7 @@ final class LikesIDsRepository: NftsIDsRepository {
 final class MyNftsIDsRepository: NftsIDsRepository {
 	var items: Observable<[String]> = Observable([])
 }
+
+final class OrderIDsRepository: NftsIDsRepository {
+	var items: Observable<[String]> = Observable([])
+}

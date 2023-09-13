@@ -1,9 +1,9 @@
 final class UseCaseProvider {
 	struct Dependencies {
 		let apiClient: APIClient
-		let profileRepository: ProfileRepository
+		let nftRepository: NftRepository
 		let likesIDsRepository: NftsIDsRepository
-		let myNftsIDsRepository: NftsIDsRepository
+		let orderIDsRepository: NftsIDsRepository
 	}
 
 	private let dependencies: Dependencies
@@ -28,39 +28,33 @@ final class UseCaseProvider {
 	}()
 
 	lazy var getProfile: GetProfileUseCase = {
-		GetProfileUseCaseImp(
-			apiClient: dependencies.apiClient,
-			profileRepository: dependencies.profileRepository
-		)
+		GetProfileUseCaseImp(apiClient: dependencies.apiClient)
 	}()
 
 	lazy var putProfile: PutProfileUseCase = {
-		PutProfileUseCaseImp(
-			apiClient: dependencies.apiClient,
-			profileRepository: dependencies.profileRepository
-		)
+		PutProfileUseCaseImp(apiClient: dependencies.apiClient)
 	}()
 
-	lazy var getNfts: GetNftsProfileUseCase = {
-		GetNftsProfileUseCaseImp(
+	lazy var getNfts: GetNftsUseCase = {
+		GetNftsUseCaseImp(
 			apiClient: dependencies.apiClient,
-			profileRepository: dependencies.profileRepository
+			nftRepository: dependencies.nftRepository
 		)
 	}()
 
 	lazy var getAuthors: GetAuthorsUseCase = {
-		GetAuthorsUseCaseImp(
-			apiClient: dependencies.apiClient,
-			profileRepository: dependencies.profileRepository
-		)
+		GetAuthorsUseCaseImp(apiClient: dependencies.apiClient)
 	}()
 
 	lazy var getOrder: GetOrderUseCase = {
 		GetOrderUseCaseImp(apiClient: dependencies.apiClient)
 	}()
 
-	lazy var putOrder: PutOrderUseCase = {
-		PutOrderUseCaseImp(apiClient: dependencies.apiClient)
+	lazy var putNftToOrderByID: PutNftToOrderByIDUseCase = {
+		PutNftToOrderByIDUseCaseImp(
+			apiClient: dependencies.apiClient,
+			orderIDsRepository: dependencies.orderIDsRepository
+		)
 	}()
 
 	lazy var getSetSortMyNtfsOption: SortMyNtfsOption = {

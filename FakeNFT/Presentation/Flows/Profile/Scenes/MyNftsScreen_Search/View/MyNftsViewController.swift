@@ -24,6 +24,10 @@ final class MyNftsViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	deinit {
+		print("MyNftsViewController deinit")
+	}
+
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -43,6 +47,7 @@ final class MyNftsViewController: UIViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+		searchController.isActive = false
 		showNavTabBars(animated)
 	}
 }
@@ -52,9 +57,6 @@ final class MyNftsViewController: UIViewController {
 private extension MyNftsViewController {
 	func bind(to viewModel: MyNftsViewModel) {
 		viewModel.items.observe(on: self) { [weak self] _ in
-			self?.updateItems()
-		}
-		viewModel.authors.observe(on: self) { [weak self] _ in
 			self?.updateItems()
 		}
 		viewModel.isTimeToCheckLikes.observe(on: self) { [weak self] _ in
@@ -103,7 +105,13 @@ extension MyNftsViewController: UITableViewDataSource {
 extension MyNftsViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
 		guard let query = searchController.searchBar.text else { return }
-		viewModel.didUserDo(request: .filterItemsBy(query))
+		// debounce
+		NSObject.cancelPreviousPerformRequests(withTarget: self)
+		perform(#selector(searchWith(_:)), with: query, afterDelay: 1.0)
+	}
+
+	@objc private func searchWith(_ term: String) {
+		viewModel.didUserDo(request: .filterItemsBy(term))
 	}
 }
 

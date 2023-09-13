@@ -37,7 +37,7 @@ typealias FavoritesViewModel = (
 
 final class DefaultFavoritesViewModel: FavoritesViewModel {
 	struct Dependencies {
-		let getNfts: GetNftsProfileUseCase
+		let getNfts: GetNftsUseCase
 		let putLike: PutLikeByIDUseCase
 		let likesIDsRepository: NftsIDsRepository
 	}

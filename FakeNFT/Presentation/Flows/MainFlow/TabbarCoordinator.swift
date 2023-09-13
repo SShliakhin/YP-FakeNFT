@@ -39,13 +39,13 @@ private extension TabbarCoordinator {
 			coordinator = coordinatorFactory
 				.makeProfileCoordinator(
 					navController: controller,
-					container: container.makeProfileFlowDIContainer()
+					container: container // container.makeProfileFlowDIContainer()
 				)
 		case .catalog:
 			coordinator = coordinatorFactory
 				.makeCatalogCoordinator(
 					navController: controller,
-					container: container.makeCatalogFlowDIContainer()
+					container: container // container.makeCatalogFlowDIContainer()
 				)
 		case .shoppingCart:
 			coordinator = coordinatorFactory

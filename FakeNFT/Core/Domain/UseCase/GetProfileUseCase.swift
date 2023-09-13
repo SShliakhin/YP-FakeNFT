@@ -7,22 +7,12 @@ protocol GetProfileUseCase {
 final class GetProfileUseCaseImp: GetProfileUseCase {
 	private let network: APIClient
 	private var task: NetworkTask?
-	private var profileRepository: ProfileRepository
 
-	init(
-		apiClient: APIClient,
-		profileRepository: ProfileRepository
-	) {
+	init(apiClient: APIClient) {
 		self.network = apiClient
-		self.profileRepository = profileRepository
 	}
 
 	func invoke(completion: @escaping (Result<Profile, FakeNFTError>) -> Void) {
-		if let profile = profileRepository.profile.value {
-			completion(.success(profile))
-			return
-		}
-
 		assert(Thread.isMainThread)
 		guard task == nil else { return }
 
@@ -34,7 +24,6 @@ final class GetProfileUseCaseImp: GetProfileUseCase {
 			switch result {
 			case .success(let profileDTO):
 				if let profile = profileDTO.toDomain() {
-					self.profileRepository.profile.value = profile
 					completion(.success(profile))
 				} else {
 					completion(.failure(.noProfile))

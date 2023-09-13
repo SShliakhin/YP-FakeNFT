@@ -27,6 +27,10 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	deinit {
+		print("WebViewController deinit")
+	}
+
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()

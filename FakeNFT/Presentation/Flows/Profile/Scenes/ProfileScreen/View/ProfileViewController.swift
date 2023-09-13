@@ -20,6 +20,10 @@ final class ProfileViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	deinit {
+		print("ProfileViewController deinit")
+	}
+
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -41,7 +45,6 @@ private extension ProfileViewController {
 			self?.updateItems()
 		}
 		viewModel.profile.observe(on: self) { [weak self] profile in
-			guard let profile = profile else { return }
 			self?.profileHeaderView.update(with: profile)
 		}
 		viewModel.isLoading.observe(on: self) { isLoading in
