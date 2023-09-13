@@ -104,7 +104,13 @@ extension MyNftsViewController: UITableViewDataSource {
 extension MyNftsViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
 		guard let query = searchController.searchBar.text else { return }
-		viewModel.didUserDo(request: .filterItemsBy(query))
+		// debounce
+		NSObject.cancelPreviousPerformRequests(withTarget: self)
+		perform(#selector(searchWith(_:)), with: query, afterDelay: 1.0)
+	}
+
+	@objc private func searchWith(_ term: String) {
+		viewModel.didUserDo(request: .filterItemsBy(term))
 	}
 }
 

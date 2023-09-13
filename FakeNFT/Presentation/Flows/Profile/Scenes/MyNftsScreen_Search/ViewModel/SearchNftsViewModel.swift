@@ -1,6 +1,6 @@
 import Foundation
 
-final class SearchNftsViewModel: NSObject, MyNftsViewModel {
+final class SearchNftsViewModel: MyNftsViewModel {
 	struct Dependencies {
 		let searchNftsByName: SearchNftsByNameUseCase
 		let getSetSortOption: SortMyNtfsOption
@@ -47,7 +47,6 @@ final class SearchNftsViewModel: NSObject, MyNftsViewModel {
 		dependencies = dep
 		likesForReview = dep.likesIDsRepository.numberOfItems + Appearance.incrementToRequestReview
 
-		super.init()
 		bind(to: dep.likesIDsRepository)
 	}
 }
@@ -100,9 +99,7 @@ extension SearchNftsViewModel {
 		case .goBack:
 			didSendEventClosure?(.close)
 		case .filterItemsBy(let term):
-			// debounce
-			NSObject.cancelPreviousPerformRequests(withTarget: self)
-			perform(#selector(searchNftsWith(_:)), with: term, afterDelay: TimeInterval(1.0))
+			searchNftsWith(term)
 		case .list:
 			break
 		case .like:
@@ -112,7 +109,7 @@ extension SearchNftsViewModel {
 }
 
 private extension SearchNftsViewModel {
-	@objc func searchNftsWith(_ text: String) {
+	func searchNftsWith(_ text: String) {
 		let text = text
 			.trimmingCharacters(in: .whitespaces)
 			.lowercased()
