@@ -94,6 +94,7 @@ extension AppDIContainer: StartFlowDIContainer {
 			getOrder: useCases.getOrder,
 			getCollections: useCases.getCollections,
 			getAuthors: useCases.getAuthors,
+			getNfts: useCases.getNfts,
 
 			profileRepository: profileRepository,
 			likesIDsRepository: likesIDsRepository,

@@ -30,6 +30,7 @@ final class DefaultSplashViewModel: SplashViewModel {
 		let getOrder: GetOrderUseCase
 		let getCollections: GetCollectionsUseCase
 		let getAuthors: GetAuthorsUseCase
+		let getNfts: GetNftsUseCase
 		let profileRepository: ProfileRepository
 		let likesIDsRepository: NftsIDsRepository
 		let myNftsIDsRepository: NftsIDsRepository
@@ -72,13 +73,44 @@ extension DefaultSplashViewModel {
 private extension DefaultSplashViewModel {
 	func fetchData() {
 		isLoading.value = true
-
 		errors = []
+		beginFetching()
+	}
+
+	func beginFetching() {
 		let group = DispatchGroup()
 
 		fetchCollections(group: group)
 		fetchProfile(group: group)
 		fetchOrder(group: group)
+
+		group.notify(queue: .main) {
+			if !self.errors.isEmpty {
+				self.retryAction = { self.viewIsReady() }
+				let message = self.errors.joined(separator: "\n")
+				self.didSendEventClosuer?(.showErrorAlert(message, withRetry: true))
+
+				self.isLoading.value = false
+			} else {
+				self.finishFetching()
+			}
+		}
+	}
+
+	func finishFetching() {
+		let group = DispatchGroup()
+
+		let idsAuthors = dependencies.collectionsRepository.items.map { $0.authorID }
+		fetchAuthors(group: group, ids: idsAuthors)
+
+		let idsNfts = Array(
+			Set(
+				dependencies.myNftsIDsRepository.items.value +
+				dependencies.likesIDsRepository.items.value +
+				dependencies.orderIDsRepository.items.value
+			)
+		)
+		fetchNfts(group: group, ids: idsNfts)
 
 		group.notify(queue: .main) {
 			if !self.errors.isEmpty {
@@ -93,26 +125,6 @@ private extension DefaultSplashViewModel {
 		}
 	}
 
-	func fetchCollections(group: DispatchGroup) {
-		group.enter()
-		dependencies.getCollections.invoke { [weak self] result in
-			guard let self = self else { return }
-
-			switch result {
-			case .success(let collections):
-				self.dependencies.collectionsRepository.putItems(items: collections)
-
-				// TODO: - есть лучший вариант?
-				let ids = collections.map { $0.authorID }
-				self.fetchAuthors(group: group, ids: ids)
-
-			case .failure(let error):
-				self.errors.append(error.description)
-			}
-			group.leave()
-		}
-	}
-
 	func fetchAuthors(group: DispatchGroup, ids: [String]) {
 		group.enter()
 		dependencies.getAuthors.invoke(authorIDs: ids) { [weak self] result in
@@ -121,6 +133,33 @@ private extension DefaultSplashViewModel {
 			switch result {
 			case .success(let authors):
 				self.dependencies.authorsRepository.putItems(items: authors)
+			case .failure(let error):
+				self.errors.append(error.description)
+			}
+			group.leave()
+		}
+	}
+
+	func fetchNfts(group: DispatchGroup, ids: [String]) {
+		group.enter()
+		dependencies.getNfts.invoke(nftIDs: ids) { [weak self] result in
+			guard let self = self else { return }
+
+			if case .failure(let error) = result {
+				self.errors.append(error.description)
+			}
+			group.leave()
+		}
+	}
+
+	func fetchCollections(group: DispatchGroup) {
+		group.enter()
+		dependencies.getCollections.invoke { [weak self] result in
+			guard let self = self else { return }
+
+			switch result {
+			case .success(let collections):
+				self.dependencies.collectionsRepository.putItems(items: collections)
 			case .failure(let error):
 				self.errors.append(error.description)
 			}
