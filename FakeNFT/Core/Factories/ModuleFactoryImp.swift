@@ -1,6 +1,7 @@
 import UIKit
 
-final class ModuleFactoryImp: CommonModuleFactory,
+final class ModuleFactoryImp: ErrorModuleFactory,
+	CommonModuleFactory,
 	StartModuleFactory,
 	OnboardingModuleFactory,
 	AuthModuleFactory,
@@ -88,7 +89,9 @@ final class ModuleFactoryImp: CommonModuleFactory,
 		ProfileViewController(viewModel: viewModel)
 	}
 	func makeEditProfileViewController(viewModel: ProfileViewModel) -> Presentable {
-		EditProfileViewController(viewModel: viewModel)
+		let module = EditProfileViewController(viewModel: viewModel)
+		module.modalTransitionStyle = .flipHorizontal
+		return module
 	}
 	func makeMyNftsViewController(viewModel: MyNftsViewModel) -> Presentable {
 		MyNftsViewController(viewModel: viewModel)
