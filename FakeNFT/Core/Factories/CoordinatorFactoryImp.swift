@@ -18,12 +18,8 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
 	}
 
 	func makeTabbarCoordinator(container: MainDIContainer) -> (configurator: Coordinator, toPresent: Presentable?) {
-		let pages: [TabbarPage] = TabbarPage.allTabbarPages
-		let firstPage = TabbarPage.firstTabbarPage
-
-		let controller = TabBarController(pages: pages, firstPage: firstPage)
+		let controller = TabBarController()
 		let coordinator = TabbarCoordinator(
-			pages: pages,
 			tabbarController: controller,
 			coordinatorFactory: CoordinatorFactoryImp(),
 			container: container

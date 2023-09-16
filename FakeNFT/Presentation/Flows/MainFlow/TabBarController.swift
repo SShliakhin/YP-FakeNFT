@@ -1,22 +1,7 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-	private let pages: [TabbarPage]
-	private let firstPage: TabbarPage
-
-	// MARK: - Inits
-
-	init(pages: [TabbarPage], firstPage: TabbarPage) {
-		self.pages = pages
-		self.firstPage = firstPage
-		super.init(nibName: nil, bundle: nil)
-	}
-
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-
-	// MARK: - LifeCycle
+	// MARK: - LifeCycle -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -26,10 +11,10 @@ final class TabBarController: UITabBarController {
 
 private extension TabBarController {
 	func setup() {
-		let controllers: [UINavigationController] = pages.map { getTabController($0) }
+		let controllers: [UINavigationController] = TabbarPage.allTabbarPages.map { getTabController($0) }
 
 		setViewControllers(controllers, animated: true)
-		selectedIndex = firstPage.pageOrderNumber
+		selectedIndex = TabbarPage.firstTabbarPage.pageOrderNumber
 	}
 
 	func getTabController(_ page: TabbarPage) -> UINavigationController {
