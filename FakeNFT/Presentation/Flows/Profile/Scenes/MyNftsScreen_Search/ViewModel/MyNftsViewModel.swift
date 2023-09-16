@@ -179,10 +179,7 @@ private extension DefaultMyNftsViewModel {
 	func fetchNftsByIDs(_ myNfts: [String]) {
 		isLoading.value = true
 
-		dependencies.getMyNfts.invoke(
-			sortBy: dependencies.getSetSortOption.sortBy, // предсортировка на сервере
-			nftIDs: myNfts
-		) { [weak self] result in
+		dependencies.getMyNfts.invoke(nftIDs: myNfts) { [weak self] result in
 			guard let self = self else { return }
 
 			switch result {
@@ -197,6 +194,7 @@ private extension DefaultMyNftsViewModel {
 			}
 
 			self.isLoading.value = false
+			self.sortItems()
 		}
 	}
 
