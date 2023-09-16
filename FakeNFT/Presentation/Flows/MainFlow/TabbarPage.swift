@@ -6,18 +6,6 @@ enum TabbarPage {
 	case shoppingCart
 	case statistics
 
-	func pageOrderNumber() -> Int {
-		switch self {
-		case .profile:
-			return .zero
-		case .catalog:
-			return 1 // swiftlint:disable:this numbers_smell
-		case .shoppingCart:
-			return 2 // swiftlint:disable:this numbers_smell
-		case .statistics:
-			return 3 // swiftlint:disable:this numbers_smell
-		}
-	}
 	func pageTitleValue() -> String {
 		switch self {
 		case .profile:
@@ -41,5 +29,13 @@ enum TabbarPage {
 		case .statistics:
 			return Theme.image(kind: .statisticsIcon)
 		}
+	}
+
+	static let allTabbarPages: [TabbarPage] = [.profile, .catalog, .shoppingCart, .statistics]
+	static let firstTabbarPage: TabbarPage = .shoppingCart
+
+	var pageOrderNumber: Int {
+		guard let num = TabbarPage.allTabbarPages.firstIndex(of: self) else { return .zero }
+		return num
 	}
 }

@@ -18,15 +18,8 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
 	}
 
 	func makeTabbarCoordinator(container: MainDIContainer) -> (configurator: Coordinator, toPresent: Presentable?) {
-		let pages: [TabbarPage] = {
-			[
-				.profile,
-				.catalog,
-				.shoppingCart,
-				.statistics
-			].sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
-		}()
-		let firstPage: TabbarPage = .shoppingCart
+		let pages: [TabbarPage] = TabbarPage.allTabbarPages
+		let firstPage = TabbarPage.firstTabbarPage
 
 		let controller = TabBarController(pages: pages, firstPage: firstPage)
 		let coordinator = TabbarCoordinator(

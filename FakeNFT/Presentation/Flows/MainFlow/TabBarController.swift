@@ -29,7 +29,7 @@ private extension TabBarController {
 		let controllers: [UINavigationController] = pages.map { getTabController($0) }
 
 		setViewControllers(controllers, animated: true)
-		selectedIndex = firstPage.pageOrderNumber()
+		selectedIndex = firstPage.pageOrderNumber
 	}
 
 	func getTabController(_ page: TabbarPage) -> UINavigationController {
@@ -38,7 +38,7 @@ private extension TabBarController {
 		navController.tabBarItem = UITabBarItem(
 			title: page.pageTitleValue(),
 			image: page.pageIconValue(),
-			tag: page.pageOrderNumber()
+			tag: page.pageOrderNumber
 		)
 
 		return navController
