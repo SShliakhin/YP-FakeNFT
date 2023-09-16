@@ -134,6 +134,10 @@ enum L10n {
 			"onboarding.compete.text",
 			comment: "Текст страницы онбординга Состязайтесь"
 		)
+		static let completionButtonTitle = NSLocalizedString(
+			"onboarding.completionButton.title",
+			comment: "Заголовок кнопки завершения онбординга: Что внутри?"
+		)
 	}
 
 	enum Profile {

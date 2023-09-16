@@ -52,11 +52,19 @@ enum OnboardingPage: Int {
 		return true
 	}
 
-	var shouldShowNextButton: Bool {
+	var shouldShowCompletionButton: Bool {
 		guard
 			let pageOrderNumber = pageOrderNumber,
 			pageOrderNumber == OnboardingPage.fullOnboarding.count - 1
 		else { return false }
 		return true
+	}
+
+	var comptetionButtonTitle: String {
+		L10n.Onboarding.completionButtonTitle
+	}
+
+	var numberOfPages: Int {
+		OnboardingPage.fullOnboarding.count
 	}
 }
