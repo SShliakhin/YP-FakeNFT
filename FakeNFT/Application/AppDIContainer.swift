@@ -8,6 +8,10 @@ protocol StartFlowDIContainer {
 	func makeSplashViewModel() -> SplashViewModel
 }
 
+protocol OnboardingFlowDIContainer {
+	func makeOnboardingViewModel() -> OnboardingViewModel
+}
+
 protocol ProfileFlowDIContainer {
 	func makeProfileViewModel() -> ProfileViewModel
 	func makeMyNftsViewModel() -> MyNftsViewModel
@@ -33,12 +37,12 @@ typealias MainDIContainer = (
 final class AppDIContainer {
 	private let session = URLSession(configuration: .default)
 
-	// MARK: - Network
+	// MARK: - Network -
 	lazy var apiClient: APIClient = {
 		APIClient(session: session)
 	}()
 
-	// MARK: - Repository
+	// MARK: - Repository -
 	let profileRepository: ProfileRepository = ProfileRepositoryImp()
 	let nftRepository: NftRepository = NftRepositoryImp()
 	let likesIDsRepository: NftsIDsRepository = LikesIDsRepository()
@@ -47,7 +51,7 @@ final class AppDIContainer {
 	let collectionsRepository: CollectionsRepository = CollectionsRepositoryImp()
 	let authorsRepository: AuthorsRepository = AuthorsRepositoryImp()
 
-	// MARK: - UseCases
+	// MARK: - UseCases -
 	lazy var useCases: UseCaseProvider = {
 		let dep = UseCaseProvider.Dependencies(
 			apiClient: apiClient,
@@ -57,9 +61,12 @@ final class AppDIContainer {
 		)
 		return UseCaseProvider(dependencies: dep)
 	}()
+
+	// MARK: - Onboarding data -
+	lazy var onboardingData: [OnboardingPage] = OnboardingPage.fullOnboarding
 }
 
-// MARK: - AppFactory
+// MARK: - AppFactory -
 
 extension AppDIContainer: AppFactory {
 	func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, Coordinator) {
@@ -85,7 +92,7 @@ extension AppDIContainer: AppFactory {
 	}
 }
 
-// MARK: - StartFlowDIContainer
+// MARK: - StartFlowDIContainer -
 
 extension AppDIContainer: StartFlowDIContainer {
 	func makeSplashViewModel() -> SplashViewModel {
@@ -108,7 +115,18 @@ extension AppDIContainer: StartFlowDIContainer {
 	}
 }
 
-// MARK: - ProfileFlowDIContainer
+// MARK: - OnboardingFlowDIContainer -
+
+extension AppDIContainer: OnboardingFlowDIContainer {
+	func makeOnboardingViewModel() -> OnboardingViewModel {
+		let dep = DefaultOnboardingViewModel.Dependencies(
+			onboardingData: onboardingData
+		)
+		return DefaultOnboardingViewModel(dep: dep)
+	}
+}
+
+// MARK: - ProfileFlowDIContainer -
 
 extension AppDIContainer: ProfileFlowDIContainer {
 	func makeProfileViewModel() -> ProfileViewModel {
@@ -159,7 +177,7 @@ extension AppDIContainer: ProfileFlowDIContainer {
 	}
 }
 
-// MARK: - CatalogFlowDIContainer
+// MARK: - CatalogFlowDIContainer -
 
 extension AppDIContainer: CatalogFlowDIContainer {
 	func makeCatalogViewModel() -> CatalogViewModel {
@@ -188,10 +206,10 @@ extension AppDIContainer: CatalogFlowDIContainer {
 	}
 }
 
-// MARK: - SpoppingCartFlowDIContainer
+// MARK: - SpoppingCartFlowDIContainer -
 
 extension AppDIContainer: SpoppingCartFlowDIContainer {}
 
-// MARK: - StatisticsFlowDIContainer
+// MARK: - StatisticsFlowDIContainer -
 
 extension AppDIContainer: StatisticsFlowDIContainer {}

@@ -1,6 +1,20 @@
 import UIKit
 
-enum OnboardingPage: Int {
+protocol OnboardingPageData {
+	var titleValue: String { get }
+	var textValue: String { get }
+	var imageAssetValue: Theme.ImageAsset { get }
+}
+
+protocol OnboardingPageControl {
+	var completionButtonTitle: String { get }
+	var numberOfPages: Int { get }
+	var pageOrderNumber: Int? { get }
+	var shouldShowCloseButton: Bool { get }
+	var shouldShowCompletionButton: Bool { get }
+}
+
+enum OnboardingPage: OnboardingPageData, OnboardingPageControl {
 	case explore
 	case collect
 	case compete
@@ -27,14 +41,14 @@ enum OnboardingPage: Int {
 		}
 	}
 
-	var imageValue: UIImage {
+	var imageAssetValue: Theme.ImageAsset {
 		switch self {
 		case .explore:
-			return Theme.image(kind: .onboardingPage1)
+			return .onboardingPage1
 		case .collect:
-			return Theme.image(kind: .onboardingPage2)
+			return .onboardingPage2
 		case .compete:
-			return Theme.image(kind: .onboardingPage3)
+			return .onboardingPage3
 		}
 	}
 
@@ -60,7 +74,7 @@ enum OnboardingPage: Int {
 		return true
 	}
 
-	var comptetionButtonTitle: String {
+	var completionButtonTitle: String {
 		L10n.Onboarding.completionButtonTitle
 	}
 

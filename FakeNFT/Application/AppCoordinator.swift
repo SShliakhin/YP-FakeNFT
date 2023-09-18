@@ -40,10 +40,15 @@ final class AppCoordinator: BaseCoordinator {
 		self.appContext = appContext
 		self.container = container
 
-		// appContext.reset()
+		appContext.reset()
 	}
 
 	override func start() {
+
+		// FIXME: - while onboarding development -
+		runOnboardingFlow()
+		return
+
 		if !isDataLoaded {
 			runStarFlow()
 			return
@@ -77,7 +82,10 @@ private extension AppCoordinator {
 	}
 
 	func runOnboardingFlow() {
-		let coordinator = coordinatorFactory.makeOnboardingCoordinator(router: router)
+		let coordinator = coordinatorFactory.makeOnboardingCoordinator(
+			router: router,
+			container: container
+		)
 		coordinator.finishFlow = { [weak self, weak coordinator] in
 			guard let self = self else { return }
 			self.appContext.setFirstStart()

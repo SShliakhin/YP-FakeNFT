@@ -2,7 +2,10 @@ import UIKit
 
 protocol CoordinatorFactory {
 	func makeStartCoordinator(router: Router, container: StartFlowDIContainer) -> Coordinator & StartCoordinatorOutput
-	func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput
+	func makeOnboardingCoordinator(
+		router: Router,
+		container: OnboardingFlowDIContainer
+	) -> Coordinator & OnboardingCoordinatorOutput
 	func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
 
 	func makeTabbarCoordinator(container: MainDIContainer) -> (configurator: Coordinator, toPresent: Presentable?)

@@ -9,8 +9,15 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
 		)
 	}
 
-	func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput {
-		OnboardingCoordinator(router: router, factory: ModuleFactoryImp())
+	func makeOnboardingCoordinator(
+		router: Router,
+		container: OnboardingFlowDIContainer
+	) -> Coordinator & OnboardingCoordinatorOutput {
+		OnboardingCoordinator(
+			router: router,
+			factory: ModuleFactoryImp(),
+			container: container
+		)
 	}
 
 	func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput {
