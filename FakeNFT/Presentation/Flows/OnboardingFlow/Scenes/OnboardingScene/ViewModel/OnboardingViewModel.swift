@@ -14,16 +14,11 @@ protocol OnboardingViewModelInput: AnyObject {
 	func didUserDo(request: OnboardingRequest)
 }
 
-protocol OnboardingViewModelOutput: AnyObject {
+protocol OnboardingViewModelOutput: AnyObject, OnboardingPageControl {
 	var renderMe: Observable<Bool> { get }
-	var title: String { get }
-	var text: String { get }
-	var imageAsset: Theme.ImageAsset { get }
+
+	var pagesData: [OnboardingPageData] { get }
 	var pageNumber: Int { get }
-	var numberOfPages: Int { get }
-	var completionButtonTitle: String { get }
-	var shouldShowCloseButton: Bool { get }
-	var shouldShowCompletionButton: Bool { get }
 }
 
 typealias OnboardingViewModel = (
@@ -43,18 +38,10 @@ final class DefaultOnboardingViewModel: OnboardingViewModel {
 
 	// MARK: - OUTPUT
 	var renderMe: Observable<Bool> = Observable(false)
-	var title: String {
-		guard let currentPage = currentPage else { return "" }
-		return currentPage.titleValue
-	}
-	var text: String {
-		guard let currentPage = currentPage else { return "" }
-		return currentPage.textValue
-	}
-	var imageAsset: Theme.ImageAsset {
-		guard let currentPage = currentPage else { return Theme.ImageAsset.imagePlaceholder }
-		return currentPage.imageAssetValue
-	}
+
+	var pagesData: [OnboardingPageData] { dependencies.onboardingData }
+
+	var pageOrderNumber: Int?
 	var pageNumber: Int {
 		guard
 			let currentPage = currentPage,

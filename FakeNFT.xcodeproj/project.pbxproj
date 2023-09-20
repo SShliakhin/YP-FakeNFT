@@ -96,6 +96,8 @@
 		5A5B91F82A9BB91600A4B7E3 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5B91F72A9BB91600A4B7E3 /* ProfileRepository.swift */; };
 		5A5B91FB2A9C170500A4B7E3 /* UIResponder+findFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5B91FA2A9C170500A4B7E3 /* UIResponder+findFirst.swift */; };
 		5A5E63AE2AB79F9900885527 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5E63AD2AB79F9900885527 /* GradientView.swift */; };
+		5A5E63B12AB8B6E400885527 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5E63B02AB8B6E400885527 /* PageViewController.swift */; };
+		5A5E63BA2ABA160A00885527 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5E63B92ABA160A00885527 /* OnboardingPageViewController.swift */; };
 		5A7EA4592A8F38EE004C5402 /* GetNftsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA4582A8F38EE004C5402 /* GetNftsUseCase.swift */; };
 		5A7EA45D2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */; };
 		5A7EA45F2A8FE83B004C5402 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7EA45E2A8FE83B004C5402 /* ProfileViewModel.swift */; };
@@ -255,6 +257,8 @@
 		5A5B91F92A9BFBB800A4B7E3 /* CatalogFlowDecomposition_SAS_c4gr4.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CatalogFlowDecomposition_SAS_c4gr4.md; sourceTree = "<group>"; };
 		5A5B91FA2A9C170500A4B7E3 /* UIResponder+findFirst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+findFirst.swift"; sourceTree = "<group>"; };
 		5A5E63AD2AB79F9900885527 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		5A5E63B02AB8B6E400885527 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		5A5E63B92ABA160A00885527 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		5A7EA4582A8F38EE004C5402 /* GetNftsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNftsUseCase.swift; sourceTree = "<group>"; };
 		5A7EA45A2A8F7BD8004C5402 /* SortMyNftsBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortMyNftsBy.swift; sourceTree = "<group>"; };
 		5A7EA45C2A8F8A7C004C5402 /* GetSetSortMyNtfsOptionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSetSortMyNtfsOptionUseCase.swift; sourceTree = "<group>"; };
@@ -649,7 +653,6 @@
 		5A1B6D902AA639DF00A1BCB4 /* OnboardingFlow */ = {
 			isa = PBXGroup;
 			children = (
-				5A5E63AF2AB87A6E00885527 /* Views */,
 				5A1B6DB82AA67FF200A1BCB4 /* OnboardingCoordinator.swift */,
 				5AE52CDB2AB5C3E400D2A98A /* OnboardingPage.swift */,
 				5A1B6D912AA63A3200A1BCB4 /* Scenes */,
@@ -685,6 +688,9 @@
 		5A1B6D962AA63A8700A1BCB4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5A5E63AF2AB87A6E00885527 /* Views */,
+				5A5E63B92ABA160A00885527 /* OnboardingPageViewController.swift */,
+				5A5E63B02AB8B6E400885527 /* PageViewController.swift */,
 				5A1B6D972AA63AC200A1BCB4 /* OnboardingViewController.swift */,
 			);
 			path = View;
@@ -1272,6 +1278,7 @@
 				5A3DE6772AB5F5100042C13C /* PageControlView.swift in Sources */,
 				5A0469822A7ABCC50026D783 /* ILoadWithIndicator.swift in Sources */,
 				5AAB67632A8120C700E95CB2 /* CollectionDTO.swift in Sources */,
+				5A5E63B12AB8B6E400885527 /* PageViewController.swift in Sources */,
 				5A5636132AAF15640097A719 /* PutLikeByIDUseCase.swift in Sources */,
 				5A04698D2A7ABE180026D783 /* StatisticsViewController.swift in Sources */,
 				5AD004B22AAE012400D72651 /* SplashViewModel.swift in Sources */,
@@ -1307,6 +1314,7 @@
 				5A5E63AE2AB79F9900885527 /* GradientView.swift in Sources */,
 				5AA5C8BC2A88F58700510684 /* WebViewModel.swift in Sources */,
 				5A1B6DC92AA6E1F900A1BCB4 /* CatalogCoordinator.swift in Sources */,
+				5A5E63BA2ABA160A00885527 /* OnboardingPageViewController.swift in Sources */,
 				5A0469782A7ABCC50026D783 /* UIViewController+Preview.swift in Sources */,
 				5A04697C2A7ABCC50026D783 /* UIViewController+Keyboard.swift in Sources */,
 				5A51DA022A8570D700235E7D /* CatalogViewModel.swift in Sources */,

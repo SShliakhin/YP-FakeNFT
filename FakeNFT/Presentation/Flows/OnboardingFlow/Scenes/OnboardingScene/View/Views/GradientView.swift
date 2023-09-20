@@ -33,8 +33,8 @@ extension GradientView {
 	static var OnboardingPageLayer: CAGradientLayer {
 		let layer = CAGradientLayer()
 		layer.colors = [
-			Theme.color(usage: .allDayBlack).cgColor,
-			Theme.color(usage: .allDayBlack).withAlphaComponent(0).cgColor
+			Theme.color(usage: .allDayBlack).withAlphaComponent(0).cgColor,
+			Theme.color(usage: .allDayBlack).cgColor
 		]
 		layer.startPoint = CGPoint(x: 1, y: 0)
 		layer.endPoint = CGPoint(x: 1, y: 1)

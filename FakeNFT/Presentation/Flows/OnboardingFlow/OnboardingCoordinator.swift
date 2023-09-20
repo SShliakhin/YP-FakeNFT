@@ -28,7 +28,13 @@ final class OnboardingCoordinator: BaseCoordinator, OnboardingCoordinatorOutput 
 private extension OnboardingCoordinator {
 	func showOnboardingModule() {
 		let viewModel = container.makeOnboardingViewModel()
-		let module = factory.makeOnboardingViewController(viewModel: viewModel)
+
+		let module = factory.makeOnboardingViewController(
+			viewModel: viewModel,
+			pagesData: viewModel.pagesData
+		) { [weak viewModel] pageIndex in
+			viewModel?.didUserDo(request: .showPage(pageIndex))
+		}
 		viewModel.didSendEventClosure = { [weak self] event in
 			switch event {
 			case .close:

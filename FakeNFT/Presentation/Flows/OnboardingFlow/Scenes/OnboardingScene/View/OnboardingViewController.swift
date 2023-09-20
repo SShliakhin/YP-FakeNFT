@@ -2,23 +2,11 @@ import UIKit
 
 final class OnboardingViewController: UIViewController {
 	private let viewModel: OnboardingViewModel
+	private let pageViewController: PageViewController
 
 	// MARK: - UI
-	private lazy var imageView = ImageViewFactory.makeImageView()
-	private lazy var gradientView = GradientView()
-		.update(with: GradientView.OnboardingPageLayer)
-	private lazy var titleLabel = LabelFactory.makeLabel(
-		font: Theme.font(style: .title1),
-		textColor: Theme.color(usage: .allDayWhite)
-	)
-	private lazy var textLabel = LabelFactory.makeLabel(
-		font: Theme.font(style: .subhead),
-		textColor: Theme.color(usage: .allDayWhite),
-		numberOfLines: .zero
-	)
-
-	private lazy var pageControlView = PageControlView(count: viewModel.numberOfPages) { [weak self] index in
-		self?.viewModel.didUserDo(request: .showPage(index))
+	private lazy var pageControlView = PageControlView(count: viewModel.numberOfPages) { [weak self] pageIndex in
+		self?.viewModel.didUserDo(request: .showPage(pageIndex))
 	}
 	private lazy var closeButton = ButtonFactory.makeButton(
 		image: Theme.image(kind: .close),
@@ -34,17 +22,19 @@ final class OnboardingViewController: UIViewController {
 		),
 		backgroundColor: Theme.color(usage: .white),
 		cornerRadius: Theme.dimension(kind: .cornerRadius)
-	) {
+	) { [weak self] in
 		// чтобы успеть увидеть анимацию нажатия кнопки
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
 			self?.viewModel.didUserDo(request: .didTapActionButton)
 		}
 	}
 
-	// MARK: - Inits
+	// MARK: - Inits -
 
-	init(viewModel: OnboardingViewModel) {
+	init(viewModel: OnboardingViewModel, pageViewController: PageViewController) {
 		self.viewModel = viewModel
+		self.pageViewController = pageViewController
+
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -60,58 +50,11 @@ final class OnboardingViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		applyStyle()
+		setup()
 		setConstraints()
 
 		bind(to: viewModel)
 		viewModel.viewIsReady()
-
-		completionButton.addTarget(self, action: #selector(addClickAnimation), for: .touchUpInside)
-	}
-
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-
-		if viewModel.shouldShowCloseButton {
-			view.addSubview(closeButton)
-			closeButton.makeConstraints { make in
-				[
-					make.topAnchor.constraint(
-						equalTo: view.safeAreaLayoutGuide.topAnchor,
-						constant: Appearance.closeButtonTopInset
-					),
-					make.trailingAnchor.constraint(
-						equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-						constant: -Appearance.closeButtonTrailingInset
-					)
-				]
-			}
-		} else {
-			closeButton.removeFromSuperview()
-		}
-
-		if viewModel.shouldShowCompletionButton {
-			view.addSubview(completionButton)
-			completionButton.makeConstraints { make in
-				[
-					make.heightAnchor.constraint(equalToConstant: Appearance.completionButtonHeight),
-					make.bottomAnchor.constraint(
-						equalTo: view.bottomAnchor,
-						constant: -Appearance.completionButtonBottomInset
-					),
-					make.leadingAnchor.constraint(
-						equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-						constant: Theme.spacing(usage: .standard2)
-					),
-					make.trailingAnchor.constraint(
-						equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-						constant: -Theme.spacing(usage: .standard2)
-					)
-				]
-			}
-		} else {
-			completionButton.removeFromSuperview()
-		}
 	}
 }
 
@@ -125,41 +68,50 @@ private extension OnboardingViewController {
 	}
 
 	func renderViewModel() {
-		imageView.image = Theme.image(kind: viewModel.imageAsset)
 		pageControlView.update(with: viewModel.pageNumber)
-		titleLabel.text = viewModel.title
-		textLabel.text = viewModel.text
-		textLabel.lineBreakMode = .byWordWrapping
-		if viewModel.shouldShowCompletionButton {
-			completionButton.setTitle(viewModel.completionButtonTitle, for: .normal)
-		}
+		pageViewController.update(pageNumber: viewModel.pageNumber)
+
+		closeButton.isHidden = !viewModel.shouldShowCloseButton
+		completionButton.isHidden = !viewModel.shouldShowCompletionButton
 	}
 }
 
 // MARK: - UI
 private extension OnboardingViewController {
-	func applyStyle() {}
+	func setup() {
+		// внедряем к себе pageVC
+		addChild(pageViewController)
+		view.addSubview(pageViewController.view)
+		pageViewController.didMove(toParent: self)
+
+		completionButton.addTarget(self, action: #selector(addClickAnimation), for: .touchUpInside)
+	}
 
 	func setConstraints() {
-		let stackView = UIStackView(arrangedSubviews: [titleLabel, textLabel])
-		stackView.axis = .vertical
-		stackView.spacing = Appearance.textSpacing
-
 		[
-			imageView,
-			gradientView,
-			stackView,
+			closeButton,
+			completionButton,
 			pageControlView
 		].forEach { view.addSubview($0) }
 
-		imageView.makeEqualToSuperview()
-		gradientView.makeEqualToSuperview()
-
-		stackView.makeConstraints { make in
+		closeButton.makeConstraints { make in
 			[
-				make.centerYAnchor.constraint(
+				make.topAnchor.constraint(
 					equalTo: view.safeAreaLayoutGuide.topAnchor,
-					constant: view.frame.height / (Appearance.textYOffsetCenterInitialValue - CGFloat(viewModel.pageNumber))
+					constant: Appearance.closeButtonTopInset
+				),
+				make.trailingAnchor.constraint(
+					equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+					constant: -Appearance.closeButtonTrailingInset
+				)
+			]
+		}
+		completionButton.makeConstraints { make in
+			[
+				make.heightAnchor.constraint(equalToConstant: Appearance.completionButtonHeight),
+				make.bottomAnchor.constraint(
+					equalTo: view.bottomAnchor,
+					constant: -Appearance.completionButtonBottomInset
 				),
 				make.leadingAnchor.constraint(
 					equalTo: view.safeAreaLayoutGuide.leadingAnchor,
@@ -171,7 +123,6 @@ private extension OnboardingViewController {
 				)
 			]
 		}
-
 		pageControlView.makeConstraints { make in
 			[
 				make.heightAnchor.constraint(equalToConstant: Appearance.pageControlViewHeight),
@@ -190,9 +141,6 @@ private extension OnboardingViewController {
 
 		static let closeButtonTopInset = 2.0
 		static let closeButtonTrailingInset = 9.0
-
-		static let textSpacing = 12.0
-		static let textYOffsetCenterInitialValue = 4.0
 
 		static let pageControlViewHeight = 28.0
 	}
