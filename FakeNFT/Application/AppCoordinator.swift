@@ -44,11 +44,6 @@ final class AppCoordinator: BaseCoordinator {
 	}
 
 	override func start() {
-
-		// FIXME: - while onboarding development -
-		runOnboardingFlow()
-		return
-
 		if !isDataLoaded {
 			runStarFlow()
 			return
