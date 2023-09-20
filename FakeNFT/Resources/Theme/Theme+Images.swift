@@ -16,6 +16,10 @@ extension Theme {
 
 		case imagePlaceholder
 		case logo
+
+		case onboardingPage1
+		case onboardingPage2
+		case onboardingPage3
 	}
 
 	static func image(kind: ImageAsset) -> UIImage {

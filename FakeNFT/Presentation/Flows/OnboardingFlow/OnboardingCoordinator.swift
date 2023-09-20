@@ -3,14 +3,16 @@ protocol OnboardingCoordinatorOutput: AnyObject {
 }
 
 final class OnboardingCoordinator: BaseCoordinator, OnboardingCoordinatorOutput {
+	private let container: OnboardingFlowDIContainer
 	private let factory: OnboardingModuleFactory
 	private let router: Router
 
 	var finishFlow: (() -> Void)?
 
-	init(router: Router, factory: OnboardingModuleFactory) {
+	init(router: Router, factory: OnboardingModuleFactory, container: OnboardingFlowDIContainer) {
 		self.router = router
 		self.factory = factory
+		self.container = container
 	}
 
 	override func start() {
@@ -25,8 +27,14 @@ final class OnboardingCoordinator: BaseCoordinator, OnboardingCoordinatorOutput 
 // MARK: - show Modules
 private extension OnboardingCoordinator {
 	func showOnboardingModule() {
-		let viewModel = DefaultOnboardingViewModel()
-		let module = factory.makeOnboardingViewController(viewModel: viewModel)
+		let viewModel = container.makeOnboardingViewModel()
+
+		let module = factory.makeOnboardingViewController(
+			viewModel: viewModel,
+			pagesData: viewModel.pagesData
+		) { [weak viewModel] pageIndex in
+			viewModel?.didUserDo(request: .showPage(pageIndex))
+		}
 		viewModel.didSendEventClosure = { [weak self] event in
 			switch event {
 			case .close:
@@ -34,6 +42,6 @@ private extension OnboardingCoordinator {
 				self?.finishFlow?()
 			}
 		}
-		router.setRootModule(module)
+		router.setRootModule(module, hideBar: true)
 	}
 }

@@ -9,8 +9,15 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
 		)
 	}
 
-	func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput {
-		OnboardingCoordinator(router: router, factory: ModuleFactoryImp())
+	func makeOnboardingCoordinator(
+		router: Router,
+		container: OnboardingFlowDIContainer
+	) -> Coordinator & OnboardingCoordinatorOutput {
+		OnboardingCoordinator(
+			router: router,
+			factory: ModuleFactoryImp(),
+			container: container
+		)
 	}
 
 	func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput {
@@ -18,19 +25,8 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
 	}
 
 	func makeTabbarCoordinator(container: MainDIContainer) -> (configurator: Coordinator, toPresent: Presentable?) {
-		let pages: [TabbarPage] = {
-			[
-				.profile,
-				.catalog,
-				.shoppingCart,
-				.statistics
-			].sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
-		}()
-		let firstPage: TabbarPage = .shoppingCart
-
-		let controller = TabBarController(pages: pages, firstPage: firstPage)
+		let controller = TabBarController()
 		let coordinator = TabbarCoordinator(
-			pages: pages,
 			tabbarController: controller,
 			coordinatorFactory: CoordinatorFactoryImp(),
 			container: container

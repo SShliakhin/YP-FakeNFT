@@ -75,8 +75,30 @@ final class ModuleFactoryImp: ErrorModuleFactory,
 	}
 
 	// MARK: - OnboardingModuleFactory
-	func makeOnboardingViewController(viewModel: OnboardingViewModel) -> Presentable {
-		OnboardingViewController(viewModel: viewModel)
+	func makeOnboardingViewController(
+		viewModel: OnboardingViewModel,
+		pagesData: [OnboardingPageData],
+		onShowPage: ((Int) -> Void)?
+	) -> Presentable {
+		OnboardingViewController(
+			viewModel: viewModel,
+			pageViewController: makePageViewController(
+				pagesData: pagesData,
+				onShowPage: onShowPage
+			)
+		)
+	}
+
+	private func makePageViewController(
+		pagesData: [OnboardingPageData],
+		onShowPage: ((Int) -> Void)?
+	) -> PageViewController {
+		var pages: [UIViewController] = []
+		for page in pagesData {
+			pages.append(OnboardingPageViewController(page: page))
+		}
+
+		return PageViewControllerImp(pages: pages, onShowPage: onShowPage)
 	}
 
 	// MARK: - AuthModuleFactory

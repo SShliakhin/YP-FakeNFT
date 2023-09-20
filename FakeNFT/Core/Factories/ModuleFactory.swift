@@ -23,7 +23,11 @@ protocol StartModuleFactory: ErrorModuleFactory {
 }
 
 protocol OnboardingModuleFactory {
-	func makeOnboardingViewController(viewModel: OnboardingViewModel) -> Presentable
+	func makeOnboardingViewController(
+		viewModel: OnboardingViewModel,
+		pagesData: [OnboardingPageData],
+		onShowPage: ((Int) -> Void)?
+	) -> Presentable
 }
 
 protocol AuthModuleFactory {

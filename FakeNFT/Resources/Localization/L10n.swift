@@ -109,6 +109,37 @@ enum L10n {
 		}
 	}
 
+	enum Onboarding {
+		static let titleExplore = NSLocalizedString(
+			"onboarding.explore.title",
+			comment: "Заголовок страницы онбординга: Исследуйте."
+		)
+		static let titleCollect = NSLocalizedString(
+			"onboarding.collect.title",
+			comment: "Заголовок страницы онбординга: Коллекционируйте."
+		)
+		static let titleCompete = NSLocalizedString(
+			"onboarding.compete.title",
+			comment: "Заголовок страницы онбординга: Состязайтесь."
+		)
+		static let textExplore = NSLocalizedString(
+			"onboarding.explore.text",
+			comment: "Текст страницы онбординга Исследуйте"
+		)
+		static let textCollect = NSLocalizedString(
+			"onboarding.collect.text",
+			comment: "Текст страницы онбординга Коллекционируйте"
+		)
+		static let textCompete = NSLocalizedString(
+			"onboarding.compete.text",
+			comment: "Текст страницы онбординга Состязайтесь"
+		)
+		static let completionButtonTitle = NSLocalizedString(
+			"onboarding.completionButton.title",
+			comment: "Заголовок кнопки завершения онбординга: Что внутри?"
+		)
+	}
+
 	enum Profile {
 		static var incorrectURL: String {
 			NSLocalizedString(

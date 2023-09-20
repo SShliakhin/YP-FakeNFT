@@ -16,4 +16,21 @@ extension UIView {
 			self?.isHidden = true
 		}
 	}
+
+	func addClickAnimation() {
+		let xScale: CGFloat = 1.025
+		let yScale: CGFloat = 1.05
+
+		UIView.animate(
+			withDuration: 0.1,
+			animations: {
+				let transformation = CGAffineTransform(scaleX: xScale, y: yScale)
+				self.transform = transformation
+			},
+			completion: { _ in
+				let transformation = CGAffineTransform(scaleX: 1, y: 1)
+				self.transform = transformation
+			}
+		)
+	}
 }

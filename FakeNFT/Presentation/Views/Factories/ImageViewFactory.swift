@@ -3,7 +3,7 @@ import Kingfisher
 
 enum ImageViewFactory {
 	static func makeImageView(
-		image: UIImage,
+		image: UIImage = UIImage(),
 		cornerRadius: CGFloat = .zero,
 		isMasksToBounds: Bool = false,
 		contentMode: UIView.ContentMode = .scaleAspectFill

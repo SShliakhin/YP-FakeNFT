@@ -1,18 +1,17 @@
 import UIKit
 
 final class TabbarCoordinator: BaseCoordinator {
-	private let pages: [TabbarPage]
 	private let tabbarController: UITabBarController
 	private let coordinatorFactory: CoordinatorFactory
 	private let container: MainDIContainer
 
+	private let pages: [TabbarPage] = TabbarPage.allTabbarPages
+
 	init(
-		pages: [TabbarPage],
 		tabbarController: UITabBarController,
 		coordinatorFactory: CoordinatorFactory,
 		container: MainDIContainer
 	) {
-		self.pages = pages
 		self.tabbarController = tabbarController
 		self.coordinatorFactory = coordinatorFactory
 		self.container = container
@@ -30,7 +29,7 @@ final class TabbarCoordinator: BaseCoordinator {
 	}
 }
 
-// MARK: - run Flows
+// MARK: - run Flows -
 private extension TabbarCoordinator {
 	func runFlowByIndex(_ index: Int, on controller: UINavigationController) {
 		let coordinator: Coordinator
@@ -39,13 +38,13 @@ private extension TabbarCoordinator {
 			coordinator = coordinatorFactory
 				.makeProfileCoordinator(
 					navController: controller,
-					container: container // container.makeProfileFlowDIContainer()
+					container: container
 				)
 		case .catalog:
 			coordinator = coordinatorFactory
 				.makeCatalogCoordinator(
 					navController: controller,
-					container: container // container.makeCatalogFlowDIContainer()
+					container: container
 				)
 		case .shoppingCart:
 			coordinator = coordinatorFactory
