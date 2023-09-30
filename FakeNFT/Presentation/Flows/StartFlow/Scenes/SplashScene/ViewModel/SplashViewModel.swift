@@ -58,7 +58,7 @@ final class DefaultSplashViewModel: SplashViewModel {
 // MARK: - INPUT
 extension DefaultSplashViewModel {
 	func viewIsReady() {
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+		DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
 			self?.fetchData()
 		}
 	}

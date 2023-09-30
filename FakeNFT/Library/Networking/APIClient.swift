@@ -1,12 +1,25 @@
 import UIKit
+#if canImport(Connectivity)
+import Connectivity
+#endif
 
 struct APIClient {
 	private let session: URLSession
 	private let queue: DispatchQueue
 
+	#if canImport(Connectivity)
+	private let connectivity: Connectivity
+	#endif
+
 	init(session: URLSession) {
 		self.session = session
 		self.queue = DispatchQueue(label: "SimpleNetworking", qos: .userInitiated, attributes: .concurrent)
+
+		#if canImport(Connectivity)
+		connectivity = Connectivity()
+		connectivity.framework = .network
+		connectivity.startNotifier()
+		#endif
 	}
 
 	@discardableResult
@@ -55,6 +68,18 @@ struct APIClient {
 	) -> NetworkTask {
 
 		let networkTask = NetworkTask()
+
+		#if canImport(Connectivity)
+		if !connectivity.isConnected {
+			let networkError = NSError(
+				domain: NSURLErrorDomain,
+				code: NSURLErrorNotConnectedToInternet,
+				userInfo: nil
+			)
+			completion(.failure(.networkError(networkError)))
+			return networkTask
+		}
+		#endif
 
 		let backgroundTaskID = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
 		// swiftlint:disable:next closure_body_length

@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Connectivity",
+        "repositoryURL": "https://github.com/rwbutler/Connectivity",
+        "state": {
+          "branch": null,
+          "revision": "8b5d46aa82ff1a2eda220523437946aa5aa2bf29",
+          "version": "5.1.0"
+        }
+      },
+      {
         "package": "Kingfisher",
         "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
         "state": {

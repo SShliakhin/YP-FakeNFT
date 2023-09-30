@@ -142,6 +142,7 @@
 		5AE76DA92A9312D400BAC6B2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE76DA82A9312D400BAC6B2 /* EditProfileViewController.swift */; };
 		5AEAAF422AAF83F800DA3D88 /* CollectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEAAF412AAF83F800DA3D88 /* CollectionsRepository.swift */; };
 		5AEAAF442AAFB4B000DA3D88 /* AuthorsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEAAF432AAFB4B000DA3D88 /* AuthorsRepository.swift */; };
+		5AF9B8D52AC7889000F513E5 /* Connectivity in Frameworks */ = {isa = PBXBuildFile; productRef = 5AF9B8D42AC7889000F513E5 /* Connectivity */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -313,6 +314,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AF9B8D52AC7889000F513E5 /* Connectivity in Frameworks */,
 				3F603CD029DB4A74000C43D7 /* Kingfisher in Frameworks */,
 				3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */,
 			);
@@ -1119,6 +1121,7 @@
 			packageProductDependencies = (
 				3F603CCC29DB4A53000C43D7 /* ProgressHUD */,
 				3F603CCF29DB4A74000C43D7 /* Kingfisher */,
+				5AF9B8D42AC7889000F513E5 /* Connectivity */,
 			);
 			productName = FakeNFT;
 			productReference = 3F68069329CBBAF100B4F915 /* FakeNFT.app */;
@@ -1196,6 +1199,7 @@
 			packageReferences = (
 				3F603CCB29DB4A53000C43D7 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 				3F603CCE29DB4A74000C43D7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				5AF9B8D32AC7889000F513E5 /* XCRemoteSwiftPackageReference "Connectivity" */,
 			);
 			productRefGroup = 3F68069429CBBAF100B4F915 /* Products */;
 			projectDirPath = "";
@@ -1758,6 +1762,14 @@
 				version = 7.6.1;
 			};
 		};
+		5AF9B8D32AC7889000F513E5 /* XCRemoteSwiftPackageReference "Connectivity" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rwbutler/Connectivity";
+			requirement = {
+				kind = exactVersion;
+				version = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1770,6 +1782,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3F603CCE29DB4A74000C43D7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		5AF9B8D42AC7889000F513E5 /* Connectivity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5AF9B8D32AC7889000F513E5 /* XCRemoteSwiftPackageReference "Connectivity" */;
+			productName = Connectivity;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
