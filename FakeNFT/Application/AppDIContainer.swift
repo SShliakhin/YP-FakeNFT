@@ -41,6 +41,9 @@ final class AppDIContainer {
 	lazy var apiClient: APIClient = {
 		APIClient(session: session)
 	}()
+	lazy var networkMonitor: NetworkMonitor = {
+		NetworkMonitorImp()
+	}()
 
 	// MARK: - Repository -
 	let profileRepository: ProfileRepository = ProfileRepositoryImp()
@@ -57,7 +60,8 @@ final class AppDIContainer {
 			apiClient: apiClient,
 			nftRepository: nftRepository,
 			likesIDsRepository: likesIDsRepository,
-			orderIDsRepository: orderIDsRepository
+			orderIDsRepository: orderIDsRepository,
+			networkMonitor: networkMonitor
 		)
 		return UseCaseProvider(dependencies: dep)
 	}()
@@ -97,6 +101,7 @@ extension AppDIContainer: AppFactory {
 extension AppDIContainer: StartFlowDIContainer {
 	func makeSplashViewModel() -> SplashViewModel {
 		let dep = DefaultSplashViewModel.Dependencies(
+			networkMonitor: networkMonitor,
 			getProfile: useCases.getProfile,
 			getOrder: useCases.getOrder,
 			getCollections: useCases.getCollections,

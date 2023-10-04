@@ -26,6 +26,7 @@ typealias SplashViewModel = (
 
 final class DefaultSplashViewModel: SplashViewModel {
 	struct Dependencies {
+		let networkMonitor: NetworkMonitor
 		let getProfile: GetProfileUseCase
 		let getOrder: GetOrderUseCase
 		let getCollections: GetCollectionsUseCase
@@ -58,9 +59,7 @@ final class DefaultSplashViewModel: SplashViewModel {
 // MARK: - INPUT
 extension DefaultSplashViewModel {
 	func viewIsReady() {
-		DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
-			self?.fetchData()
-		}
+		fetchData()
 	}
 	func didUserDo(request: SplashRequest) {
 		switch request {
@@ -71,8 +70,24 @@ extension DefaultSplashViewModel {
 }
 
 private extension DefaultSplashViewModel {
+	func showLoadingError(message: String, completion: (() -> Void)? = nil) {
+		retryAction = completion
+		isLoading.value = false
+		let withRetry = completion != nil ? true : false
+
+		didSendEventClosuer?(.showErrorAlert(message, withRetry: withRetry))
+	}
+
 	func fetchData() {
 		isLoading.value = true
+
+		if !dependencies.networkMonitor.isConnected {
+			showLoadingError(message: FakeNFTError.notConnectedToInternet.description) {
+				self.fetchData()
+			}
+			return
+		}
+
 		errors = []
 		beginFetching()
 	}
@@ -86,11 +101,10 @@ private extension DefaultSplashViewModel {
 
 		group.notify(queue: .main) {
 			if !self.errors.isEmpty {
-				self.retryAction = { self.viewIsReady() }
 				let message = self.errors.joined(separator: "\n")
-				self.didSendEventClosuer?(.showErrorAlert(message, withRetry: true))
-
-				self.isLoading.value = false
+				self.showLoadingError(message: message) {
+					self.fetchData()
+				}
 			} else {
 				self.finishFetching()
 			}
@@ -114,14 +128,14 @@ private extension DefaultSplashViewModel {
 
 		group.notify(queue: .main) {
 			if !self.errors.isEmpty {
-				self.retryAction = { self.viewIsReady() }
 				let message = self.errors.joined(separator: "\n")
-				self.didSendEventClosuer?(.showErrorAlert(message, withRetry: true))
+				self.showLoadingError(message: message) {
+					self.fetchData()
+				}
 			} else {
 				self.didSendEventClosuer?(.loadData)
+				self.isLoading.value = false
 			}
-
-			self.isLoading.value = false
 		}
 	}
 

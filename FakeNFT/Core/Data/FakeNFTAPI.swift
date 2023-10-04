@@ -118,6 +118,7 @@ enum FakeNFTError: Error {
 	case brokenOrder
 	case noProfile
 	case noAuthors
+	case notConnectedToInternet
 }
 
 extension FakeNFTError: CustomStringConvertible {
@@ -143,6 +144,8 @@ extension FakeNFTError: CustomStringConvertible {
 			return L10n.NetworkError.noProfile
 		case .noAuthors:
 			return L10n.NetworkError.noAuthors
+		case .notConnectedToInternet:
+			return L10n.NetworkError.notConnectedToInternet
 		}
 	}
 

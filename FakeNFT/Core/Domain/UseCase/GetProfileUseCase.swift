@@ -36,3 +36,21 @@ final class GetProfileUseCaseImp: GetProfileUseCase {
 		}
 	}
 }
+
+final class GetProfileWithMonitor: GetProfileUseCase {
+	private let getProfile: GetProfileUseCase
+	private let networkMonitor: NetworkMonitor
+
+	init(getProfile: GetProfileUseCase, networkMonitor: NetworkMonitor) {
+		self.getProfile = getProfile
+		self.networkMonitor = networkMonitor
+	}
+
+	func invoke(completion: @escaping (Result<Profile, FakeNFTError>) -> Void) {
+		if !networkMonitor.isConnected {
+			completion(.failure(.notConnectedToInternet))
+		}
+
+		getProfile.invoke(completion: completion)
+	}
+}

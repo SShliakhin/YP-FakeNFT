@@ -4,6 +4,7 @@ final class UseCaseProvider {
 		let nftRepository: NftRepository
 		let likesIDsRepository: NftsIDsRepository
 		let orderIDsRepository: NftsIDsRepository
+		let networkMonitor: NetworkMonitor
 	}
 
 	private let dependencies: Dependencies
@@ -29,6 +30,10 @@ final class UseCaseProvider {
 
 	lazy var getProfile: GetProfileUseCase = {
 		GetProfileUseCaseImp(apiClient: dependencies.apiClient)
+	}()
+
+	lazy var getProfileWithMonitor: GetProfileUseCase = {
+		GetProfileWithMonitor(getProfile: getProfile, networkMonitor: dependencies.networkMonitor)
 	}()
 
 	lazy var putProfile: PutProfileUseCase = {

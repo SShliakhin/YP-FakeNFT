@@ -107,6 +107,12 @@ enum L10n {
 				comment: "Ошибка сети: Авторы не получены."
 			)
 		}
+		static var notConnectedToInternet: String {
+			NSLocalizedString(
+				"error.notConnectedToInternet",
+				comment: "Ошибка сети: Отсутствует подключение к Интернету."
+			)
+		}
 	}
 
 	enum Onboarding {
